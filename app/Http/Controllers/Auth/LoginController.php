@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -46,10 +46,8 @@ class LoginController extends Controller {
                     'user_password' => Hash::make($credentials['password']),
                 ])->save();
             }
-        } else {
-            if (Hash::check($credentials['password'], $user->getAuthPassword())) {
-                $passwordCorrect = true;
-            }
+        } else if (Hash::check($credentials['password'], $user->getAuthPassword())) {
+            $passwordCorrect = true;
         }
 
         if ($passwordCorrect) {
