@@ -7,18 +7,21 @@
             --dp-tab-on: #E6B800;
             --dp-tab-head: #FFE680;
         }
+
         .nav-tabs-dotproject .nav-link {
             border: 1px solid #dee2e6;
             border-bottom: none;
             background-color: #f8f9fa;
             color: #495057;
         }
+
         .nav-tabs-dotproject .nav-link.active {
             background-color: var(--dp-tab-on);
             border-color: var(--dp-tab-on);
             color: #333;
             font-weight: bold;
         }
+
         .thead-dotproject {
             background-color: var(--dp-tab-head);
             color: #333;
@@ -34,19 +37,45 @@
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 gap-3">
                 <h1 class="h2 mb-0">Empresas</h1>
 
-                <form class="d-flex flex-grow-1 flex-md-grow-0 justify-content-end align-items-center gap-2" role="search">
+                <form class="d-flex flex-column flex-md-row justify-content-start align-items-center mb-3 gap-3"
+                      role="search"
+                      method="GET"
+                      action="{{ route('companies.index') }}">
+
                     <div>
                         <label for="search" class="form-label form-label-sm mb-0 me-1">Busca:</label>
-                        <input class="form-control form-control-sm d-inline-block w-auto" id="search" type="search">
+                        <input class="form-control form-control-sm d-inline-block w-auto"
+                               id="search"
+                               type="search"
+                               name="search"
+                               value="{{ request('search') }}">
                     </div>
+
+
                     <div>
-                        <label for="responsavel" class="form-label form-label-sm mb-0 me-1">Filtro por responsável:</label>
-                        <select id="responsavel" class="form-select form-select-sm d-inline-block w-auto">
-                            <option value="todos">Todos</option>
+                        <label for="companyResponsible" class="form-label form-label-sm mb-0 me-1">Filtro por responsável:</label>
+                        <select id="companyResponsible"
+                                name="owner"
+                                class="form-select form-select-sm d-inline-block w-auto">
+
+
+                            <option value="all" {{ request('owner') === 'all' || !request('owner') ? 'selected' : '' }}>
+                                Todos
+                            </option>
+
+                            @foreach ($owners as $ownerId => $ownerName)
+                                <option value="{{ $ownerId }}" {{ request('owner') === $ownerId ? 'selected' : '' }}>
+                                    {{ $ownerName }}
+                                </option>
+                            @endforeach
+
                         </select>
                     </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
                     <a href="{{ route('companies.create') }}" class="btn btn-dark btn-sm flex-shrink-0">Nova Empresa</a>
                 </form>
+
             </div>
 
             <ul class="nav nav-tabs nav-tabs-dotproject mb-4">
@@ -78,10 +107,12 @@
                                 <td>{{ $company->company_name }}</td>
                                 <td>{{ $company->active_projects_count }}</td>
                                 <td>{{ $company->archived_projects_count }}</td>
-                                <td>{{ $company->company_type_name ?? 'N/A' }}</td>
+                                <td>{{ $types[$company->company_type] ?? 'N/A' }}</td>
                                 <td>
-                                    <a href="{{ route('companies.show', $company) }}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                    <a href="{{ route('companies.edit', $company) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                    <a href="{{ route('companies.show', $company) }}"
+                                       class="btn btn-sm btn-outline-secondary">Ver</a>
+                                    <a href="{{ route('companies.edit', $company) }}"
+                                       class="btn btn-sm btn-outline-primary">Editar</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -16,30 +16,32 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller {
-    /**
-     * Função auxiliar para buscar a lista de 'donos' (usuários)
-     * no formato correto (ID => Nome Completo) para os formulários.
-     * Esta função é usada por create() e edit().
-     */
     private function getOwnerList() {
-        // Busca Users, faz join com a tabela de contatos e retorna [user_id => 'Nome Sobrenome']
         return User::join('dotp_contacts', 'dotp_users.user_contact', '=', 'dotp_contacts.contact_id')
             ->orderBy('dotp_contacts.contact_first_name')
             ->orderBy('dotp_contacts.contact_last_name')
             ->pluck(DB::raw("CONCAT(contact_first_name, ' ', contact_last_name)"), 'dotp_users.user_id');
     }
 
+    private function getCompanyTypes(): array {
+        $getTypes = DB::table('dotp_sysvals')
+            ->where('sysval_title', 'CompanyType')
+            ->pluck('sysval_value');
 
-    private function getCompanyTypes(): Collection {
-        return DB::table('dotp_company_role') // ATENÇÃO: Verifique se o nome da sua tabela é 'sysvals'
-        ->where('role_name', 'CompanyType')
-            ->orderBy('id')
-            ->pluck('sysval_value', 'sysval_value_id');
+        $data = $getTypes->first();
+        preg_match_all('/(\d+)\|(\D+)/', $data, $matches);
+
+        $types = [];
+        if (!empty($matches[1]) && !empty($matches[2])) {
+            $types = array_combine($matches[1], $matches[2]);
+        }
+
+        return $types;
     }
 
 
-    public function index(): Factory|View {
-        $companies = Company::with('owner.contact')
+    public function index(Request $request): Factory|View {
+        $query = Company::with('owner.contact')
             ->withCount([
                 'projects AS active_projects_count' => function ($query) {
                     $query->whereNotNull('project_id');
@@ -47,11 +49,26 @@ class CompanyController extends Controller {
                 'projects AS archived_projects_count' => function ($query) {
                     $query->where('project_status', 7);
                 }
-            ])
-            ->orderBy('company_name')
-            ->paginate(15);
+            ]);
 
-        return view('companies.index', compact('companies'));
+        if ($request->has('search') && $request->input('search') !== '') {
+            $searchTerm = $request->input('search');
+            $query->where('company_name', 'LIKE', '%' . $searchTerm . '%');
+        }
+
+        if ($request->has('owner') && $request->input('owner') !== 'all') {
+            $query->where('company_owner', $request->input('owner'));
+        }
+
+        $companies = $query->paginate(15)->appends($request->query());
+        $types = $this->getCompanyTypes();
+        $owners = $this->getOwnerList();
+
+        return view('companies.index', [
+            'companies' => $companies,
+            'types' => $types,
+            'owners' => $owners
+        ]);
     }
 
 
