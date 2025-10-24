@@ -1,35 +1,6 @@
 @extends('dashboard')
 @section('title', 'Empresas - dotProject+')
 
-@push('styles')
-    <style>
-        :root {
-            --dp-tab-on: #E6B800;
-            --dp-tab-head: #FFE680;
-        }
-
-        .nav-tabs-dotproject .nav-link {
-            border: 1px solid #dee2e6;
-            border-bottom: none;
-            background-color: #f8f9fa;
-            color: #495057;
-        }
-
-        .nav-tabs-dotproject .nav-link.active {
-            background-color: var(--dp-tab-on);
-            border-color: var(--dp-tab-on);
-            color: #333;
-            font-weight: bold;
-        }
-
-        .thead-dotproject {
-            background-color: var(--dp-tab-head);
-            color: #333;
-            border-color: #dee2e6;
-        }
-    </style>
-@endpush
-
 @section('dashboard-content')
     <div class="card shadow-sm">
         <div class="card-body p-4">

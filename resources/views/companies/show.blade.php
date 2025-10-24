@@ -2,38 +2,6 @@
 
 @section('title', 'Ver Empresa: ' . $company->company_name)
 
-@push('styles')
-    <style>
-        :root {
-            --dp-tab-on: #E6B800;
-            --dp-tab-head: #FFE680;
-            --dp-tab-inactive: #f8f9fa;
-        }
-
-        .nav-tabs-dotproject .nav-link {
-            border: 1px solid #dee2e6;
-            border-bottom: none;
-            background-color: var(--dp-tab-inactive);
-            color: #495057;
-        }
-
-        .nav-tabs-dotproject .nav-link.active {
-            background-color: var(--dp-tab-on);
-            border-color: var(--dp-tab-on);
-            color: #333;
-            font-weight: bold;
-        }
-
-        /* Para o conteúdo das abas */
-        .tab-content-dotproject {
-            background-color: var(--dp-tab-inactive);
-            border: 1px solid #dee2e6;
-            border-top: none;
-        }
-    </style>
-@endpush
-
-
 @section('dashboard-content')
     <div class="card shadow-sm">
         <div class="card-body p-4">
@@ -78,13 +46,13 @@
             <div class="bg-light p-3 rounded border mb-4">
                 <dl class="row mb-0">
                     <dt class="col-sm-2">Recompensas:</dt>
-                    <dd class="col-sm-10">{{ $policies->company_policies_recognition ?? 'N/A' }}</dd>
+                    <dd class="col-sm-10">{{ $company->policy->company_policies_recognition ?? 'N/A' }}</dd>
 
                     <dt class="col-sm-2">Regulamentação:</dt>
-                    <dd class="col-sm-10">{{ $policies->company_policies_policy ?? 'N/A' }}</dd>
+                    <dd class="col-sm-10">{{ $company->policy->company_policies_policy ?? 'N/A' }}</dd>
 
                     <dt class="col-sm-2">Segurança:</dt>
-                    <dd class="col-sm-10">{{ $policies->company_policies_safety ?? 'N/A' }}</dd>
+                    <dd class="col-sm-10">{{ $company->policy->company_policies_safety ?? 'N/A' }}</dd>
                 </dl>
             </div>
 

@@ -1,0 +1,46 @@
+:root {
+    --dp-tab-on: #E6B800;
+    --dp-tab-head: #FFE680;
+}
+
+.nav-tabs-dotproject .nav-link {
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+    background-color: #f8f9fa;
+    color: #495057;
+}
+
+.nav-tabs-dotproject .nav-link.active {
+    background-color: var(--dp-tab-on);
+    border-color: var(--dp-tab-on);
+    color: #333;
+    font-weight: bold;
+}
+
+.thead-dotproject {
+    background-color: var(--dp-tab-head);
+    color: #333;
+    border-color: #dee2e6;
+}
+
+.col-form-label {
+    background-color: var(--dp-tab-on);
+    color: #333;
+    font-weight: 600;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+.row > .col-sm-9 {
+    padding-left: 0;
+}
+
+.row > .col-sm-9 .form-control,
+.row > .col-sm-9 .form-select {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

@@ -34,13 +34,16 @@ class Company extends Model {
         'company_custom',
     ];
 
-
     public function owner(): BelongsTo {
         return $this->belongsTo(User::class, 'company_owner', 'user_id');
     }
 
-    public function policies(): HasOne {
-        return $this->hasOne(CompanyPolicy::class, 'company_policies_company_id', 'company_id');
+    public function policy(): HasOne {
+        return $this->hasOne(
+            CompanyPolicy::class,
+            'company_policies_company_id',
+            'company_id'
+        );
     }
 
     public function projects() {

@@ -15,23 +15,35 @@
             </div>
         </div>
 
-        <div class="card shadow-sm mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Política Organizacional</h5>
-            </div>
-            <div class="card-body p-4">
+        <hr class="my-4">
+        <h4>Política Organizacional</h4>
+        <div class="row">
+            <div class="col-12">
+
                 <div class="mb-3">
-                    <label for="company_policies_recognition" class="form-label">Recompensas e reconhecimentos:</label>
-                    <textarea id="company_policies_recognition" name="company_policies_recognition" class="form-control" rows="5">{{ old('company_policies_recognition', $company->policies->company_policies_recognition) }}</textarea>
+                    <label for="company_policies_recognition" class="form-label">
+                        Recompensas e reconhecimentos:
+                    </label>
+                    <textarea id="company_policies_recognition" name="company_policies_recognition" class="form-control" rows="5"
+                    >{{ old('company_policies_recognition', $company->policy->company_policies_recognition ?? '') }}</textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label for="company_policies_policy" class="form-label">Regulamentos, padrões, e cumprimento de políticas:</label>
-                    <textarea id="company_policies_policy" name="company_policies_policy" class="form-control" rows="5">{{ old('company_policies_policy', $company->policies->company_policies_policy) }}</textarea>
+                    <label for="company_policies_policy" class="form-label">
+                        Regulamentos, padrões, e comprimento de políticas:
+                    </label>
+                    <textarea id="company_policies_policy" name="company_policies_policy" class="form-control" rows="5"
+                    >{{ old('company_policies_policy', $company->policy->company_policies_policy ?? '') }}</textarea>
                 </div>
+
                 <div class="mb-3">
-                    <label for="company_policies_safety" class="form-label">Segurança:</label>
-                    <textarea id="company_policies_safety" name="company_policies_safety" class="form-control" rows="5">{{ old('company_policies_safety', $company->policies->company_policies_safety) }}</textarea>
+                    <label for="company_policies_safety" class="form-label">
+                        Segurança:
+                    </label>
+                    <textarea id="company_policies_safety" name="company_policies_safety" class="form-control" rows="5"
+                    >{{ old('company_policies_safety', $company->policy->company_policies_safety ?? '') }}</textarea>
                 </div>
+
             </div>
         </div>
 

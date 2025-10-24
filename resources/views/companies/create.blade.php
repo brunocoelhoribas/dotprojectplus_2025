@@ -1,13 +1,21 @@
+@php use App\Models\Company\Company; @endphp
 @extends('dashboard')
-@section('title', 'Nova Empresa')
+@section('title', 'Empresas - dotProject+')
+
 @section('dashboard-content')
-    <h1 class="h2 mb-4">Nova Empresa</h1>
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form action="{{ route('companies.store') }}" method="POST">
-                @csrf
-                @include('companies._form')
-            </form>
-        </div>
+    <div class="container">
+        <h3>Adicionar Empresa</h3>
+
+        <form action="{{ route('companies.store') }}" method="POST">
+
+            @include('companies.form', ['company' => new Company])
+
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-end">
+                    <a href="{{ route('companies.index') }}" class="btn btn-secondary me-2">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">Salvar Empresa</button>
+                </div>
+            </div>
+        </form>
     </div>
 @endsection
