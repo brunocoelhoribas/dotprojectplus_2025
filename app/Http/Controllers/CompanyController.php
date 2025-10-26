@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 class CompanyController extends Controller {
 
     public function index(Request $request): Factory|View {
+        $selectedTypeId = $request->input('type');
+
         $query = Company::with('owner.contact')
             ->withCount([
                 'projects AS active_projects_count' => function ($query) {
@@ -33,6 +35,10 @@ class CompanyController extends Controller {
             $query->where('company_owner', $request->input('owner'));
         }
 
+        if ($selectedTypeId) {
+            $query->where('company_type', $selectedTypeId);
+        }
+
         $companies = $query->paginate(15)->appends($request->query());
         $types = $this->getCompanyTypes();
         $owners = $this->getOwnerList();
@@ -40,7 +46,8 @@ class CompanyController extends Controller {
         return view('companies.index', [
             'companies' => $companies,
             'types' => $types,
-            'owners' => $owners
+            'owners' => $owners,
+            'selectedTypeId' => $selectedTypeId,
         ]);
     }
 

@@ -50,14 +50,22 @@
             </div>
 
             <ul class="nav nav-tabs nav-tabs-dotproject mb-4">
-                <li class="nav-item"><a class="nav-link active" href="#">Todas Empresas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Cliente</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Fabricante</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Fornecedor</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Consultor</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Governo</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Interno</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Não aplicável</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ !$selectedTypeId ? 'active' : '' }}"
+                       href="{{ route('companies.index', request()->except('type')) }}">
+                        Todas Empresas
+                    </a>
+                </li>
+
+                @foreach($types as $id => $name)
+                    <li class="nav-item">
+                        <a class="nav-link {{ $selectedTypeId === $id ? 'active' : '' }}"
+                           href="{{ route('companies.index', array_merge(request()->query(), ['type' => $id])) }}">
+                            {{ $name }}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
 
             <div class="table-responsive">
