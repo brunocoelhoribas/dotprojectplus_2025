@@ -110,6 +110,7 @@ class Company extends Model {
         );
     }
 
+
     /**
      * Defines the HasMany relationship with the projects.
      *
@@ -117,6 +118,24 @@ class Company extends Model {
      */
     public function projects(): HasMany {
         return $this->hasMany(Project::class, 'project_company', 'company_id');
+    }
+
+    /**
+     * Defines the HasMany relationship with the active projects.
+     *
+     * @return HasMany
+     */
+    public function activeProjects(): HasMany {
+        return $this->projects()->where('project_status', '<>', 7);
+    }
+
+    /**
+     * Defines the HasMany relationship with the archived projects.
+     *
+     * @return HasMany
+     */
+    public function archivedProjects(): HasMany {
+        return $this->projects()->where('project_status', 7);
     }
 }
 

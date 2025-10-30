@@ -111,7 +111,19 @@ class CompanyController extends Controller {
      * @return Factory|View|Application
      */
     public function show(Company $company): Factory|View|Application {
-        return view('companies.show', ['company' => $company->load('owner.contact', 'policy')]);
+        $company->loadMissing([
+            'owner.contact',
+            'policy',
+            'activeProjects.owner.contact',
+            'archivedProjects.owner.contact'
+        ]);
+
+        $projectStatus = $this->getProjectStatus();
+
+        return view('companies.show', [
+            'company' => $company,
+            'projectStatus' => $projectStatus,
+        ]);
     }
 
     /**
@@ -231,5 +243,28 @@ class CompanyController extends Controller {
         }
 
         return $types;
+    }
+
+    /** @noinspection DuplicatedCode */
+    private function getProjectStatus(): array {
+        $getStatus = DB::table('dotp_sysvals')
+            ->where('sysval_title', 'ProjectStatus')
+            ->pluck('sysval_value');
+
+        $data = $getStatus->first();
+        if (!$data) {
+            return [];
+        }
+
+        // Use regex to parse the "1|TypeA\n2|TypeB" format
+        preg_match_all('/(\d+)\|(\D+)/', $data, $matches);
+
+        $status = [];
+        if (!empty($matches[1]) && !empty($matches[2])) {
+            // Combine the keys (matches[1]) with the values (matches[2])
+            $status = array_combine($matches[1], array_map('trim', $matches[2]));
+        }
+
+        return $status;
     }
 }
