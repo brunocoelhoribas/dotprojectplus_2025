@@ -1,9 +1,9 @@
-@php use Carbon\Carbon; @endphp
 @extends('dashboard')
 
 @section('title', 'Ver Empresa: ' . $company->company_name)
 
 @section('dashboard-content')
+    @inject('carbon', 'Carbon\Carbon')
     <div class="card shadow-sm">
         <div class="card-body p-4">
 
@@ -83,21 +83,18 @@
             <div class="tab-content tab-content-dotproject" id="companyTabContent">
 
                 <div class="tab-pane fade show active p-4" id="projetos" role="tabpanel" aria-labelledby="projetos-tab">
-
                     @if ($company->activeProjects->isEmpty())
 
                         <div class="text-center text-muted py-5">
                             <p class="mb-3">Ainda não existe nenhum projeto cadastrado.
-                                {{-- Ajuste este link para sua rota de criação de projetos --}}
-                                Clique <a href="{{-- route('projects.create', ['company_id' => $company->company_id]) --}}">aqui</a> para criar um projeto.
+                                Clique <a href="{{ route('projects.create', ['company_id' => $company->company_id]) }}"><b><u>aqui</u></b></a> para criar um projeto.
                             </p>
                         </div>
 
                     @else
 
                         <div class="d-flex justify-content-end mb-3">
-                            {{-- Ajuste este link para sua rota de criação de projetos --}}
-                            <a href="{{-- route('projects.create', ['company_id' => $company->company_id]) --}}" class="btn btn-primary">
+                            <a href="{{ route('projects.create', ['company_id' => $company->company_id]) }}" class="btn btn-primary">
                                 Adicionar Projeto
                             </a>
                         </div>
@@ -119,29 +116,22 @@
                                 @foreach ($company->activeProjects as $project)
                                     <tr>
                                         <td class="text-end">{{ $project->project_percent_complete ?? 0 }}%</td>
-
                                         <td>
-                                            {{-- Ajuste este link para sua rota de visualização de projeto --}}
-                                            <a href="#">{{ $project->project_name }}</a>
+                                            {{-- Rota preenchida para ver um projeto --}}
+                                            <a href="{{ route('projects.show', $project->project_id) }}">{{ $project->project_name }}</a>
                                         </td>
-
-                                        <td>{{ Carbon::parse($project->project_start_date)->format('d/m/Y') }}</td>
-
+                                        <td>{{ $carbon::parse($project->project_start_date)->format('d/m/Y') }}</td>
                                         <td>
                                             @if ($project->project_end_date)
-                                                {{ Carbon::parse($project->project_end_date)->format('d/m/Y') }}
+                                                {{ $carbon::parse($project->project_end_date)->format('d/m/Y') }}
                                             @else
                                                 N/A
                                             @endif
                                         </td>
-
                                         <td>{{ $project->owner?->contact?->full_name ?? 'N/A' }}</td>
-
                                         <td>{{ $projectStatus[$project->project_status] ?? 'N/A' }}</td>
-
                                         <td class="text-center">
-                                            {{-- Ajuste este link para sua rota de edição de projeto --}}
-                                            <a href="{{-- route('projects.edit', $project->project_id) --}}" class="btn btn-sm btn-secondary">
+                                            <a href="{{ route('projects.edit', $project->project_id) }}" class="btn btn-sm btn-secondary">
                                                 Editar
                                             </a>
                                         </td>

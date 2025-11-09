@@ -15,6 +15,7 @@
                     <div class="collapse navbar-collapse" id="main-nav">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Empresas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('projects.index') }}">Projetos</a></li>
                         </ul>
 
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -26,7 +27,6 @@
                                     <li><a class="dropdown-item" href="#">Meus Dados</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        {{-- Formulário de Logout --}}
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="dropdown-item">Sair</button>

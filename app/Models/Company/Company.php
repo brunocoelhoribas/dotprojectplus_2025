@@ -2,15 +2,15 @@
 
 namespace App\Models\Company;
 
-use App\Models\Project;
+use App\Models\Project\Project;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 // Adicionado para o tipo de retorno
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Eloquent model representing a company in the 'dotp_companies' table.
