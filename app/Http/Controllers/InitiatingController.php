@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Initiating\Initiating;
 use App\Models\Project\Project;
-use Carbon\Traits\Date;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Carbon;
+use Illuminate\Http\Response;
 
 class InitiatingController extends Controller {
     /**
@@ -54,5 +54,22 @@ class InitiatingController extends Controller {
         // if ($request->input('action_authorized_performed') == '1') { ... }
 
         return redirect()->back()->with('success', 'Termo de Abertura salvo com sucesso.');
+    }
+
+    public function generatePDF(Project $project): Response {
+        $initiating = Initiating::with('manager.contact')
+            ->where('project_id', $project->project_id)
+            ->firstOrFail();
+
+        $data = [
+            'initiating' => $initiating,
+            'project' => $project,
+            'manager' => $initiating->manager->contact ?? null
+        ];
+
+        $pdf = PDF::loadView('projects.pdf.initiating_pdf', $data);
+        $pdf->setPaper('a4');
+
+        return $pdf->stream('termo_abertura_' . $project->project_name . '.pdf');
     }
 }

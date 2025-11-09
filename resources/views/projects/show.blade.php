@@ -196,7 +196,9 @@
 
                                 <div class="d-flex justify-content-end gap-2 mt-3">
                                     {{-- TODO: Adicionar lógica de status (Concluído, Aprovado, Autorizado) --}}
-                                    <button type="button" class="btn btn-outline-secondary">Gerar PDF</button>
+                                    <a href="{{ route('initiating.pdf', $project) }}" class="btn btn-outline-secondary" target="_blank">
+                                        Gerar PDF
+                                    </a>
                                     <button type="submit" class="btn btn-primary">Salvar Rascunho</button>
                                 </div>
                             </form>
@@ -206,12 +208,20 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="h5 mb-0">Stakeholders</h4>
 
-                                {{-- Botão "Novo Stakeholder" --}}
-                                {{-- Ele abre o modal 'createStakeholderModal' --}}
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#createStakeholderModal">
-                                    Novo Stakeholder
-                                </button>
+                                <div>
+                                    @if($initiating->exists)
+                                        <a href="{{ route('initiating.stakeholders.pdf', $initiating) }}"
+                                           class="btn btn-outline-secondary btn-sm"
+                                           target="_blank">
+                                            Gerar PDF
+                                        </a>
+                                    @endif
+
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#createStakeholderModal">
+                                        Novo Stakeholder
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="table-responsive">

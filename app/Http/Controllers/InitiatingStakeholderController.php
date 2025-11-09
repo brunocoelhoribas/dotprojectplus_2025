@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Initiating\Initiating;
 use App\Models\Initiating\InitiatingStakeholder;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class InitiatingStakeholderController extends Controller {
     public function store(Request $request): RedirectResponse {
@@ -27,6 +30,19 @@ class InitiatingStakeholderController extends Controller {
         $stakeholder->delete();
 
         return redirect()->back()->with('success', 'Stakeholder excluído com sucesso.');
+    }
+
+    public function generatePDF(Initiating $initiating): Response {
+        $initiating->load('project', 'stakeholders.contact');
+
+        $data = [
+            'initiating' => $initiating
+        ];
+
+        $pdf = PDF::loadView('projects.pdf.stakeholders_pdf', $data);
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->stream('stakeholders_' . $initiating->project->project_name . '.pdf');
     }
 
     private function validateStakeholder(Request $request): array {

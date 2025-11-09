@@ -22,6 +22,8 @@ Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])
     ->name('projects.batchUpdate');
 Route::post('projects/{project}/initiating', [InitiatingController::class, 'storeOrUpdate'])
     ->name('initiating.storeOrUpdate');
+Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])
+    ->name('initiating.pdf');
 
 Route::post('stakeholders', [InitiatingStakeholderController::class, 'store'])
     ->name('stakeholders.store');
@@ -29,6 +31,8 @@ Route::put('stakeholders/{stakeholder}', [InitiatingStakeholderController::class
     ->name('stakeholders.update');
 Route::delete('stakeholders/{stakeholder}', [InitiatingStakeholderController::class, 'destroy'])
     ->name('stakeholders.destroy');
+Route::get('initiating/{initiating}/stakeholders/pdf', [InitiatingStakeholderController::class, 'generatePDF'])
+    ->name('initiating.stakeholders.pdf');
 
 Route::get('dashboard', static function () {
     return view('dashboard');
