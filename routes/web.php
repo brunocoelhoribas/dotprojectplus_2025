@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InitiatingController;
 use App\Http\Controllers\InitiatingStakeholderController;
+use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,20 @@ Route::post('projects/{project}/initiating', [InitiatingController::class, 'stor
     ->name('initiating.storeOrUpdate');
 Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])
     ->name('initiating.pdf');
+Route::post('projects/{project}/wbs', [PlanningController::class, 'storeWbsItem'])
+    ->name('projects.wbs.store');
+Route::post('projects/{project}/wbs/{wbsItem}/activity', [PlanningController::class, 'storeActivity'])
+    ->name('projects.activity.store');
+Route::put('projects/{project}/activities/{task}', [PlanningController::class, 'updateActivity'])
+    ->name('projects.activity.update');
+Route::delete('projects/{project}/activities/{task}', [PlanningController::class, 'destroyActivity'])
+    ->name('projects.activity.destroy');
+Route::delete('projects/{project}/wbs/{wbsItem}', [PlanningController::class, 'destroyWbsItem'])
+    ->name('projects.wbs.destroy');
+Route::post('projects/{project}/wbs/{wbsItem}/move/{direction}', [PlanningController::class, 'moveWbsItem'])
+    ->name('projects.wbs.move');
+Route::post('projects/{project}/activities/{task}/move/{direction}', [PlanningController::class, 'moveActivity'])
+    ->name('projects.activity.move');
 
 Route::post('stakeholders', [InitiatingStakeholderController::class, 'store'])
     ->name('stakeholders.store');

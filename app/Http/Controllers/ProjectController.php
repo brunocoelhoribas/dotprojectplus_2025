@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Company\Company;
 use App\Models\Initiating\Initiating;
 use App\Models\Project\Project;
+use App\Models\Project\ProjectWbsItem;
+use App\Models\Project\Task\Task;
 use App\Models\User\User;
 use App\Models\User\UserContact;
 use Illuminate\Contracts\View\View;
@@ -121,8 +123,7 @@ class ProjectController extends Controller {
      * @param Project $project Route-model binding
      * @return View
      */
-    public function show(Project $project): View
-    {
+    public function show(Project $project): View {
         $project->loadMissing([
             'company',
             'owner.contact',
@@ -133,18 +134,32 @@ class ProjectController extends Controller {
 
         $statuses = $this->getProjectStatus();
         $priorities = $this->getProjectPriorities();
+        $users = $this->getOwnerList();
         $initiating = $project->initiating ?? new Initiating();
+        $contacts = UserContact::orderBy('contact_first_name')->get();
+
+        $wbsItems = ProjectWbsItem::with(['tasks.owner.contact', 'tasks.estimation'])
+            ->where('project_id', $project->project_id)
+            ->orderBy('sort_order')
+            ->get();
+
+        $executionTasks = Task::where('task_project', $project->project_id)
+            ->orderBy('task_start_date')
+            ->get();
+
         $percentComplete = $project->project_percent_complete;
         $workedHours = 0;
         $totalHours = 0;
-        $contacts = UserContact::orderBy('contact_first_name')->orderBy('contact_last_name')->get();
+
         return view('projects.show', [
             'project' => $project,
             'initiating' => $initiating,
             'statuses' => $statuses,
             'priorities' => $priorities,
-            'users' => $this->getOwnerList(),
+            'users' => $users,
             'contacts' => $contacts,
+            'wbsItems' => $wbsItems,
+            'executionTasks' => $executionTasks,
             'percentComplete' => $percentComplete,
             'workedHours' => $workedHours,
             'totalHours' => $totalHours,
@@ -159,12 +174,11 @@ class ProjectController extends Controller {
      * @return View
      */
     public function edit(Project $project): View {
-        // Load M2M relations to populate form fields
         $project->loadMissing(['departments', 'contacts']);
 
         return view('projects.edit', [
             'project' => $project,
-            'companyId' => $project->project_company, // For pre-selecting the company
+            'companyId' => $project->project_company,
             'companies' => $this->getCompanyList(),
             'users' => $this->getOwnerList(),
             'statuses' => $this->getProjectStatus(),
