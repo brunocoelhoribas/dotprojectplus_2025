@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project\Project;
+use App\Models\Project\ProjectMinute;
+use App\Models\Project\ProjectTraining;
 use App\Models\Project\ProjectWbsItem;
 use App\Models\Project\Task\Task;
 use App\Models\Project\Task\TasksWorkpackage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -97,8 +100,6 @@ class PlanningController extends Controller {
                 'task_id' => $task->task_id,
                 'eap_item_id' => $wbsItemId
             ]);
-
-            // Opcional: Criar registro vazio em dotp_project_tasks_estimations se necessário
         });
 
         return redirect()->back()->with('success', 'Atividade criada com sucesso.');
@@ -296,5 +297,133 @@ class PlanningController extends Controller {
         });
 
         return redirect()->back()->with('success', 'Atividade excluída com sucesso.');
+    }
+
+    public function sequencingIndex(Project $project): View {
+        $tasks = Task::with('predecessors')
+            ->where('task_project', $project->project_id)
+            ->orderBy('task_id')
+            ->get();
+
+        return view('projects.planning.sequencing', [
+            'project' => $project,
+            'tasks' => $tasks,
+        ]);
+    }
+
+    public function storeDependency(Request $request, Project $project): RedirectResponse {
+        $request->validate([
+            'task_id' => 'required|integer',
+            'predecessor_id' => 'required|integer|different:task_id',
+        ]);
+
+        $exists = DB::table('dotp_task_dependencies')
+            ->where('dependencies_task_id', $request->task_id)
+            ->where('dependencies_req_task_id', $request->predecessor_id)
+            ->exists();
+
+        if (!$exists) {
+            DB::table('dotp_task_dependencies')->insert([
+                'dependencies_task_id' => $request->task_id,
+                'dependencies_req_task_id' => $request->predecessor_id
+            ]);
+        }
+
+        // TODO: Aqui você poderia chamar uma função para recalcular as datas do projeto (Critical Path)
+
+        return redirect()->back()->with('success', 'Dependência adicionada.');
+    }
+
+    public function destroyDependency(Project $project, $taskId, $predecessorId): RedirectResponse {
+        DB::table('dotp_task_dependencies')
+            ->where('dependencies_task_id', $taskId)
+            ->where('dependencies_req_task_id', $predecessorId)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Dependência removida.');
+    }
+
+    public function storeTraining(Request $request, Project $project): RedirectResponse {
+        $request->validate([
+            'description' => 'nullable|string',
+        ]);
+
+        ProjectTraining::updateOrCreate(
+            [
+                'project_id' => $project->project_id,
+                'description' => $request->input('description')
+            ],
+        );
+
+        return redirect()->back()->with('success', 'Necessidade de treinamento salva com sucesso.');
+    }
+
+    public function ganttData(Project $project): JsonResponse {
+        $tasks = Task::with('predecessors')
+            ->where('task_project', $project->project_id)
+            ->whereNotNull('task_start_date')
+            ->whereNotNull('task_end_date')
+            ->orderBy('task_start_date')
+            ->get();
+
+        $ganttTasks = $tasks->map(function ($task) {
+            $dependencies = $task->predecessors->pluck('task_id')->implode(', ');
+
+            return [
+                'id' => (string)$task->task_id,
+                'name' => $task->task_name,
+                'start' => $task->task_start_date->format('Y-m-d'),
+                'end' => $task->task_end_date->format('Y-m-d'),
+                'progress' => (int)$task->task_percent_complete,
+                'dependencies' => $dependencies,
+                'custom_class' => $task->task_percent_complete === 100 ? 'bar-completed' : 'bar-running'
+            ];
+        });
+
+        return response()->json($ganttTasks);
+    }
+
+    public function storeMinute(Request $request, Project $project): RedirectResponse {
+        $minute = ProjectMinute::create([
+            'project_id' => $project->project_id,
+            'minute_date' => $request->input('date'),
+            'description' => $request->input('description'),
+            'isEffort' => $request->has('is_effort') ? 1 : 0,
+            'isDuration' => $request->has('is_duration') ? 1 : 0,
+            'isResource' => $request->has('is_resource') ? 1 : 0,
+            'isSize' => $request->has('is_size') ? 1 : 0,
+        ]);
+
+        if ($request->has('member_ids')) {
+            $minute->members()->sync($request->input('member_ids'));
+        }
+
+        return redirect()->back()->with('success', 'Ata registrada com sucesso.');
+    }
+
+    public function updateMinute(Request $request, Project $project, ProjectMinute $minute): RedirectResponse {
+        $minute->update([
+            'minute_date' => $request->input('date'),
+            'description' => $request->input('description'),
+            'isEffort' => $request->has('is_effort') ? 1 : 0,
+            'isDuration' => $request->has('is_duration') ? 1 : 0,
+            'isResource' => $request->has('is_resource') ? 1 : 0,
+            'isSize' => $request->has('is_size') ? 1 : 0,
+        ]);
+
+        if ($request->has('member_ids')) {
+            $minute->members()->sync($request->input('member_ids'));
+        } else {
+            $minute->members()->detach();
+        }
+
+        return redirect()->back()->with('success', 'Ata atualizada com sucesso.');
+    }
+
+    public function destroyMinute(Project $project, ProjectMinute $minute): RedirectResponse {
+        $minute->members()->detach();
+        $minute->delete();
+
+        return redirect()->back()->with('success', 'Ata excluída com sucesso.');
     }
 }

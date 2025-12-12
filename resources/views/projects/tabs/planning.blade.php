@@ -1,4 +1,12 @@
 @php use App\Http\Controllers\PlanningController; @endphp
+@include('projects.planning.create_wbs_modal')
+@include('projects.planning.create_activity_modal')
+@include('projects.planning.edit_activity_modal')
+@include('projects.planning.delete_wbs_modal')
+@include('projects.planning.delete_confirmation_modal')
+@include('projects.planning.partials.training_modal')
+@include('projects.planning.partials.minutes_modal')
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="h5 mb-0">
         Planejamento e Monitoramento
@@ -6,8 +14,17 @@
     </h4>
 
     <div class="btn-group">
-        <button class="btn btn-outline-secondary btn-sm">Sequenciar</button>
-        <button class="btn btn-outline-secondary btn-sm">Dicionário EAP</button>
+        <div class="btn-group">
+            <a href="{{ route('projects.sequencing.index', $project) }}" class="btn btn-outline-secondary btn-sm">
+                Sequenciar atividades
+            </a>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#trainingModal">
+            Necessidade de treinamento
+        </button>
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#minutesModal">
+            Atas para reuniões de estimativas
+        </button>
     </div>
 </div>
 
@@ -38,7 +55,6 @@
                          style="padding: 8px 8px 8px">
 
                         <div class="d-flex align-items-center">
-                            {{-- Botões de Reordenação (EAP) --}}
                             <div class="d-inline-flex flex-column me-2 align-middle" style="font-size: 0.6rem;">
                                 <form action="{{ route('projects.wbs.move', [$project->project_id, $item->id, 'up']) }}"
                                       method="POST">
@@ -238,12 +254,6 @@
         </tbody>
     </table>
 </div>
-
-@include('projects.planning.create_wbs_modal')
-@include('projects.planning.create_activity_modal')
-@include('projects.planning.edit_activity_modal')
-@include('projects.planning.delete_wbs_modal')
-@include('projects.planning.delete_confirmation_modal')
 
 @push('scripts')
     <script>

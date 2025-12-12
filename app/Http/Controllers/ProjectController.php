@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Company\Company;
 use App\Models\Initiating\Initiating;
 use App\Models\Project\Project;
+use App\Models\Project\ProjectMinute;
+use App\Models\Project\ProjectTraining;
 use App\Models\Project\ProjectWbsItem;
 use App\Models\Project\Task\Task;
 use App\Models\User\User;
@@ -146,23 +148,32 @@ class ProjectController extends Controller {
         $executionTasks = Task::where('task_project', $project->project_id)
             ->orderBy('task_start_date')
             ->get();
+        $allTasks = $executionTasks->pluck('task_name', 'task_id');
 
         $percentComplete = $project->project_percent_complete;
         $workedHours = 0;
         $totalHours = 0;
+        $minutes = ProjectMinute::where('project_id', $project->project_id)
+            ->orderBy('minute_date', 'desc')
+            ->get();
+
+        $training = ProjectTraining::where('project_id', $project->project_id)->first();
 
         return view('projects.show', [
-            'project' => $project,
-            'initiating' => $initiating,
-            'statuses' => $statuses,
-            'priorities' => $priorities,
-            'users' => $users,
-            'contacts' => $contacts,
-            'wbsItems' => $wbsItems,
-            'executionTasks' => $executionTasks,
+            'project'         => $project,
+            'initiating'      => $project->initiating,
+            'statuses'        => $statuses,
+            'priorities'      => $priorities,
+            'users'           => $this->getOwnerList(),
+            'contacts'        => $contacts,
+            'wbsItems'        => $wbsItems,
+            'executionTasks'  => $executionTasks,
+            'allTasks'        => $allTasks,
             'percentComplete' => $percentComplete,
-            'workedHours' => $workedHours,
-            'totalHours' => $totalHours,
+            'workedHours'     => $workedHours,
+            'totalHours'      => $totalHours,
+            'minutes'         => $minutes,
+            'training'        => $training,
         ]);
     }
 

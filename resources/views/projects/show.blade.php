@@ -101,7 +101,7 @@
 
                     <div class="tab-content" id="initiationSubTabContent">
                         <div class="tab-pane fade show active" id="charter-content" role="tabpanel" aria-labelledby="charter-tab">
-                            <form action="{{ route('initiating.storeOrUpdate', $project) }}" method="POST">
+                            <form action="{{ route('projects.initiating', $project) }}" method="POST">
                                 @csrf
                                 <h4 class="h5">Termo de Abertura do Projeto</h4>
                                 <hr>

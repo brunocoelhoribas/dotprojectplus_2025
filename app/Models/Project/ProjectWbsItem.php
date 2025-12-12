@@ -17,17 +17,15 @@ class ProjectWbsItem extends Model {
 
     protected $fillable = [
         'project_id',
-        'item_name', // ou 'description' no legado? Verifique o nome da coluna
-        'number', // ex: 1.1, 1.2
+        'item_name',
+        'number',
         'sort_order',
         'is_leaf',
         'identation',
         'parent_id'
     ];
 
-
-    protected function level(): Attribute
-    {
+    protected function level(): Attribute {
         return Attribute::make(
             get: static function ($value, $attributes) {
                 $indentation = $attributes['identation'] ?? '';
@@ -36,8 +34,7 @@ class ProjectWbsItem extends Model {
                     return 0;
                 }
 
-                $decoded = html_entity_decode($indentation);
-                $levelByString = substr_count($indentation, '&nbsp;&nbsp;&nbsp;');
+                $levelByString = substr_count(html_entity_decode($indentation), '&nbsp;&nbsp;&nbsp;');
 
                 if ($levelByString > 0) {
                     return $levelByString;
@@ -54,10 +51,10 @@ class ProjectWbsItem extends Model {
 
     public function tasks(): BelongsToMany {
         return $this->belongsToMany(
-            Task::class,                    // Model final (Tarefa)
-            'dotp_tasks_workpackages',      // Tabela de ligação (que achamos na imagem)
-            'eap_item_id',                  // Chave estrangeira do WBS nesta tabela
-            'task_id'                       // Chave estrangeira da Task nesta tabela
+            Task::class,
+            'dotp_tasks_workpackages',
+            'eap_item_id',
+            'task_id'
         );
     }
 }
