@@ -46,6 +46,7 @@ class Task extends Model {
         'task_contacts',
         'task_custom',
         'task_type',
+        'task_order',
     ];
 
     protected $casts = [

@@ -53,7 +53,7 @@ class InitiatingController extends Controller {
         // (que copia dados do 'initiating' para o 'project')
         // if ($request->input('action_authorized_performed') == '1') { ... }
 
-        return redirect()->back()->with('success', 'Termo de Abertura salvo com sucesso.');
+        return redirect()->back()->with('success', __('initiating/messages.charter.saved'));
     }
 
     public function generatePDF(Project $project): Response {

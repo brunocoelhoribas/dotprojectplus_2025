@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Stakeholders</title>
+    <title>{{ __('projects/pdf.stakeholders.main_title') }}</title>
     <style>
         body {
             font-family: 'Helvetica', sans-serif;
@@ -29,17 +29,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>Registro de Stakeholders</h1>
-    <h2>Projeto: {{ $initiating->project->project_name ?? 'N/A' }}</h2>
+    <h1>{{ __('projects/pdf.stakeholders.main_title') }}</h1>
+    <h2>{{ __('projects/pdf.stakeholders.project_label') }} {{ $initiating->project->project_name ?? 'N/A' }}</h2>
 
     <table>
         <thead>
         <tr>
-            <th>Stakeholder</th>
-            <th>Responsabilidades</th>
-            <th>Interesse</th>
-            <th>Poder</th>
-            <th>Estratégia</th>
+            <th>{{ __('projects/pdf.stakeholders.table.name') }}</th>
+            <th>{{ __('projects/pdf.stakeholders.table.responsibilities') }}</th>
+            <th>{{ __('projects/pdf.stakeholders.table.interest') }}</th>
+            <th>{{ __('projects/pdf.stakeholders.table.power') }}</th>
+            <th>{{ __('projects/pdf.stakeholders.table.strategy') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@
         @empty
             <tr>
                 <td colspan="5" style="text-align: center;">
-                    Nenhum stakeholder cadastrado.
+                    {{ __('projects/pdf.stakeholders.table.empty') }}
                 </td>
             </tr>
         @endforelse

@@ -3,19 +3,18 @@
         <div class="modal-content">
             <form action="{{ route('stakeholders.store') }}" method="POST">
                 @csrf
-                {{-- O ID do Termo de Abertura (initiating) é essencial --}}
                 <input type="hidden" name="initiating_id" value="{{ $initiating->initiating_id }}">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Novo Stakeholder</h5>
+                    <h5 class="modal-title" id="createModalLabel">{{ __('projects/partials.stakeholder.create_title') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="mb-3">
-                        <label for="contact_id" class="form-label">Contato (Nome do Stakeholder) *</label>
+                        <label for="contact_id" class="form-label">{{ __('projects/partials.stakeholder.contact_label') }} *</label>
                         <select name="contact_id" id="contact_id" class="form-select" required>
-                            <option value="">Selecione um contato...</option>
+                            <option value="">{{ __('projects/partials.stakeholder.select_contact') }}</option>
                             @foreach($contacts as $contact)
                                 <option value="{{ $contact->contact_id }}">{{ $contact->full_name }}</option>
                             @endforeach
@@ -23,40 +22,40 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="stakeholder_responsibility" class="form-label">Responsabilidades</label>
+                        <label for="stakeholder_responsibility" class="form-label">{{ __('projects/partials.stakeholder.responsibilities') }}</label>
                         <textarea name="stakeholder_responsibility" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="stakeholder_power" class="form-label">Poder</label>
+                            <label for="stakeholder_power" class="form-label">{{ __('projects/partials.stakeholder.power') }}</label>
                             <select name="stakeholder_power" class="form-select">
-                                <option value="">N/D</option>
-                                <option value="Baixo">Baixo</option>
-                                <option value="Médio">Médio</option>
-                                <option value="Alto">Alto</option>
+                                <option value="">{{ __('projects/partials.stakeholder.options.na') }}</option>
+                                <option value="Baixo">{{ __('projects/partials.stakeholder.options.low') }}</option>
+                                <option value="Médio">{{ __('projects/partials.stakeholder.options.medium') }}</option>
+                                <option value="Alto">{{ __('projects/partials.stakeholder.options.high') }}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="stakeholder_interest" class="form-label">Interesse</label>
+                            <label for="stakeholder_interest" class="form-label">{{ __('projects/partials.stakeholder.interest') }}</label>
                             <select name="stakeholder_interest" class="form-select">
-                                <option value="">N/D</option>
-                                <option value="Baixo">Baixo</option>
-                                <option value="Médio">Médio</option>
-                                <option value="Alto">Alto</option>
+                                <option value="">{{ __('projects/partials.stakeholder.options.na') }}</option>
+                                <option value="Baixo">{{ __('projects/partials.stakeholder.options.low') }}</option>
+                                <option value="Médio">{{ __('projects/partials.stakeholder.options.medium') }}</option>
+                                <option value="Alto">{{ __('projects/partials.stakeholder.options.high') }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="mt-3">
-                        <label for="stakeholder_strategy" class="form-label">Estratégia</label>
+                        <label for="stakeholder_strategy" class="form-label">{{ __('projects/partials.stakeholder.strategy') }}</label>
                         <textarea name="stakeholder_strategy" class="form-control" rows="3"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Submeter</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('projects/partials.stakeholder.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('projects/partials.stakeholder.submit') }}</button>
                 </div>
             </form>
         </div>
@@ -77,53 +76,53 @@
                 <input type="hidden" name="contact_id" id="edit_contact_id">
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Editar Stakeholder</h5>
+                    <h5 class="modal-title" id="editModalLabel">{{ __('projects/partials.stakeholder.edit_title') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
                     <div class="mb-3">
-                        <label class="form-label">Stakeholder (Nome)</label>
+                        <label class="form-label">{{ __('projects/partials.stakeholder.name_readonly_label') }}</label>
                         <input type="text" id="edit_contact_name" class="form-control" readonly>
                     </div>
 
                     <div class="mb-3">
-                        <label for="edit_stakeholder_responsibility" class="form-label">Responsabilidades</label>
+                        <label for="edit_stakeholder_responsibility" class="form-label">{{ __('projects/partials.stakeholder.responsibilities') }}</label>
                         <textarea name="stakeholder_responsibility" id="edit_stakeholder_responsibility" class="form-control" rows="3"></textarea>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="edit_stakeholder_power" class="form-label">Poder</label>
+                            <label for="edit_stakeholder_power" class="form-label">{{ __('projects/partials.stakeholder.power') }}</label>
                             <select name="stakeholder_power" id="edit_stakeholder_power" class="form-select">
-                                <option value="">N/D</option>
-                                <option value="Baixo">Baixo</option>
-                                <option value="Médio">Médio</option>
-                                <option value="Alto">Alto</option>
+                                <option value="">{{ __('projects/partials.stakeholder.options.na') }}</option>
+                                <option value="Baixo">{{ __('projects/partials.stakeholder.options.low') }}</option>
+                                <option value="Médio">{{ __('projects/partials.stakeholder.options.medium') }}</option>
+                                <option value="Alto">{{ __('projects/partials.stakeholder.options.high') }}</option>
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label for="edit_stakeholder_interest" class="form-label">Interesse</label>
+                            <label for="edit_stakeholder_interest" class="form-label">{{ __('projects/partials.stakeholder.interest') }}</label>
                             <select name="stakeholder_interest" id="edit_stakeholder_interest" class="form-select">
-                                <option value="">N/D</option>
-                                <option value="Baixo">Baixo</option>
-                                <option value="Médio">Médio</option>
-                                <option value="Alto">Alto</option>
+                                <option value="">{{ __('projects/partials.stakeholder.options.na') }}</option>
+                                <option value="Baixo">{{ __('projects/partials.stakeholder.options.low') }}</option>
+                                <option value="Médio">{{ __('projects/partials.stakeholder.options.medium') }}</option>
+                                <option value="Alto">{{ __('projects/partials.stakeholder.options.high') }}</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="mt-3">
-                        <label for="edit_stakeholder_strategy" class="form-label">Estratégia</label>
+                        <label for="edit_stakeholder_strategy" class="form-label">{{ __('projects/partials.stakeholder.strategy') }}</label>
                         <textarea name="stakeholder_strategy" id="edit_stakeholder_strategy" class="form-control" rows="3"></textarea>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger me-auto" id="deleteStakeholderBtn">Deletar Stakeholder</button>
+                    <button type="button" class="btn btn-danger me-auto" id="deleteStakeholderBtn">{{ __('projects/partials.stakeholder.delete_btn') }}</button>
 
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Submeter</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('projects/partials.stakeholder.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('projects/partials.stakeholder.submit') }}</button>
                 </div>
             </form>
 

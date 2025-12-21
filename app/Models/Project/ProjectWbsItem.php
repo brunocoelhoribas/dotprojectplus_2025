@@ -22,7 +22,9 @@ class ProjectWbsItem extends Model {
         'sort_order',
         'is_leaf',
         'identation',
-        'parent_id'
+        'parent_id',
+        'name',
+        'indentation'
     ];
 
     protected function level(): Attribute {

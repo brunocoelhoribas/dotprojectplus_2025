@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-
+document.addEventListener('DOMContentLoaded', function() {
 
     const editModalEl = document.getElementById('editStakeholderModal');
     let editModalInstance = null;

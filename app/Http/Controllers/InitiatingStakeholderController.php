@@ -15,7 +15,8 @@ class InitiatingStakeholderController extends Controller {
 
         InitiatingStakeholder::create($validatedData);
 
-        return redirect()->back()->with('success', 'Stakeholder adicionado com sucesso.');
+        // ALTERADO: Mensagem traduzida
+        return redirect()->back()->with('success', __('initiating/messages.stakeholder.created'));
     }
 
     public function update(Request $request, InitiatingStakeholder $stakeholder): RedirectResponse {
@@ -23,13 +24,13 @@ class InitiatingStakeholderController extends Controller {
 
         $stakeholder->update($validatedData);
 
-        return redirect()->back()->with('success', 'Stakeholder atualizado com sucesso.');
+        return redirect()->back()->with('success', __('initiating/messages.stakeholder.updated'));
     }
 
     public function destroy(InitiatingStakeholder $stakeholder): RedirectResponse {
         $stakeholder->delete();
 
-        return redirect()->back()->with('success', 'Stakeholder excluído com sucesso.');
+        return redirect()->back()->with('success', __('initiating/messages.stakeholder.deleted'));
     }
 
     public function generatePDF(Initiating $initiating): Response {

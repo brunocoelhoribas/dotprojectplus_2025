@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InitiatingController;
 use App\Http\Controllers\InitiatingStakeholderController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::get('/', static function () {
 Route::get('login', [LoginController::class, 'create'])->name('login');
 Route::post('login', [LoginController::class, 'store']);
 Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+Route::get('lang/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', static function () {
@@ -59,6 +61,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('minutes/{minute}', [PlanningController::class, 'updateMinute'])->name('minutes.update');
         Route::delete('minutes/{minute}', [PlanningController::class, 'destroyMinute'])->name('minutes.destroy');
         Route::post('dependencies', [PlanningController::class, 'storeDependency'])->name('dependencies.store');
+
+        Route::get('planning/tab/{tab}', [PlanningController::class, 'loadTabContent'])
+            ->name('planning.tab');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])
