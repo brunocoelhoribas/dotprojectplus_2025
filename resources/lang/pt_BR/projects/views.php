@@ -31,7 +31,10 @@ return [
             'update_btn' => 'Atualizar status do projeto',
         ],
     ],
-
+    'edit' => [
+        'page_title' => 'Editar Projeto: :name',
+        'title' => 'Editar Projeto',
+    ],
     'form' => [
         'create_title' => 'Criar Novo Projeto',
         'edit_title' => 'Editar Projeto',

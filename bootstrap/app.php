@@ -16,9 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
             SetLocale::class,
         ]);
     })
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-    })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

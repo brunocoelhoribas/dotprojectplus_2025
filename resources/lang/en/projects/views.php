@@ -32,6 +32,10 @@ return [
         ],
     ],
 
+    'edit' => [
+        'page_title' => 'Edit Project: :name',
+        'title' => 'Edit Project',
+    ],
     'form' => [
         'create_title' => 'Create New Project',
         'edit_title' => 'Edit Project',
