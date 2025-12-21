@@ -4,7 +4,49 @@ return [
     'activities' => [
         'sequencing' => 'Sequenciar Atividades',
         'training' => 'Treinamento',
-        'minutes' => 'Minutos',
+        'minutes' => 'Atas/Minutas', // Ajustei "Minutos" (tempo) para "Atas" (reunião) se for o contexto
+
+        // Novas chaves para a tabela
+        'table' => [
+            'wbs' => 'Atividade / EAP',
+            'start' => 'Início',
+            'end' => 'Fim',
+            'duration' => 'Duração',
+            'resources' => 'Recursos',
+            'actions' => 'Ações',
+        ],
+        'menu' => [
+            'new_activity' => 'Nova Atividade',
+            'new_subitem' => 'Novo Sub-item',
+            'delete_item' => 'Excluir Item',
+        ],
+        'task' => [
+            'days' => 'dias',
+            'hours' => 'horas',
+            'status' => [
+                'completed' => 'Concluído',
+                'not_started' => 'Não Iniciada',
+            ],
+            'actions' => [
+                'edit' => 'Editar',
+                'delete' => 'Excluir',
+            ],
+            'details' => [
+                'owner' => 'Responsável:',
+                'not_defined' => 'Não definido',
+                'effort' => 'Esforço:',
+                'units' => [
+                    'person_hour' => 'Pessoas/Hora',
+                    'minutes' => 'Minutos',
+                    'days' => 'Dias',
+                    'hours' => 'Horas',
+                ],
+            ],
+        ],
+        'empty' => [
+            'message' => 'Nenhuma estrutura EAP definida.',
+            'btn' => 'Criar primeiro item da EAP',
+        ],
     ],
     'schedule' => [
         'title' => 'Confira o sequenciamento das atividades pelo gráfico de Gantt',

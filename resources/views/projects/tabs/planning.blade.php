@@ -6,7 +6,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-        <h4 class="h5 mb-0">Planejamento e Monitoramento</h4>
+        <h4 class="h5 mb-0">{{ __('projects/tabs.planning.title') }}</h4>
         <span id="tab-subtitle" class="text-muted fs-6 fw-normal"></span>
     </div>
 
@@ -17,31 +17,49 @@
     <div class="card-header bg-light border-bottom-0 p-0">
         <ul class="nav nav-tabs card-header-tabs mx-0" id="planning-tabs">
             <li class="nav-item">
-                <a class="nav-link active fw-bold" href="#" onclick="loadTab(event, 'activities')">Atividades</a>
+                <a class="nav-link active fw-bold" href="#" onclick="loadTab(event, 'activities')">
+                    {{ __('projects/tabs.planning.menu.activities') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'schedule')">Cronograma</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'schedule')">
+                    {{ __('projects/tabs.planning.menu.schedule') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'costs')">Custos</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'costs')">
+                    {{ __('projects/tabs.planning.menu.costs') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'risks')">Riscos</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'risks')">
+                    {{ __('projects/tabs.planning.menu.risks') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'quality')">Qualidade</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'quality')">
+                    {{ __('projects/tabs.planning.menu.quality') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'communication')">Comunicação</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'communication')">
+                    {{ __('projects/tabs.planning.menu.communication') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'procurement')">Aquisições</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'procurement')">
+                    {{ __('projects/tabs.planning.menu.procurement') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'stakeholders')">Stakeholders</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'stakeholders')">
+                    {{ __('projects/tabs.planning.menu.stakeholders') }}
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'plan')">Plano do projeto</a>
+                <a class="nav-link" href="#" onclick="loadTab(event, 'plan')">
+                    {{ __('projects/tabs.planning.menu.plan') }}
+                </a>
             </li>
         </ul>
     </div>
@@ -49,7 +67,7 @@
     <div class="card-body p-3 border border-top-0 bg-white position-relative" id="planning-content">
         <div id="loader" class="text-center py-5 d-none">
             <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Carregando...</span>
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
     </div>
@@ -93,7 +111,7 @@
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    container.innerHTML = '<div class="alert alert-danger">Erro ao carregar conteúdo.</div>';
+                    container.innerHTML = '<div class="alert alert-danger">{{ __('projects/tabs.planning.messages.load_error') }}</div>';
                     container.style.opacity = '1';
                 });
         }
@@ -124,7 +142,8 @@
                     if (response.ok) {
                         loadTab(null, 'activities');
                     } else {
-                        alert('Erro ao mover o item.');
+                        // Tradução inserida aqui
+                        alert('{{ __('projects/tabs.planning.messages.move_error') }}');
                         container.style.opacity = '1';
                     }
                 })

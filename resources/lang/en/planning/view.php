@@ -2,9 +2,50 @@
 
 return [
     'activities' => [
-        'sequence' => 'Sequence',
+        'sequencing' => 'Sequence Activities',
         'training' => 'Training',
         'minutes' => 'Minutes',
+
+        'table' => [
+            'wbs' => 'Activity / WBS',
+            'start' => 'Start',
+            'end' => 'End',
+            'duration' => 'Duration',
+            'resources' => 'Resources',
+            'actions' => 'Actions',
+        ],
+        'menu' => [
+            'new_activity' => 'New Activity',
+            'new_subitem' => 'New Sub-item',
+            'delete_item' => 'Delete Item',
+        ],
+        'task' => [
+            'days' => 'days',
+            'hours' => 'hours',
+            'status' => [
+                'completed' => 'Completed',
+                'not_started' => 'Not Started',
+            ],
+            'actions' => [
+                'edit' => 'Edit',
+                'delete' => 'Delete',
+            ],
+            'details' => [
+                'owner' => 'Owner:',
+                'not_defined' => 'Not defined',
+                'effort' => 'Effort:',
+                'units' => [
+                    'person_hour' => 'Person/Hour',
+                    'minutes' => 'Minutes',
+                    'days' => 'Days',
+                    'hours' => 'Hours',
+                ],
+            ],
+        ],
+        'empty' => [
+            'message' => 'No WBS structure defined.',
+            'btn' => 'Create first WBS item',
+        ],
     ],
     'schedule' => [
         'title' => 'Check the sequence of activities using the Gantt chart',

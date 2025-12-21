@@ -520,7 +520,7 @@ class PlanningController extends Controller {
 
         $actions = '
             <div class="btn-group">
-                <a href="' . route('projects.sequencing.index', $project) . '" class="btn btn-outline-secondary btn-sm">' .  __('planning/view.activities.sequence') . '</a>
+                <a href="' . route('projects.sequencing.index', $project) . '" class="btn btn-outline-secondary btn-sm">' .  __('planning/view.activities.sequencing') . '</a>
                 <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#trainingModal">' .  __('planning/view.activities.training') . '</button>
                 <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#minutesModal">' .  __('planning/view.activities.minutes') . '</button>
             </div>';

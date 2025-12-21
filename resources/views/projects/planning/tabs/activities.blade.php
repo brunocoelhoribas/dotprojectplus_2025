@@ -6,12 +6,12 @@
     <table class="table table-hover table-bordered table-sm align-middle mb-0">
         <thead class="table-light">
         <tr>
-            <th style="width: 50%">Atividade / EAP</th>
-            <th>Início</th>
-            <th>Fim</th>
-            <th>Duração</th>
-            <th>Recursos</th>
-            <th style="width: 100px" class="text-center">Ações</th>
+            <th style="width: 50%">{{ __('planning/view.activities.table.wbs') }}</th>
+            <th>{{ __('planning/view.activities.table.start') }}</th>
+            <th>{{ __('planning/view.activities.table.end') }}</th>
+            <th>{{ __('planning/view.activities.table.duration') }}</th>
+            <th>{{ __('planning/view.activities.table.resources') }}</th>
+            <th style="width: 100px" class="text-center">{{ __('planning/view.activities.table.actions') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -66,11 +66,23 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                             @if($item->is_leaf)
-                                <li><a class="dropdown-item" href="#" onclick="openNewActivityModal({{ $item->id }})"><i class="bi bi-plus-lg me-2 text-success"></i> Nova Atividade</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="openNewActivityModal({{ $item->id }})">
+                                        <i class="bi bi-plus-lg me-2 text-success"></i> {{ __('planning/view.activities.menu.new_activity') }}
+                                    </a>
+                                </li>
                             @endif
-                            <li><a class="dropdown-item" href="#" onclick="openNewWbsItemModal({{ $item->id }})"><i class="bi bi-folder-plus me-2 text-primary"></i> Novo Sub-item</a></li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="openNewWbsItemModal({{ $item->id }})">
+                                    <i class="bi bi-folder-plus me-2 text-primary"></i> {{ __('planning/view.activities.menu.new_subitem') }}
+                                </a>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#" onclick="openDeleteWbsModal({{ $item->id }})"><i class="bi bi-trash me-2"></i> Excluir Item</a></li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="#" onclick="openDeleteWbsModal({{ $item->id }})">
+                                    <i class="bi bi-trash me-2"></i> {{ __('planning/view.activities.menu.delete_item') }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </td>
@@ -111,16 +123,27 @@
                     </td>
                     <td class="text-center small">{{ $task->task_start_date ? $task->task_start_date->format('d/m/Y') : '-' }}</td>
                     <td class="text-center small">{{ $task->task_end_date ? $task->task_end_date->format('d/m/Y') : '-' }}</td>
-                    <td class="text-center small">{{ $task->task_duration }} {{ $task->task_duration_type === 24 ? 'dias' : 'horas' }}</td>
+                    <td class="text-center small">
+                        {{ $task->task_duration }}
+                        {{ $task->task_duration_type === 24 ? __('planning/view.activities.task.days') : __('planning/view.activities.task.hours') }}
+                    </td>
                     <td class="text-center">
-                        @if($task->task_percent_complete === 100) <span class="badge bg-success">Concluído</span>
-                        @elseif($task->task_percent_complete > 0) <span class="badge bg-warning text-dark">{{ $task->task_percent_complete }}%</span>
-                        @else <span class="badge bg-secondary">Não Iniciada</span> @endif
+                        @if($task->task_percent_complete === 100)
+                            <span class="badge bg-success">{{ __('planning/view.activities.task.status.completed') }}</span>
+                        @elseif($task->task_percent_complete > 0)
+                            <span class="badge bg-warning text-dark">{{ $task->task_percent_complete }}%</span>
+                        @else
+                            <span class="badge bg-secondary">{{ __('planning/view.activities.task.status.not_started') }}</span>
+                        @endif
                     </td>
                     <td class="text-center align-middle">
                         <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-sm btn-outline-primary border-0 p-1" title="Editar" onclick="openEditActivityModal({{ $task }})"><i class="bi bi-pencil-square fs-6"></i></button>
-                            <button class="btn btn-sm btn-outline-danger border-0 p-1" title="Excluir" onclick="deleteActivity({{ $task->task_id }})"><i class="bi bi-trash fs-6"></i></button>
+                            <button class="btn btn-sm btn-outline-primary border-0 p-1" title="{{ __('planning/view.activities.task.actions.edit') }}" onclick="openEditActivityModal({{ $task }})">
+                                <i class="bi bi-pencil-square fs-6"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger border-0 p-1" title="{{ __('planning/view.activities.task.actions.delete') }}" onclick="deleteActivity({{ $task->task_id }})">
+                                <i class="bi bi-trash fs-6"></i>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -128,13 +151,19 @@
                     <td colspan="6" class="p-0 border-0">
                         <div class="p-3 border-bottom bg-light-subtle" style="margin-left: {{ $padding + 60 }}px; border-left: 3px solid #dee2e6;">
                             <div class="row small">
-                                <div class="col-md-6"><strong>Responsável:</strong> {{ $task->owner->contact->full_name ?? 'Não definido' }}</div>
                                 <div class="col-md-6">
-                                    <strong>Esforço:</strong>
+                                    <strong>{{ __('planning/view.activities.task.details.owner') }}</strong>
+                                    {{ $task->owner->contact->full_name ?? __('planning/view.activities.task.details.not_defined') }}
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>{{ __('planning/view.activities.task.details.effort') }}</strong>
                                     @if($task->estimation)
                                         {{ $task->estimation->effort }}
                                         @switch($task->estimation->effort_unit)
-                                            @case(0) Pessoas/Hora @break @case(1) Minutos @break @case(2) Dias @break @default Horas
+                                            @case(0) {{ __('planning/view.activities.task.details.units.person_hour') }} @break
+                                            @case(1) {{ __('planning/view.activities.task.details.units.minutes') }} @break
+                                            @case(2) {{ __('planning/view.activities.task.details.units.days') }} @break
+                                            @default {{ __('planning/view.activities.task.details.units.hours') }}
                                         @endswitch
                                     @else - @endif
                                 </div>
@@ -146,8 +175,10 @@
         @empty
             <tr>
                 <td colspan="6" class="text-center py-5 text-muted">
-                    <div class="mb-3">Nenhuma estrutura EAP definida.</div>
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createWbsModal">Criar primeiro item da EAP</button>
+                    <div class="mb-3">{{ __('planning/view.activities.empty.message') }}</div>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createWbsModal">
+                        {{ __('planning/view.activities.empty.btn') }}
+                    </button>
                 </td>
             </tr>
         @endforelse
