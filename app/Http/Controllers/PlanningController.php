@@ -6,10 +6,12 @@ use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
 use App\Models\Project\Project;
 use App\Models\Project\ProjectMinute;
+use App\Models\Project\ProjectRisk;
 use App\Models\Project\ProjectTraining;
 use App\Models\Project\ProjectWbsItem;
 use App\Models\Project\Task\Task;
 use App\Models\Project\Task\TasksWorkpackage;
+use App\Models\User\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -78,7 +80,7 @@ class PlanningController extends Controller {
             $parentItem->update(['is_leaf' => 0]);
         });
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -117,7 +119,7 @@ class PlanningController extends Controller {
             ]);
         });
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -135,7 +137,7 @@ class PlanningController extends Controller {
 
         $task->update($validated);
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -237,7 +239,7 @@ class PlanningController extends Controller {
             }
         });
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -281,7 +283,7 @@ class PlanningController extends Controller {
             $targetTask->update(['task_order' => $order1]);
         }
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -313,7 +315,7 @@ class PlanningController extends Controller {
             ProjectWbsItem::whereIn('id', $idsToDelete)->delete();
         });
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -329,7 +331,7 @@ class PlanningController extends Controller {
             $task->delete();
         });
 
-        return redirect()->route('projects.show', [
+        return redirect()->route('projects.planning.tab', [
             'project' => $project->project_id,
             'tab' => 'planning',
             'subtab' => 'activities'
@@ -499,7 +501,12 @@ class PlanningController extends Controller {
             'activities' => $this->handleActivitiesTab($project),
             'schedule' => $this->handleScheduleTab($request, $project),
             'costs' => $this->renderSimpleTab('costs', $project),
-            'risks' => $this->renderSimpleTab('risks', $project),
+            'risks' => $this->handleRisksTab($project),
+            'quality' => $this->renderSimpleTab('quality', $project),
+            'communication' => $this->renderSimpleTab('communication', $project),
+            'procurement' => $this->renderSimpleTab('procurement', $project),
+            'stakeholders' => $this->renderSimpleTab('stakeholders', $project),
+            'plan' => $this->renderSimpleTab('plan', $project),
             default => $this->renderUnderConstruction(),
         };
     }
@@ -520,9 +527,9 @@ class PlanningController extends Controller {
 
         $actions = '
             <div class="btn-group">
-                <a href="' . route('projects.sequencing.index', $project) . '" class="btn btn-outline-secondary btn-sm">' .  __('planning/view.activities.sequencing') . '</a>
-                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#trainingModal">' .  __('planning/view.activities.training') . '</button>
-                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#minutesModal">' .  __('planning/view.activities.minutes') . '</button>
+                <a href="' . route('projects.sequencing.index', $project) . '" class="btn btn-outline-secondary btn-sm">' . __('planning/view.activities.sequencing') . '</a>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#trainingModal">' . __('planning/view.activities.training') . '</button>
+                <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#minutesModal">' . __('planning/view.activities.minutes') . '</button>
             </div>';
 
         return response()->json(['html' => $html, 'actions' => $actions]);
@@ -553,6 +560,40 @@ class PlanningController extends Controller {
         return response()->json(['html' => $html, 'actions' => '']);
     }
 
+    /**
+     * @throws Throwable
+     */
+    private function handleRisksTab(Project $project): JsonResponse {
+        $risks = ProjectRisk::where('risk_project', $project->project_id)
+            ->orderBy('risk_id', 'desc')
+            ->get();
+
+        $activeRisks = $risks->filter(fn($r) => (int)$r->risk_active === 1);
+        $inactiveRisks = $risks->filter(fn($r) => (int)$r->risk_active === 0);
+
+        $users = User::join('dotp_contacts', 'dotp_users.user_contact', '=', 'dotp_contacts.contact_id')
+            ->orderBy('contact_first_name')
+            ->select('user_id', DB::raw("CONCAT(contact_first_name, ' ', contact_last_name) as full_name"))
+            ->pluck('full_name', 'user_id');
+
+        $tasks = Task::where('task_project', $project->project_id)
+            ->orderBy('task_start_date')
+            ->pluck('task_name', 'task_id');
+
+        $html = view('projects.planning.tabs.risks.risks', [
+            'project' => $project,
+            'activeRisks' => $activeRisks,
+            'inactiveRisks' => $inactiveRisks,
+            'users' => $users,
+            'tasks' => $tasks
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    /**
+     * @throws Throwable
+     */
     private function renderSimpleTab(string $viewName, Project $project): JsonResponse {
         $html = view("projects.planning.tabs.{$viewName}", ['project' => $project])->render();
         return response()->json(['html' => $html, 'actions' => '']);

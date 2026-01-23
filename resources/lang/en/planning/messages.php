@@ -22,4 +22,8 @@ return [
         'updated' => 'Minute updated successfully.',
         'deleted' => 'Minute deleted successfully.',
     ],
+    'risk' => [
+        'created' => 'Risk created successfully.',
+        'updated' => 'Risk updated successfully.',
+    ],
 ];

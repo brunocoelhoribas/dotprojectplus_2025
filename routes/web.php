@@ -7,6 +7,7 @@ use App\Http\Controllers\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectRiskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('planning/tab/{tab}', [PlanningController::class, 'loadTabContent'])
             ->name('planning.tab');
+
+        Route::post('/risks', [ProjectRiskController::class, 'store'])->name('risks.store');
+        Route::put('/risks/{risk}', [ProjectRiskController::class, 'update'])->name('risks.update');
+        Route::get('/risks/plan', [ProjectRiskController::class, 'editPlan'])->name('risks.plan.edit');
+        Route::post('/risks/plan', [ProjectRiskController::class, 'updatePlan'])->name('risks.plan.update');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])

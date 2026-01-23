@@ -22,4 +22,8 @@ return [
         'updated' => 'Ata atualizada com sucesso.',
         'deleted' => 'Ata excluída com sucesso.',
     ],
+    'risk' => [
+        'created' => 'Risco criado com sucesso.',
+        'updated' => 'Risco atualizado com sucesso.',
+    ],
 ];
