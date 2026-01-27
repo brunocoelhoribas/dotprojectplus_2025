@@ -14,19 +14,52 @@
 
                     <div class="collapse navbar-collapse" id="main-nav">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Empresas</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Empresas</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('projects.index') }}">Projetos</a>
+                            </li>
                         </ul>
 
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+
+                            <li class="nav-item dropdown me-3">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-globe me-1"></i>
+                                    {{ strtoupper(app()->getLocale()) === 'PT_BR' ? 'PT' : strtoupper(app()->getLocale()) }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow">
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                           href="{{ route('lang.switch', 'pt_BR') }}">
+                                            Português <span>🇧🇷</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                           href="{{ route('lang.switch', 'en') }}">
+                                            English <span>🇺🇸</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex justify-content-between align-items-center"
+                                           href="{{ route('lang.switch', 'es') }}">
+                                            Español <span>🇪🇸</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown border-start ps-3 border-secondary">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-bs-toggle="dropdown">
                                     Admin, Sempre
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="#">Meus Dados</a></li>
-                                    <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        {{-- Formulário de Logout --}}
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="dropdown-item">Sair</button>
