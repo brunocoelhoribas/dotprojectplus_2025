@@ -3,8 +3,9 @@
         <button class="btn btn-sm btn-outline-secondary" onclick="openManagementPlanModal()">
             {{ __('planning/view.risks.actions.management_plan') }}
         </button>
-        <button
-            class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.checklist_analysis') }}</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="openChecklistModal()">
+            {{ __('planning/view.risks.actions.checklist_analysis') }}
+        </button>
         <button class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.watch_list') }}</button>
         <button
             class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.short_term_response') }}</button>
@@ -542,6 +543,7 @@
     </div>
 </div>
 
+<div id="checklistModalContainer"></div>
 
 <script>
     let mapLevels = @json(__('planning/view.risks.levels'), JSON_THROW_ON_ERROR);
@@ -740,5 +742,34 @@
         if (dateStr.length > 10) dateStr = dateStr.substring(0, 10);
         const parts = dateStr.split('-');
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    function openChecklistModal() {
+        const url = "{{ route('projects.risks.checklist', $project->project_id) }}";
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                const container = document.getElementById('checklistModalContainer');
+                container.innerHTML = html;
+
+                let modalEl = container.querySelector('.modal');
+                if (!modalEl) {
+                    container.innerHTML = `
+                    <div class="modal fade" id="dynamicChecklistModal" tabindex="-1">
+                        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                ${html}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    modalEl = document.getElementById('dynamicChecklistModal');
+                }
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            })
+            .catch(error => console.error('Erro ao carregar checklist:', error));
     }
 </script>

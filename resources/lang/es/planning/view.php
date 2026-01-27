@@ -145,6 +145,26 @@ return [
             'active' => 'Activo',
             'yes' => 'Sí',
             'no' => 'No',
-        ]
+        ],
+        'checklist' => [
+            'title' => 'Análisis de Checklist',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descripción',
+                'exposure_factor' => 'Factor de exposición',
+                'strategy' => 'Estrategia',
+            ],
+            'empty' => 'No hay riesgos disponibles de otros proyectos para importar.',
+            'buttons' => [
+                'cancel' => 'Cancelar',
+                'confirm' => 'Confirmar riesgos identificados',
+            ],
+            'messages' => [
+                'empty_selection' => 'Ningún elemento seleccionado.',
+                'success_imported' => ':count riesgos importados con éxito.',
+                'imported_note' => 'Importado del proyecto #:id vía Checklist.',
+            ]
+        ],
     ],
 ];

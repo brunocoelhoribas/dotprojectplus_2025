@@ -70,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/risks/{risk}', [ProjectRiskController::class, 'update'])->name('risks.update');
         Route::get('/risks/plan', [ProjectRiskController::class, 'editPlan'])->name('risks.plan.edit');
         Route::post('/risks/plan', [ProjectRiskController::class, 'updatePlan'])->name('risks.plan.update');
+        Route::get('/risks/checklist', [ProjectRiskController::class, 'checklist'])->name('risks.checklist');
+        Route::post('/risks/checklist/import', [ProjectRiskController::class, 'importChecklist'])->name('risks.checklist.import');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])

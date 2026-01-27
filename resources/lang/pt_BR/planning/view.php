@@ -173,6 +173,26 @@ return [
         ],
         'messages' => [
             'plan_updated' => 'Plano de gerenciamento atualizado com sucesso.',
-        ]
+        ],
+        'checklist' => [
+            'title' => 'Análise de checklist',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descrição',
+                'exposure_factor' => 'Fator de exposição',
+                'strategy' => 'Estratégia',
+            ],
+            'empty' => 'Nenhum risco disponível em outros projetos para importação.',
+            'buttons' => [
+                'cancel' => 'Cancelar',
+                'confirm' => 'Confirmar riscos identificados',
+            ],
+            'messages' => [
+                'empty_selection' => 'Nenhum item selecionado.',
+                'success_imported' => ':count riscos importados com sucesso.',
+                'imported_note' => 'Importado do projeto #:id via Checklist.',
+            ]
+        ],
     ],
 ];

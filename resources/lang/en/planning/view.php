@@ -145,6 +145,26 @@ return [
             'active' => 'Active',
             'yes' => 'Yes',
             'no' => 'No',
-        ]
+        ],
+        'checklist' => [
+            'title' => 'Checklist Analysis',
+            'table' => [
+                'id' => 'ID',
+                'title' => 'Title',
+                'description' => 'Description',
+                'exposure_factor' => 'Exposure Factor',
+                'strategy' => 'Strategy',
+            ],
+            'empty' => 'No risks available from other projects for import.',
+            'buttons' => [
+                'cancel' => 'Cancel',
+                'confirm' => 'Confirm identified risks',
+            ],
+            'messages' => [
+                'empty_selection' => 'No item selected.',
+                'success_imported' => ':count risks imported successfully.',
+                'imported_note' => 'Imported from project #:id via Checklist.',
+            ]
+        ],
     ],
 ];

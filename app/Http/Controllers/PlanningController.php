@@ -564,8 +564,8 @@ class PlanningController extends Controller {
      * @throws Throwable
      */
     private function handleRisksTab(Project $project): JsonResponse {
-        $risks = ProjectRisk::where('risk_project', $project->project_id)
-            ->orderBy('risk_id', 'desc')
+        $risks = ProjectRisk::where('risk_project', '<>', null)
+            ->orderBy('risk_id', 'asc')
             ->get();
 
         $activeRisks = $risks->filter(fn($r) => (int)$r->risk_active === 1);

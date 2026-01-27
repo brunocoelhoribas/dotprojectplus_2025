@@ -99,4 +99,45 @@ class ProjectRiskController extends Controller {
 
         return $validated;
     }
+
+    public function checklist(Project $project) {
+        $templates = ProjectRisk::where('risk_project', '!=', $project->project_id)
+            ->where('risk_active', 1)
+            ->orderBy('risk_name')
+            ->get();
+
+        return view('projects.planning.tabs.risks.actions.checklist', [
+            'project' => $project,
+            'templates' => $templates
+        ]);
+    }
+
+    public function importChecklist(Request $request, Project $project): RedirectResponse {
+        $selectedIds = $request->input('selected_risks', []);
+
+        if (empty($selectedIds)) {
+            return redirect()->route('projects.show', [
+                'project' => $project->project_id, 'tab' => 'planning', 'subtab' => 'risks'
+            ])->with('error', __('planning/view.risks.checklist.messages.empty_selection'));
+        }
+
+        $sourceRisks = ProjectRisk::whereIn('risk_id', $selectedIds)->get();
+
+        foreach ($sourceRisks as $source) {
+            $newRisk = $source->replicate();
+
+            $newRisk->risk_project = $project->project_id;
+            $newRisk->risk_task = 0;
+            $newRisk->risk_responsible = 0;
+            $newRisk->risk_status = 0;
+            $newRisk->risk_active = 0;
+
+            $newRisk->risk_notes = __('planning/view.risks.checklist.messages.imported_note', ['id' => $source->risk_project]);
+            $newRisk->save();
+        }
+
+        return redirect()->route('projects.show', [
+            'project' => $project->project_id, 'tab' => 'planning', 'subtab' => 'risks'
+        ])->with('success', __('planning/view.risks.checklist.messages.success_imported', ['count' => count($sourceRisks)]));
+    }
 }
