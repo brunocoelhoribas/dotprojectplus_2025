@@ -9,8 +9,9 @@
         <button class="btn btn-sm btn-outline-secondary" onclick="openWatchListModal()">
             {{ __('planning/view.risks.actions.watch_list') }}
         </button>
-        <button
-            class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.short_term_response') }}</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="openShortTermModal()">
+            {{ __('planning/view.risks.actions.short_term_response') }}
+        </button>
         <button
             class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.lessons_learned') }}</button>
         <button class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.response_list') }}</button>
@@ -547,6 +548,7 @@
 
 <div id="checklistModalContainer"></div>
 <div id="watchListModalContainer"></div>
+<div id="shortTermModalContainer"></div>
 
 <script>
     let mapLevels = @json(__('planning/view.risks.levels'), JSON_THROW_ON_ERROR);
@@ -803,5 +805,34 @@
                 modal.show();
             })
             .catch(error => console.error('Erro ao carregar Watch List:', error));
+    }
+
+    function openShortTermModal() {
+        const url = "{{ route('projects.risks.short_term', $project->project_id) }}";
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                const container = document.getElementById('shortTermModalContainer');
+                container.innerHTML = html;
+
+                let modalEl = container.querySelector('.modal');
+                if (!modalEl) {
+                    container.innerHTML = `
+                    <div class="modal fade" id="dynamicShortTermModal" tabindex="-1">
+                        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                ${html}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    modalEl = document.getElementById('dynamicShortTermModal');
+                }
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            })
+            .catch(error => console.error('Erro ao carregar Short Term List:', error));
     }
 </script>

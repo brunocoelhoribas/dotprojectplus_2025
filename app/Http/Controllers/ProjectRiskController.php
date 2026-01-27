@@ -142,21 +142,43 @@ class ProjectRiskController extends Controller {
     }
 
     public function watchList(Project $project) {
-        $risks = ProjectRisk::where('risk_project', $project->project_id)
+        $risks = ProjectRisk::where('risk_project', '<>', null)
             ->orderBy('risk_id')
             ->get();
 
         $activeRisks = $risks->filter(function ($risk) {
             $score = $risk->risk_probability * $risk->risk_impact;
-            return $risk->risk_active === 0 && $score < 6;
+            return $risk->risk_active === 1 && $score < 6;
         });
 
         $inactiveRisks = $risks->filter(function ($risk) {
             $score = $risk->risk_probability * $risk->risk_impact;
-            return $risk->risk_active !== 0 && $score < 6;
+            return $risk->risk_active === 0 && $score < 6;
         });
 
         return view('projects.planning.tabs.risks.actions.watch_list', [
+            'project' => $project,
+            'activeRisks' => $activeRisks,
+            'inactiveRisks' => $inactiveRisks
+        ]);
+    }
+
+    public function shortTermList(Project $project) {
+        $risks = ProjectRisk::where('risk_project', '<>', null)
+            ->orderBy('risk_id')
+            ->get();
+
+        $activeRisks = $risks->filter(function ($risk) {
+            $score = $risk->risk_probability * $risk->risk_impact;
+            return $risk->risk_active === 1 && $score >= 6;
+        });
+
+        $inactiveRisks = $risks->filter(function ($risk) {
+            $score = $risk->risk_probability * $risk->risk_impact;
+            return $risk->risk_active === 0 && $score >= 6;
+        });
+
+        return view('projects.planning.tabs.risks.actions.short_term', [
             'project' => $project,
             'activeRisks' => $activeRisks,
             'inactiveRisks' => $inactiveRisks

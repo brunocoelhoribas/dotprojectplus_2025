@@ -209,5 +209,21 @@ return [
                 'status' => 'Status',
             ]
         ],
+        'short_term' => [
+            'title' => 'Riscos - Lista resposta a curto prazo',
+            'active_risks' => 'Riscos ativos',
+            'inactive_risks' => 'Riscos inativos',
+            'empty' => 'Nenhum risco de alta prioridade encontrado.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descrição',
+                'probability' => 'Probabilidade',
+                'impact' => 'Impacto',
+                'exposure_factor' => 'Fator de exposição',
+                'status' => 'Status',
+            ],
+            'close' => 'Fechar'
+        ],
     ],
 ];

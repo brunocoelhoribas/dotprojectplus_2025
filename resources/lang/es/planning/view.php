@@ -182,5 +182,21 @@ return [
             ],
             'close' => 'Cerrar'
         ],
+        'short_term' => [
+            'title' => 'Lista de Respuesta a Corto Plazo',
+            'active_risks' => 'Riesgos activos',
+            'inactive_risks' => 'Riesgos inactivos',
+            'empty' => 'No se encontraron riesgos de alta prioridad.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descripción',
+                'probability' => 'Probabilidad',
+                'impact' => 'Impacto',
+                'exposure_factor' => 'Factor de exposición',
+                'status' => 'Estado',
+            ],
+            'close' => 'Cerrar'
+        ],
     ],
 ];

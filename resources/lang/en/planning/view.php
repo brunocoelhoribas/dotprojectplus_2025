@@ -182,5 +182,21 @@ return [
             ],
             'close' => 'Close'
         ],
+        'short_term' => [
+            'title' => 'Short-term Response List',
+            'active_risks' => 'Active Risks',
+            'inactive_risks' => 'Inactive Risks',
+            'empty' => 'No high priority risks found.',
+            'table' => [
+                'id' => 'ID',
+                'title' => 'Title',
+                'description' => 'Description',
+                'probability' => 'Probability',
+                'impact' => 'Impact',
+                'exposure_factor' => 'Exposure Factor',
+                'status' => 'Status',
+            ],
+            'close' => 'Close'
+        ],
     ],
 ];
