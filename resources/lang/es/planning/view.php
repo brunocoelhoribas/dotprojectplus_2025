@@ -146,6 +146,33 @@ return [
             'yes' => 'Sí',
             'no' => 'No',
         ],
+        'plan' => [
+            'title' => 'Plan de Gestión de Riesgos',
+            'definitions_title' => 'Definiciones de Probabilidad y Niveles de Impacto',
+            'probability' => 'Probabilidad',
+            'impact' => 'Impacto',
+            'matrix_title' => 'Matriz de Probabilidad e Impacto',
+            'monitoring_title' => 'Definiciones para el Monitoreo y Control de Riesgos',
+            'protocol' => 'Protocolo para la aplicación de la reserva de contingencia:',
+            'frequency' => 'Frecuencia de revisión de riesgos (en días):',
+            'levels' => [
+                'super_low' => 'Muy Baja',
+                'low' => 'Baja',
+                'medium' => 'Media',
+                'high' => 'Alta',
+                'super_high' => 'Muy Alta',
+            ],
+            'matrix_headers' => [
+                'super_low' => 'Muy Bajo',
+                'low' => 'Bajo',
+                'medium' => 'Medio',
+                'high' => 'Alto',
+                'super_high' => 'Muy Alto',
+            ]
+        ],
+        'messages' => [
+            'plan_updated' => 'Plan de gestión actualizado con éxito.',
+        ],
         'checklist' => [
             'title' => 'Análisis de Checklist',
             'table' => [

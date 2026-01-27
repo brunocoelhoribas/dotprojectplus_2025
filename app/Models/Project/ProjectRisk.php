@@ -38,6 +38,10 @@ class ProjectRisk extends Model {
         'risk_is_contingency'
     ];
 
+    public const ACTIVE = 1;
+    public const INACTIVE = 0;
+    public const THRESHOLD_HIGH_PRIORITY = 6;
+
     protected $casts = [
         'risk_period_start_date' => 'date',
         'risk_period_end_date' => 'date',
@@ -121,5 +125,25 @@ class ProjectRisk extends Model {
 
     public function getStrategyKeyAttribute(): string {
         return self::STRATEGIES[(int)$this->risk_strategy] ?? '';
+    }
+
+    public function scopeActive($query) {
+        return $query->where('risk_active', self::ACTIVE);
+    }
+
+    public function scopeInactive($query) {
+        return $query->where('risk_active', self::INACTIVE);
+    }
+
+    public function scopeByProject($query, $projectId) {
+        return $query->where('risk_project', $projectId);
+    }
+
+    public function getScoreAttribute(): int {
+        return (int) $this->risk_probability * (int) $this->risk_impact;
+    }
+
+    public function isHighPriority(): bool {
+        return $this->score >= self::THRESHOLD_HIGH_PRIORITY;
     }
 }

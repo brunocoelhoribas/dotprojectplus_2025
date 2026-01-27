@@ -146,6 +146,33 @@ return [
             'yes' => 'Yes',
             'no' => 'No',
         ],
+        'plan' => [
+            'title' => 'Risk Management Plan',
+            'definitions_title' => 'Probability and Impact Level Definitions',
+            'probability' => 'Probability',
+            'impact' => 'Impact',
+            'matrix_title' => 'Probability and Impact Matrix',
+            'monitoring_title' => 'Definitions for Risk Monitoring and Control',
+            'protocol' => 'Protocol for contingency reserve application:',
+            'frequency' => 'Risk review frequency (in days):',
+            'levels' => [
+                'super_low' => 'Very Low',
+                'low' => 'Low',
+                'medium' => 'Medium',
+                'high' => 'High',
+                'super_high' => 'Very High',
+            ],
+            'matrix_headers' => [
+                'super_low' => 'Very Low',
+                'low' => 'Low',
+                'medium' => 'Medium',
+                'high' => 'High',
+                'super_high' => 'Very High',
+            ]
+        ],
+        'messages' => [
+            'plan_updated' => 'Management plan updated successfully.',
+        ],
         'checklist' => [
             'title' => 'Checklist Analysis',
             'table' => [

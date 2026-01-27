@@ -880,7 +880,6 @@
 
                 let modalEl = container.querySelector('.modal');
                 if (!modalEl) {
-                    // Usamos modal-xl para caber todas as colunas
                     container.innerHTML = `
                     <div class="modal fade" id="dynamicResponseListModal" tabindex="-1">
                         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
