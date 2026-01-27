@@ -225,5 +225,17 @@ return [
             ],
             'close' => 'Fechar'
         ],
+        'lessons_learned' => [
+            'title' => 'Riscos - Lista de lições aprendidas',
+            'active_risks' => 'Riscos ativos',
+            'inactive_risks' => 'Riscos inativos',
+            'empty' => 'Nenhuma lição aprendida registrada.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'lessons' => 'Lições Aprendidas',
+            ],
+            'close' => 'Fechar'
+        ],
     ],
 ];

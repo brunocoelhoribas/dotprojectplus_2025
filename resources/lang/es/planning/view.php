@@ -198,5 +198,17 @@ return [
             ],
             'close' => 'Cerrar'
         ],
+        'lessons_learned' => [
+            'title' => 'Lista de Lecciones Aprendidas',
+            'active_risks' => 'Riesgos activos',
+            'inactive_risks' => 'Riesgos inactivos',
+            'empty' => 'No hay lecciones aprendidas registradas.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'lessons' => 'Lecciones Aprendidas',
+            ],
+            'close' => 'Cerrar'
+        ],
     ],
 ];
