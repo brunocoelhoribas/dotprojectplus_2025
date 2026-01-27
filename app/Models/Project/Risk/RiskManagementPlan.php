@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Project;
+namespace App\Models\Project\Risk;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectRiskManagementPlan extends Model {
+class RiskManagementPlan extends Model {
     protected $table = 'dotp_risks_management_plan';
     protected $primaryKey = 'risk_plan_id';
     public $timestamps = false;

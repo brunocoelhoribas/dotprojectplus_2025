@@ -6,6 +6,7 @@ use App\Http\Controllers\InitiatingController;
 use App\Http\Controllers\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlanningController;
+use App\Http\Controllers\QualityController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectRiskController;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +77,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/risks/short-term', [ProjectRiskController::class, 'shortTermList'])->name('risks.short_term');
         Route::get('/risks/lessons-learned', [ProjectRiskController::class, 'lessonsLearnedList'])->name('risks.lessons_learned');
         Route::get('/risks/response_list', [ProjectRiskController::class, 'responseList'])->name('risks.response_list');
+
+        Route::post('/quality/plan', [QualityController::class, 'updatePlan'])->name('quality.update_plan');
+        Route::post('/quality/requirement', [QualityController::class, 'storeRequirement'])->name('quality.store_requirement');
+        Route::delete('/quality/requirement/{requirement}', [QualityController::class, 'destroyRequirement'])->name('quality.destroy_requirement');
+        Route::post('/quality/assurance', [QualityController::class, 'storeAssurance'])->name('quality.store_assurance');
+        Route::delete('/quality/assurance/{item}', [QualityController::class, 'destroyAssurance'])->name('quality.destroy_assurance');
+        Route::post('/quality/goal', [QualityController::class, 'storeGoal'])->name('quality.store_goal');
+        Route::post('/quality/goal/{goal}/question', [QualityController::class, 'storeQuestion'])->name('quality.store_question');
+        Route::post('/quality/question/{question}/metric', [QualityController::class, 'storeMetric'])->name('quality.store_metric');
+        Route::delete('/quality/goal/{goal}', [QualityController::class, 'destroyGoal'])->name('quality.destroy_goal');
+        Route::delete('/quality/question/{question}', [QualityController::class, 'destroyQuestion'])->name('quality.destroy_question');
+        Route::delete('/quality/metric/{metric}', [QualityController::class, 'destroyMetric'])->name('quality.destroy_metric');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])

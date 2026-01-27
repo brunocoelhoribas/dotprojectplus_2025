@@ -6,17 +6,18 @@ use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
 use App\Models\Project\Project;
 use App\Models\Project\ProjectMinute;
-use App\Models\Project\ProjectRisk;
 use App\Models\Project\ProjectTraining;
 use App\Models\Project\ProjectWbsItem;
+use App\Models\Project\Quality\QualityPlanning;
+use App\Models\Project\Risk\Risk;
 use App\Models\Project\Task\Task;
 use App\Models\Project\Task\TasksWorkpackage;
 use App\Models\User\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -502,7 +503,7 @@ class PlanningController extends Controller {
             'schedule' => $this->handleScheduleTab($request, $project),
             'costs' => $this->renderSimpleTab('costs', $project),
             'risks' => $this->handleRisksTab($project),
-            'quality' => $this->renderSimpleTab('quality', $project),
+            'quality' => $this->handleQualityTab($project),
             'communication' => $this->renderSimpleTab('communication', $project),
             'procurement' => $this->renderSimpleTab('procurement', $project),
             'stakeholders' => $this->renderSimpleTab('stakeholders', $project),
@@ -564,7 +565,7 @@ class PlanningController extends Controller {
      * @throws Throwable
      */
     private function handleRisksTab(Project $project): JsonResponse {
-        $risks = ProjectRisk::where('risk_project', '<>', null)
+        $risks = Risk::where('risk_project', '<>', null)
             ->orderBy('risk_id', 'asc')
             ->get();
 
@@ -586,6 +587,27 @@ class PlanningController extends Controller {
             'inactiveRisks' => $inactiveRisks,
             'users' => $users,
             'tasks' => $tasks
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    private function handleQualityTab(Project $project): JsonResponse {
+        $qualityPlan = QualityPlanning::with([
+            'requirements',
+            'assuranceItems',
+            'goals.questions.metrics'
+        ])->firstOrCreate(['project_id' => $project->project_id]);
+
+        $users = User::join('dotp_contacts', 'dotp_users.user_contact', '=', 'dotp_contacts.contact_id')
+            ->orderBy('contact_first_name')
+            ->select('user_id', DB::raw("CONCAT(contact_first_name, ' ', contact_last_name) as full_name"))
+            ->pluck('full_name', 'user_id');
+
+        $html = view('projects.planning.tabs.quality', [
+            'project' => $project,
+            'plan' => $qualityPlan,
+            'users' => $users
         ])->render();
 
         return response()->json(['html' => $html, 'actions' => '']);

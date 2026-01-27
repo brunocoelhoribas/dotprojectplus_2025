@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models\Project;
+namespace App\Models\Project\Risk;
 
+use App\Models\Project\Project;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProjectRisk extends Model {
+class Risk extends Model {
     protected $table = 'dotp_risks';
     protected $primaryKey = 'risk_id';
     public $timestamps = false;
