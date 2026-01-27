@@ -166,5 +166,21 @@ return [
                 'imported_note' => 'Imported from project #:id via Checklist.',
             ]
         ],
+        'watch_list' => [
+            'title' => 'Watch List',
+            'active_risks' => 'Active Risks',
+            'inactive_risks' => 'Inactive Risks',
+            'empty' => 'No low priority risks found for observation.',
+            'table' => [
+                'id' => 'ID',
+                'title' => 'Title',
+                'description' => 'Description',
+                'probability' => 'Probability',
+                'impact' => 'Impact',
+                'exposure_factor' => 'Exposure Factor',
+                'status' => 'Status',
+            ],
+            'close' => 'Close'
+        ],
     ],
 ];

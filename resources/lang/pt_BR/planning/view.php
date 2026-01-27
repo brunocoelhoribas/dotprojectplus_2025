@@ -194,5 +194,20 @@ return [
                 'imported_note' => 'Importado do projeto #:id via Checklist.',
             ]
         ],
+        'watch_list' => [
+            'title' => 'Riscos - Lista de observação',
+            'return' => 'Retornar aos riscos do projeto',
+            'active_risks' => 'Riscos ativos',
+            'inactive_risks' => 'Riscos inativos',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descrição',
+                'probability' => 'Probabilidade',
+                'impact' => 'Impacto',
+                'exposure_factor' => 'Fator de exposição',
+                'status' => 'Status',
+            ]
+        ],
     ],
 ];

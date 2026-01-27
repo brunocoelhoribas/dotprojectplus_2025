@@ -140,4 +140,26 @@ class ProjectRiskController extends Controller {
             'project' => $project->project_id, 'tab' => 'planning', 'subtab' => 'risks'
         ])->with('success', __('planning/view.risks.checklist.messages.success_imported', ['count' => count($sourceRisks)]));
     }
+
+    public function watchList(Project $project) {
+        $risks = ProjectRisk::where('risk_project', $project->project_id)
+            ->orderBy('risk_id')
+            ->get();
+
+        $activeRisks = $risks->filter(function ($risk) {
+            $score = $risk->risk_probability * $risk->risk_impact;
+            return $risk->risk_active === 0 && $score < 6;
+        });
+
+        $inactiveRisks = $risks->filter(function ($risk) {
+            $score = $risk->risk_probability * $risk->risk_impact;
+            return $risk->risk_active !== 0 && $score < 6;
+        });
+
+        return view('projects.planning.tabs.risks.actions.watch_list', [
+            'project' => $project,
+            'activeRisks' => $activeRisks,
+            'inactiveRisks' => $inactiveRisks
+        ]);
+    }
 }

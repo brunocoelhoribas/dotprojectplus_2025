@@ -166,5 +166,21 @@ return [
                 'imported_note' => 'Importado del proyecto #:id vía Checklist.',
             ]
         ],
+        'watch_list' => [
+            'title' => 'Lista de Observación',
+            'active_risks' => 'Riesgos activos',
+            'inactive_risks' => 'Riesgos inactivos',
+            'empty' => 'No se encontraron riesgos de baja prioridad para observación.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'description' => 'Descripción',
+                'probability' => 'Probabilidad',
+                'impact' => 'Impacto',
+                'exposure_factor' => 'Factor de exposición',
+                'status' => 'Estado',
+            ],
+            'close' => 'Cerrar'
+        ],
     ],
 ];
