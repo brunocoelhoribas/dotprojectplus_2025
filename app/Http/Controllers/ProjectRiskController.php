@@ -199,4 +199,19 @@ class ProjectRiskController extends Controller {
             'inactiveRisks' => $inactiveRisks
         ]);
     }
+
+    public function responseList(Project $project) {
+        $risks = ProjectRisk::where('risk_project', '<>', null)
+            ->orderBy('risk_id')
+            ->get();
+
+        $activeRisks = $risks->where('risk_active', 1);
+        $inactiveRisks = $risks->where('risk_active',0);
+
+        return view('projects.planning.tabs.risks.actions.response_list', [
+            'project' => $project,
+            'activeRisks' => $activeRisks,
+            'inactiveRisks' => $inactiveRisks
+        ]);
+    }
 }

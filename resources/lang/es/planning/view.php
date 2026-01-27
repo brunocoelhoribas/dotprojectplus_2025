@@ -210,5 +210,20 @@ return [
             ],
             'close' => 'Cerrar'
         ],
+        'response_list' => [
+            'title' => 'Lista de Respuesta a los Riesgos',
+            'active_risks' => 'Riesgos activos',
+            'inactive_risks' => 'Riesgos inactivos',
+            'empty' => 'No hay planes de respuesta registrados.',
+            'table' => [
+                'id' => 'Id',
+                'title' => 'Título',
+                'exposure_factor' => 'Factor de exposición',
+                'strategy' => 'Estrategia',
+                'prevention' => 'Plan de prevención',
+                'contingency' => 'Plan de contingencia',
+            ],
+            'close' => 'Cerrar'
+        ],
     ],
 ];

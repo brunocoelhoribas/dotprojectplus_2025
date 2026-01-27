@@ -15,8 +15,9 @@
         <button class="btn btn-sm btn-outline-secondary" onclick="openLessonsLearnedModal()">
             {{ __('planning/view.risks.actions.lessons_learned') }}
         </button>
-        <button class="btn btn-sm btn-outline-secondary">{{ __('planning/view.risks.actions.response_list') }}</button>
-
+        <button class="btn btn-sm btn-outline-secondary" onclick="openResponseListModal()">
+            {{ __('planning/view.risks.actions.response_list') }}
+        </button>
         <button class="btn btn-sm btn-secondary" onclick="openNewRiskModal()">
             <i class="bi bi-plus-lg me-1"></i> {{ __('planning/view.risks.actions.new_risk') }}
         </button>
@@ -551,6 +552,7 @@
 <div id="watchListModalContainer"></div>
 <div id="shortTermModalContainer"></div>
 <div id="lessonsLearnedModalContainer"></div>
+<div id="responseListModalContainer"></div>
 
 <script>
     let mapLevels = @json(__('planning/view.risks.levels'), JSON_THROW_ON_ERROR);
@@ -865,5 +867,35 @@
                 modal.show();
             })
             .catch(error => console.error('Erro ao carregar Lessons Learned:', error));
+    }
+
+    function openResponseListModal() {
+        const url = "{{ route('projects.risks.response_list', $project->project_id) }}";
+
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                const container = document.getElementById('responseListModalContainer');
+                container.innerHTML = html;
+
+                let modalEl = container.querySelector('.modal');
+                if (!modalEl) {
+                    // Usamos modal-xl para caber todas as colunas
+                    container.innerHTML = `
+                    <div class="modal fade" id="dynamicResponseListModal" tabindex="-1">
+                        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                ${html}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    modalEl = document.getElementById('dynamicResponseListModal');
+                }
+
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            })
+            .catch(error => console.error('Erro ao carregar Response List:', error));
     }
 </script>

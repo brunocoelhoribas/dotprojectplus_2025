@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/risks/watchlist', [ProjectRiskController::class, 'watchList'])->name('risks.watchlist');
         Route::get('/risks/short-term', [ProjectRiskController::class, 'shortTermList'])->name('risks.short_term');
         Route::get('/risks/lessons-learned', [ProjectRiskController::class, 'lessonsLearnedList'])->name('risks.lessons_learned');
+        Route::get('/risks/response_list', [ProjectRiskController::class, 'responseList'])->name('risks.response_list');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])

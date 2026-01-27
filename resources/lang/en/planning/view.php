@@ -210,5 +210,20 @@ return [
             ],
             'close' => 'Close'
         ],
+        'response_list' => [
+            'title' => 'Risk Response List',
+            'active_risks' => 'Active Risks',
+            'inactive_risks' => 'Inactive Risks',
+            'empty' => 'No response plans recorded.',
+            'table' => [
+                'id' => 'ID',
+                'title' => 'Title',
+                'exposure_factor' => 'Exposure Factor',
+                'strategy' => 'Strategy',
+                'prevention' => 'Prevention Plan',
+                'contingency' => 'Contingency Plan',
+            ],
+            'close' => 'Close'
+        ],
     ],
 ];
