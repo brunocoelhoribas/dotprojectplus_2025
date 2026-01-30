@@ -316,4 +316,46 @@ return [
             'delete_metric' => 'Delete Metric?',
         ]
     ],
+    'communication' => [
+        'buttons' => [
+            'new_event' => 'New communication event',
+            'new_channel' => 'New communication channel',
+            'new_frequency' => 'New communication frequency',
+        ],
+        'table' => [
+            'title' => 'Communication Title',
+            'communication' => 'Communication',
+            'channel' => 'Channel',
+            'frequency' => 'Frequency',
+        ],
+        'modals' => [
+            'event_title' => 'New Communication Event',
+            'channel_title' => 'New Channel',
+            'frequency_title' => 'New Frequency',
+
+            'label_title' => 'Title:',
+            'label_info' => 'Description:',
+            'label_issuer' => 'Issuer:',
+            'label_receptor' => 'Receiver:',
+            'label_channel' => 'Channel:',
+            'label_frequency' => 'Frequency:',
+            'label_restrictions' => 'Restrictions:',
+            'label_responsible' => 'Auth. Responsible:',
+            'label_responsible_help' => '(confidential data)',
+            'select_option' => '-- Select --',
+            'add_option' => 'Add...',
+            'save' => 'Save',
+
+            'channel_manage_title' => 'Add and Delete Channels',
+            'label_new_channel' => 'New Channel:',
+            'label_channel_list' => 'Channel List:',
+            'btn_send' => 'Send',
+            'btn_cancel' => 'Cancel',
+
+            'frequency_manage_title' => 'Add and Delete Frequencies',
+            'label_new_frequency' => 'New Frequency:',
+            'label_frequency_list' => 'Frequency List:',
+            'label_show_date_field' => 'show date field',
+        ]
+    ],
 ];

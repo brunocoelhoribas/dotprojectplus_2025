@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Planning;
 use App\Http\Controllers\Controller;
 use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
+use App\Models\Planning\Communication\Communication;
+use App\Models\Planning\Communication\CommunicationChannel;
+use App\Models\Planning\Communication\CommunicationFrequency;
 use App\Models\Planning\Quality\QualityPlanning;
 use App\Models\Planning\Risk\Risk;
 use App\Models\Project\Project;
@@ -505,7 +508,7 @@ class PlanningController extends Controller {
             'costs' => $this->renderSimpleTab('costs', $project),
             'risks' => $this->handleRisksTab($project),
             'quality' => $this->handleQualityTab($project),
-            'communication' => $this->renderSimpleTab('communication', $project),
+            'communication' => $this->handleCommunicationTab($project),
             'procurement' => $this->renderSimpleTab('procurement', $project),
             'stakeholders' => $this->renderSimpleTab('stakeholders', $project),
             'plan' => $this->renderSimpleTab('plan', $project),
@@ -608,6 +611,31 @@ class PlanningController extends Controller {
         $html = view('projects.planning.tabs.quality', [
             'project' => $project,
             'plan' => $qualityPlan,
+            'users' => $users
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    private function handleCommunicationTab(Project $project): JsonResponse {
+        $communications = Communication::with(['channel', 'frequency'])
+            ->where('communication_project_id', $project->project_id)
+            ->orderBy('communication_title')
+            ->get();
+
+        $channels = CommunicationChannel::orderBy('communication_channel')->get();
+        $frequencies = CommunicationFrequency::orderBy('communication_frequency')->get();
+
+        $users = User::join('dotp_contacts', 'dotp_users.user_contact', '=', 'dotp_contacts.contact_id')
+            ->orderBy('contact_first_name')
+            ->select('user_id', DB::raw("CONCAT(contact_first_name, ' ', contact_last_name) as full_name"))
+            ->pluck('full_name', 'user_id');
+
+        $html = view('projects.planning.tabs.communication', [
+            'project' => $project,
+            'communications' => $communications,
+            'channels' => $channels,
+            'frequencies' => $frequencies,
             'users' => $users
         ])->render();
 

@@ -26,4 +26,16 @@ return [
         'created' => 'Risk created successfully.',
         'updated' => 'Risk updated successfully.',
     ],
+    'communication' => [
+        'event_created' => 'Communication event created successfully.',
+        'event_deleted' => 'Communication event removed.',
+
+        'channel_created' => 'Communication channel created successfully.',
+        'channel_deleted' => 'Channel removed successfully.',
+        'channel_in_use' => 'This channel is being used in a communication event and cannot be deleted.',
+
+        'frequency_created' => 'Communication frequency created successfully.',
+        'frequency_deleted' => 'Frequency removed successfully.',
+        'frequency_in_use' => 'This frequency is in use and cannot be deleted.',
+    ],
 ];

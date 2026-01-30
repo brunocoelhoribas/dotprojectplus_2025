@@ -316,4 +316,43 @@ return [
             'delete_metric' => 'Excluir Métrica?',
         ]
     ],
+    'communication' => [
+        'buttons' => [
+            'new_event' => 'Novo evento comunicação',
+            'new_channel' => 'Novo canal comunicação',
+            'new_frequency' => 'Nova frequência comunicação',
+        ],
+        'table' => [
+            'title' => 'Título Comunicação',
+            'communication' => 'Comunicação',
+            'channel' => 'Canal',
+            'frequency' => 'Frequência',
+        ],
+        'event_title' => 'Novo Evento de Comunicação',
+        'channel_title' => 'Novo Canal',
+        'frequency_title' => 'Nova Frequência',
+        'label_title' => 'Título Comunicação:',
+        'label_info' => 'Comunicação:',
+        'label_issuer' => 'Emissor:',
+        'label_receptor' => 'Receptor:',
+        'label_channel' => 'Canal:',
+        'label_frequency' => 'Frequência:',
+        'label_restrictions' => 'Restrições:',
+        'label_responsible' => 'Responsável Autorização:',
+        'label_responsible_help' => '(envio de dados confidenciais)',
+        'select_option' => 'Selecione...',
+        'add_option' => 'Adicionar...',
+        'save' => 'Salvar',
+
+        'channel_manage_title' => 'Adicionar e Deletar Canais',
+        'label_new_channel' => 'Novo Canal:',
+        'label_channel_list' => 'Lista de Canais:',
+        'btn_send' => 'Enviar',
+        'btn_cancel' => 'Cancelar',
+
+        'frequency_manage_title' => 'Adicionar e Deletar Frequências',
+        'label_new_frequency' => 'Nova Frequência:',
+        'label_frequency_list' => 'Lista de Frequências:',
+        'label_show_date_field' => 'mostrar campo de data',
+    ],
 ];

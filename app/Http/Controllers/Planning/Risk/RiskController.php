@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Project;
+namespace App\Http\Controllers\Planning\Risk;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRiskRequest;
@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ProjectRiskController extends Controller {
+class RiskController extends Controller {
     private function redirectBackToTab(Project $project, string $message, string $type = 'success'): RedirectResponse {
         return redirect()->route('projects.show', [
             'project' => $project->project_id,

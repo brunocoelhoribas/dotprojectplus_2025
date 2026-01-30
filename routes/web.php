@@ -5,10 +5,11 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Planning\Communication\CommunicationController;
 use App\Http\Controllers\Planning\PlanningController;
 use App\Http\Controllers\Planning\PlanningQualityController;
+use App\Http\Controllers\Planning\Risk\RiskController;
 use App\Http\Controllers\Project\ProjectController;
-use App\Http\Controllers\Project\ProjectRiskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,16 +68,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('planning/tab/{tab}', [PlanningController::class, 'loadTabContent'])
             ->name('planning.tab');
 
-        Route::post('/risks', [ProjectRiskController::class, 'store'])->name('risks.store');
-        Route::put('/risks/{risk}', [ProjectRiskController::class, 'update'])->name('risks.update');
-        Route::get('/risks/plan', [ProjectRiskController::class, 'editPlan'])->name('risks.plan.edit');
-        Route::post('/risks/plan', [ProjectRiskController::class, 'updatePlan'])->name('risks.plan.update');
-        Route::get('/risks/checklist', [ProjectRiskController::class, 'checklist'])->name('risks.checklist');
-        Route::post('/risks/checklist/import', [ProjectRiskController::class, 'importChecklist'])->name('risks.checklist.import');
-        Route::get('/risks/watchlist', [ProjectRiskController::class, 'watchList'])->name('risks.watchlist');
-        Route::get('/risks/short-term', [ProjectRiskController::class, 'shortTermList'])->name('risks.short_term');
-        Route::get('/risks/lessons-learned', [ProjectRiskController::class, 'lessonsLearnedList'])->name('risks.lessons_learned');
-        Route::get('/risks/response_list', [ProjectRiskController::class, 'responseList'])->name('risks.response_list');
+        Route::post('/risks', [RiskController::class, 'store'])->name('risks.store');
+        Route::put('/risks/{risk}', [RiskController::class, 'update'])->name('risks.update');
+        Route::get('/risks/plan', [RiskController::class, 'editPlan'])->name('risks.plan.edit');
+        Route::post('/risks/plan', [RiskController::class, 'updatePlan'])->name('risks.plan.update');
+        Route::get('/risks/checklist', [RiskController::class, 'checklist'])->name('risks.checklist');
+        Route::post('/risks/checklist/import', [RiskController::class, 'importChecklist'])->name('risks.checklist.import');
+        Route::get('/risks/watchlist', [RiskController::class, 'watchList'])->name('risks.watchlist');
+        Route::get('/risks/short-term', [RiskController::class, 'shortTermList'])->name('risks.short_term');
+        Route::get('/risks/lessons-learned', [RiskController::class, 'lessonsLearnedList'])->name('risks.lessons_learned');
+        Route::get('/risks/response_list', [RiskController::class, 'responseList'])->name('risks.response_list');
 
         Route::post('/quality/plan', [PlanningQualityController::class, 'updatePlan'])->name('quality.update_plan');
         Route::post('/quality/requirement', [PlanningQualityController::class, 'storeRequirement'])->name('quality.store_requirement');
@@ -89,6 +90,15 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/quality/goal/{goal}', [PlanningQualityController::class, 'destroyGoal'])->name('quality.destroy_goal');
         Route::delete('/quality/question/{question}', [PlanningQualityController::class, 'destroyQuestion'])->name('quality.destroy_question');
         Route::delete('/quality/metric/{metric}', [PlanningQualityController::class, 'destroyMetric'])->name('quality.destroy_metric');
+
+        Route::post('/communication/event', [CommunicationController::class, 'store'])->name('communication.store');
+        Route::get('/communication/event/{communication}', [CommunicationController::class, 'show'])->name('show'); // Para carregar dados no modal
+        Route::put('/communication/event/{communication}', [CommunicationController::class, 'update'])->name('update'); // Para salvar edição
+        Route::delete('/communication/event/{communication}', [CommunicationController::class, 'destroy'])->name('communication.destroy');
+        Route::post('/communication/channel', [CommunicationController::class, 'storeChannel'])->name('communication.store_channel');
+        Route::post('/channel/delete', [CommunicationController::class, 'destroyChannel'])->name('communication.destroy_channel');
+        Route::post('/communication/frequency', [CommunicationController::class, 'storeFrequency'])->name('communication.store_frequency');
+        Route::post('/frequency/delete', [CommunicationController::class, 'destroyFrequency'])->name('communication.destroy_frequency');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])
