@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Initiating;
 
+use App\Http\Controllers\Controller;
 use App\Models\Initiating\Initiating;
 use App\Models\Initiating\InitiatingStakeholder;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class InitiatingStakeholderController extends Controller {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Project\Risk;
+namespace App\Models\Planning\Risk;
 
 use App\Models\Project\Project;
 use App\Models\User\User;

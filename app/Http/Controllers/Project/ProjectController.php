@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Project;
 
+use App\Http\Controllers\Controller;
 use App\Models\Company\Company;
 use App\Models\Initiating\Initiating;
 use App\Models\Project\Project;

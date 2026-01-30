@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Planning;
 
 use App\Http\Controllers\Controller;
+use App\Models\Planning\Quality\QualityAnalysisQuestion;
+use App\Models\Planning\Quality\QualityAssuranceItem;
+use App\Models\Planning\Quality\QualityGoal;
+use App\Models\Planning\Quality\QualityMetric;
+use App\Models\Planning\Quality\QualityPlanning;
+use App\Models\Planning\Quality\QualityRequirement;
 use App\Models\Project\Project;
-use App\Models\Project\Quality\QualityAssuranceItem;
-use App\Models\Project\Quality\QualityGoal;
-use App\Models\Project\Quality\QualityAnalysisQuestion;
-use App\Models\Project\Quality\QualityMetric;
-use App\Models\Project\Quality\QualityPlanning;
-use App\Models\Project\Quality\QualityRequirement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class QualityController extends Controller {
+class PlanningQualityController extends Controller {
     private function successResponse($translationKey): JsonResponse {
         return response()->json([
             'success' => true,

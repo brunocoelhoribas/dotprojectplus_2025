@@ -1,5 +1,5 @@
 @php
-    use App\Http\Controllers\PlanningController;
+    use App\Http\Controllers\Planning\PlanningController;
 @endphp
 
 <div class="table-responsive">
@@ -44,16 +44,22 @@
                             </div>
 
                             <span class="me-2 text-muted">
-                                    @if($item->is_leaf) <i class="bi bi-folder2-open"></i> @else <i class="bi bi-folder-fill"></i> @endif
+                                    @if($item->is_leaf)
+                                    <i class="bi bi-folder2-open"></i>
+                                @else
+                                    <i class="bi bi-folder-fill"></i>
+                                @endif
                                 </span>
                             <span>{{ $item->number }} {{ $item->name }}</span>
                             @if($taskCount > 0)
-                                <span class="badge bg-secondary rounded-pill ms-2" style="font-size: 0.7em;">{{ $taskCount }}</span>
+                                <span class="badge bg-secondary rounded-pill ms-2"
+                                      style="font-size: 0.7em;">{{ $taskCount }}</span>
                             @endif
                         </div>
 
                         @if($taskCount > 0)
-                            <div style="cursor: pointer;" onclick="toggleWbsGroup({{ $item->id }})" class="me-2 text-secondary">
+                            <div style="cursor: pointer;" onclick="toggleWbsGroup({{ $item->id }})"
+                                 class="me-2 text-secondary">
                                 <i class="bi bi-caret-up-fill" id="wbs-icon-{{ $item->id }}"></i>
                             </div>
                         @endif
@@ -61,7 +67,8 @@
                 </td>
                 <td class="text-center align-middle">
                     <div class="dropdown">
-                        <button class="btn btn-link text-dark text-decoration-none p-0" type="button" data-bs-toggle="dropdown">
+                        <button class="btn btn-link text-dark text-decoration-none p-0" type="button"
+                                data-bs-toggle="dropdown">
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm">
@@ -77,9 +84,12 @@
                                     <i class="bi bi-folder-plus me-2 text-primary"></i> {{ __('planning/view.activities.menu.new_subitem') }}
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item text-danger" href="#" onclick="openDeleteWbsModal({{ $item->id }})">
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger" href="#"
+                                   onclick="openDeleteWbsModal({{ $item->id }})">
                                     <i class="bi bi-trash me-2"></i> {{ __('planning/view.activities.menu.delete_item') }}
                                 </a>
                             </li>
@@ -108,7 +118,8 @@
                                 </button>
                             </div>
 
-                            <a href="#" class="text-decoration-none text-dark me-2" data-bs-toggle="collapse" data-bs-target="#details-{{ $task->task_id }}" aria-expanded="false">
+                            <a href="#" class="text-decoration-none text-dark me-2" data-bs-toggle="collapse"
+                               data-bs-target="#details-{{ $task->task_id }}" aria-expanded="false">
                                 <i class="bi bi-caret-right-fill small text-muted"></i>
                             </a>
                             <i class="bi bi-file-text me-1 text-primary"></i>
@@ -129,19 +140,25 @@
                     </td>
                     <td class="text-center">
                         @if($task->task_percent_complete === 100)
-                            <span class="badge bg-success">{{ __('planning/view.activities.task.status.completed') }}</span>
+                            <span
+                                class="badge bg-success">{{ __('planning/view.activities.task.status.completed') }}</span>
                         @elseif($task->task_percent_complete > 0)
                             <span class="badge bg-warning text-dark">{{ $task->task_percent_complete }}%</span>
                         @else
-                            <span class="badge bg-secondary">{{ __('planning/view.activities.task.status.not_started') }}</span>
+                            <span
+                                class="badge bg-secondary">{{ __('planning/view.activities.task.status.not_started') }}</span>
                         @endif
                     </td>
                     <td class="text-center align-middle">
                         <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-sm btn-outline-primary border-0 p-1" title="{{ __('planning/view.activities.task.actions.edit') }}" onclick="openEditActivityModal({{ $task }})">
+                            <button class="btn btn-sm btn-outline-primary border-0 p-1"
+                                    title="{{ __('planning/view.activities.task.actions.edit') }}"
+                                    onclick="openEditActivityModal({{ $task }})">
                                 <i class="bi bi-pencil-square fs-6"></i>
                             </button>
-                            <button class="btn btn-sm btn-outline-danger border-0 p-1" title="{{ __('planning/view.activities.task.actions.delete') }}" onclick="deleteActivity({{ $task->task_id }})">
+                            <button class="btn btn-sm btn-outline-danger border-0 p-1"
+                                    title="{{ __('planning/view.activities.task.actions.delete') }}"
+                                    onclick="deleteActivity({{ $task->task_id }})">
                                 <i class="bi bi-trash fs-6"></i>
                             </button>
                         </div>
@@ -149,7 +166,8 @@
                 </tr>
                 <tr class="collapse bg-white wbs-group-{{ $item->id }}" id="details-{{ $task->task_id }}">
                     <td colspan="6" class="p-0 border-0">
-                        <div class="p-3 border-bottom bg-light-subtle" style="margin-left: {{ $padding + 60 }}px; border-left: 3px solid #dee2e6;">
+                        <div class="p-3 border-bottom bg-light-subtle"
+                             style="margin-left: {{ $padding + 60 }}px; border-left: 3px solid #dee2e6;">
                             <div class="row small">
                                 <div class="col-md-6">
                                     <strong>{{ __('planning/view.activities.task.details.owner') }}</strong>
@@ -165,7 +183,9 @@
                                             @case(2) {{ __('planning/view.activities.task.details.units.days') }} @break
                                             @default {{ __('planning/view.activities.task.details.units.hours') }}
                                         @endswitch
-                                    @else - @endif
+                                    @else
+                                        -
+                                    @endif
                                 </div>
                             </div>
                         </div>

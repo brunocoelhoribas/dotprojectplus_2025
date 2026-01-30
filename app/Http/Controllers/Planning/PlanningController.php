@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Planning;
 
+use App\Http\Controllers\Controller;
 use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
+use App\Models\Planning\Quality\QualityPlanning;
+use App\Models\Planning\Risk\Risk;
 use App\Models\Project\Project;
 use App\Models\Project\ProjectMinute;
 use App\Models\Project\ProjectTraining;
 use App\Models\Project\ProjectWbsItem;
-use App\Models\Project\Quality\QualityPlanning;
-use App\Models\Project\Risk\Risk;
 use App\Models\Project\Task\Task;
 use App\Models\Project\Task\TasksWorkpackage;
 use App\Models\User\User;

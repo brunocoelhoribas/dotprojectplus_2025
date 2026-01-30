@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Project\Risk;
+namespace App\Models\Planning\Risk;
 
 use Illuminate\Database\Eloquent\Model;
 

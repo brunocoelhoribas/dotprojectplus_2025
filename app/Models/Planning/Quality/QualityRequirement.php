@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Project\Quality;
+namespace App\Models\Planning\Quality;
 
 use Illuminate\Database\Eloquent\Model;
 

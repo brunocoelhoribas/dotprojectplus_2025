@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Project;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRiskRequest;
+use App\Models\Planning\Risk\Risk;
+use App\Models\Planning\Risk\RiskManagementPlan;
 use App\Models\Project\Project;
-use App\Models\Project\Risk\Risk;
-use App\Models\Project\Risk\RiskManagementPlan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
