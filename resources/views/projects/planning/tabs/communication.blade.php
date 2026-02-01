@@ -13,7 +13,7 @@
 
     <div class="table-responsive">
         <table class="table table-bordered table-sm align-middle mb-0">
-            <thead class="bg-warning text-dark">
+            <thead class="table-light">
             <tr>
                 <th style="width: 25%;">{{ __('planning/view.communication.table.title') }}</th>
                 <th style="width: 45%;">{{ __('planning/view.communication.table.communication') }}</th>

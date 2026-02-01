@@ -47,8 +47,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" onclick="loadTab(event, 'procurement')">
-                    {{ __('projects/tabs.planning.menu.procurement') }}
+                <a class="nav-link" href="#" onclick="loadTab(event, 'acquisition')">
+                    {{ __('projects/tabs.planning.menu.acquisition') }}
                 </a>
             </li>
             <li class="nav-item">

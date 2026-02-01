@@ -358,4 +358,44 @@ return [
             'label_show_date_field' => 'show date field',
         ]
     ],
+    'acquisition' => [
+        'title' => 'Acquisition Planning',
+        'btn_new' => 'New Planning',
+        'table' => [
+            'item' => 'Item to Acquire',
+            'contract' => 'Contract Type',
+            'docs' => 'Docs (SOW)',
+            'selection' => 'Supplier Selection',
+            'requirements' => 'Requirements/Constraints',
+            'management' => 'Management',
+            'roles' => 'Roles & Resp.',
+        ],
+        'modal' => [
+            'title' => 'Acquisition Planning',
+            'label_item' => 'Item to be acquired:',
+            'label_contract' => 'Contract Type:',
+            'label_docs' => 'Acquisition Documents (SOW, etc.):',
+            'label_selection' => 'Selection Criteria:',
+            'btn_add_criteria' => '+ Criteria',
+            'label_requirements' => 'Requirements, assumptions, constraints:',
+            'btn_add_req' => '+ Requirement',
+            'label_management' => 'Management process:',
+            'label_roles' => 'Roles and Responsibilities:',
+            'btn_add_role' => '+ Role',
+            'placeholders' => [
+                'criteria' => 'Ex: Lowest Price',
+                'weight' => 'Weight',
+                'req' => 'Requirement description',
+                'role' => 'Role Name',
+                'resp' => 'Responsibility',
+            ],
+            'options' => [
+                'fixed_price' => 'Fixed Price',
+                'time_material' => 'Time & Material',
+                'cost_reimbursable' => 'Cost Reimbursable',
+            ],
+            'save' => 'Save',
+            'cancel' => 'Cancel',
+        ]
+    ],
 ];

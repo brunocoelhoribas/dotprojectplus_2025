@@ -38,4 +38,9 @@ return [
         'frequency_deleted' => 'Frequência removida com sucesso.',
         'frequency_in_use' => 'Esta frequência está em uso e não pode ser excluída.',
     ],
+    'acquisition' => [
+        'created' => 'Planejamento de aquisição criado com sucesso.',
+        'updated' => 'Planejamento de aquisição atualizado com sucesso.',
+        'deleted' => 'Planejamento de aquisição removido com sucesso.',
+    ],
 ];

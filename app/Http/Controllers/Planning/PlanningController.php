@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Planning;
 use App\Http\Controllers\Controller;
 use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
+use App\Models\Planning\Acquisition\AcquisitionPlanning;
 use App\Models\Planning\Communication\Communication;
 use App\Models\Planning\Communication\CommunicationChannel;
 use App\Models\Planning\Communication\CommunicationFrequency;
@@ -509,7 +510,7 @@ class PlanningController extends Controller {
             'risks' => $this->handleRisksTab($project),
             'quality' => $this->handleQualityTab($project),
             'communication' => $this->handleCommunicationTab($project),
-            'procurement' => $this->renderSimpleTab('procurement', $project),
+            'acquisition' => $this->handleAcquisitionTab($project),
             'stakeholders' => $this->renderSimpleTab('stakeholders', $project),
             'plan' => $this->renderSimpleTab('plan', $project),
             default => $this->renderUnderConstruction(),
@@ -637,6 +638,19 @@ class PlanningController extends Controller {
             'channels' => $channels,
             'frequencies' => $frequencies,
             'users' => $users
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    private function handleAcquisitionTab(Project $project): JsonResponse {
+        $acquisitions = AcquisitionPlanning::with(['criteria', 'requirements', 'roles'])
+            ->where('project_id', $project->project_id)
+            ->get();
+
+        $html = view('projects.planning.tabs.acquisition', [
+            'project' => $project,
+            'acquisitions' => $acquisitions
         ])->render();
 
         return response()->json(['html' => $html, 'actions' => '']);

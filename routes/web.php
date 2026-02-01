@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Planning\Acquisition\AcquisitionController;
 use App\Http\Controllers\Planning\Communication\CommunicationController;
 use App\Http\Controllers\Planning\PlanningController;
 use App\Http\Controllers\Planning\PlanningQualityController;
@@ -99,6 +100,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/channel/delete', [CommunicationController::class, 'destroyChannel'])->name('communication.destroy_channel');
         Route::post('/communication/frequency', [CommunicationController::class, 'storeFrequency'])->name('communication.store_frequency');
         Route::post('/frequency/delete', [CommunicationController::class, 'destroyFrequency'])->name('communication.destroy_frequency');
+
+        Route::post('/acquisition', [AcquisitionController::class, 'store'])->name('acquisition.store');
+        Route::get('/acquisition/{acquisition}', [AcquisitionController::class, 'show'])->name('acquisition.show');
+        Route::put('/acquisition/{acquisition}', [AcquisitionController::class, 'update'])->name('acquisition.update');
+        Route::delete('/acquisition/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
     });
 
     Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])

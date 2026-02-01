@@ -358,4 +358,44 @@ return [
             'label_show_date_field' => 'mostrar campo de fecha',
         ]
     ],
+    'acquisition' => [
+        'title' => 'Planificación de Adquisiciones',
+        'btn_new' => 'Nueva Planificación',
+        'table' => [
+            'item' => 'Ítem a Adquirir',
+            'contract' => 'Tipo Contrato',
+            'docs' => 'Documentos (DT)',
+            'selection' => 'Selección Proveedores',
+            'requirements' => 'Requisitos/Premisas',
+            'management' => 'Gestión',
+            'roles' => 'Roles y Resp.',
+        ],
+        'modal' => [
+            'title' => 'Planificación de Adquisición',
+            'label_item' => 'Ítem a adquirir:',
+            'label_contract' => 'Tipo de contrato:',
+            'label_docs' => 'Documentos de adquisición:',
+            'label_selection' => 'Criterios de Selección:',
+            'btn_add_criteria' => '+ Criterio',
+            'label_requirements' => 'Requisitos, premisas y restricciones:',
+            'btn_add_req' => '+ Requisito',
+            'label_management' => 'Proceso de gestión:',
+            'label_roles' => 'Roles y Responsabilidades:',
+            'btn_add_role' => '+ Rol',
+            'placeholders' => [
+                'criteria' => 'Ej: Menor Precio',
+                'weight' => 'Peso',
+                'req' => 'Descripción del requisito',
+                'role' => 'Nombre del Rol',
+                'resp' => 'Responsabilidad',
+            ],
+            'options' => [
+                'fixed_price' => 'Precio Fijo',
+                'time_material' => 'Tiempo y Material',
+                'cost_reimbursable' => 'Costo Reembolsable',
+            ],
+            'save' => 'Guardar',
+            'cancel' => 'Cancelar',
+        ]
+    ],
 ];
