@@ -43,4 +43,9 @@ return [
         'updated' => 'Planejamento de aquisição atualizado com sucesso.',
         'deleted' => 'Planejamento de aquisição removido com sucesso.',
     ],
+    'stakeholder' => [
+        'created' => 'Stakeholder adicionado com sucesso.',
+        'updated' => 'Stakeholder atualizado com sucesso.',
+        'deleted' => 'Stakeholder removido com sucesso.',
+    ],
 ];

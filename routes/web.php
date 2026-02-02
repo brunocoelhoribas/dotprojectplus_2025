@@ -40,8 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('projects', ProjectController::class);
 
     Route::prefix('projects/{project}')->name('projects.')->group(function () {
-        Route::post('initiating', [InitiatingController::class, 'storeOrUpdate'])
-            ->name('initiating');
+        Route::post('initiating', [InitiatingController::class, 'storeOrUpdate'])->name('initiating');
+
+        Route::get('gantt-data', [PlanningController::class, 'ganttData'])->name('projects.gantt.data');
 
         Route::post('wbs', [PlanningController::class, 'storeWbsItem'])->name('wbs.store');
         Route::delete('wbs/{wbsItem}', [PlanningController::class, 'destroyWbsItem'])->name('wbs.destroy');
@@ -107,20 +108,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/acquisition/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
     });
 
-    Route::get('projects/{project}/gantt-data', [PlanningController::class, 'ganttData'])
-        ->name('projects.gantt.data');
-    Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])
-        ->name('initiating.pdf');
+    Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])->name('initiating.pdf');
+    Route::get('initiating/{initiating}/stakeholders/pdf', [InitiatingStakeholderController::class, 'generatePDF'])->name('initiating.stakeholders.pdf');
 
-    Route::post('stakeholders', [InitiatingStakeholderController::class, 'store'])
-        ->name('stakeholders.store');
+    Route::post('stakeholders', [InitiatingStakeholderController::class, 'store'])->name('stakeholders.store');
+    Route::put('stakeholders/{stakeholder}', [InitiatingStakeholderController::class, 'update'])->name('stakeholders.update');
+    Route::delete('stakeholders/{stakeholder}', [InitiatingStakeholderController::class, 'destroy'])->name('stakeholders.destroy');
 
-    Route::put('stakeholders/{stakeholder}', [InitiatingStakeholderController::class, 'update'])
-        ->name('stakeholders.update');
-
-    Route::delete('stakeholders/{stakeholder}', [InitiatingStakeholderController::class, 'destroy'])
-        ->name('stakeholders.destroy');
-
-    Route::get('initiating/{initiating}/stakeholders/pdf', [InitiatingStakeholderController::class, 'generatePDF'])
-        ->name('initiating.stakeholders.pdf');
 });

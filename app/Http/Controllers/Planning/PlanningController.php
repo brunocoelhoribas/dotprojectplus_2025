@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Planning;
 
 use App\Http\Controllers\Controller;
+use App\Models\Initiating\Initiating;
+use App\Models\Initiating\InitiatingStakeholder;
 use App\Models\Monitoring\MonitoringBaseline;
 use App\Models\Monitoring\MonitoringBaselineTask;
 use App\Models\Planning\Acquisition\AcquisitionPlanning;
@@ -18,6 +20,7 @@ use App\Models\Project\ProjectWbsItem;
 use App\Models\Project\Task\Task;
 use App\Models\Project\Task\TasksWorkpackage;
 use App\Models\User\User;
+use App\Models\User\UserContact;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -511,7 +514,7 @@ class PlanningController extends Controller {
             'quality' => $this->handleQualityTab($project),
             'communication' => $this->handleCommunicationTab($project),
             'acquisition' => $this->handleAcquisitionTab($project),
-            'stakeholders' => $this->renderSimpleTab('stakeholders', $project),
+            'stakeholders' => $this->handleStakeholderTab($project),
             'plan' => $this->renderSimpleTab('plan', $project),
             default => $this->renderUnderConstruction(),
         };
@@ -597,6 +600,9 @@ class PlanningController extends Controller {
         return response()->json(['html' => $html, 'actions' => '']);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function handleQualityTab(Project $project): JsonResponse {
         $qualityPlan = QualityPlanning::with([
             'requirements',
@@ -618,6 +624,9 @@ class PlanningController extends Controller {
         return response()->json(['html' => $html, 'actions' => '']);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function handleCommunicationTab(Project $project): JsonResponse {
         $communications = Communication::with(['channel', 'frequency'])
             ->where('communication_project_id', $project->project_id)
@@ -643,6 +652,9 @@ class PlanningController extends Controller {
         return response()->json(['html' => $html, 'actions' => '']);
     }
 
+    /**
+     * @throws Throwable
+     */
     private function handleAcquisitionTab(Project $project): JsonResponse {
         $acquisitions = AcquisitionPlanning::with(['criteria', 'requirements', 'roles'])
             ->where('project_id', $project->project_id)
@@ -659,8 +671,35 @@ class PlanningController extends Controller {
     /**
      * @throws Throwable
      */
+    private function handleStakeholderTab(Project $project): JsonResponse {
+        $initiating = Initiating::where('project_id', $project->project_id)->first();
+
+        $stakeholders = collect([]);
+        if ($initiating) {
+            $stakeholders = InitiatingStakeholder::with('contact')
+                ->where('initiating_id', $initiating->initiating_id)
+                ->get();
+        }
+
+        $contacts = UserContact::orderBy('contact_first_name')
+            ->select('contact_id', DB::raw("CONCAT(contact_first_name, ' ', contact_last_name) as full_name"))
+            ->get();
+
+        $html = view('projects.planning.tabs.stakeholder', [
+            'project' => $project,
+            'initiating' => $initiating,
+            'stakeholders' => $stakeholders,
+            'contacts' => $contacts
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    /**
+     * @throws Throwable
+     */
     private function renderSimpleTab(string $viewName, Project $project): JsonResponse {
-        $html = view("projects.planning.tabs.{$viewName}", ['project' => $project])->render();
+        $html = view("projects.planning.tabs.$viewName", ['project' => $project])->render();
         return response()->json(['html' => $html, 'actions' => '']);
     }
 

@@ -396,6 +396,44 @@ return [
             ],
             'save' => 'Save',
             'cancel' => 'Cancel',
+            'confirm_yes' => 'Yes, confirm',
+            'confirm_no' => 'Cancel',
+        ]
+    ],
+    'stakeholder' => [
+        'title' => 'Stakeholder Management',
+        'btn_new' => 'New Stakeholder',
+        'table' => [
+            'name' => 'Stakeholder',
+            'resp' => 'Responsibilities',
+            'interest' => 'Interest',
+            'power' => 'Power',
+            'strategy' => 'Strategy',
+        ],
+        'modal' => [
+            'title' => 'Manage Stakeholder',
+            'label_name' => 'Stakeholder Name:',
+            'label_resp' => 'Responsibilities:',
+            'label_interest' => 'Interest Level:',
+            'label_power' => 'Power Level:',
+            'label_strategy' => 'Management Strategy:',
+            'select_user' => 'Select a user...',
+            'options' => [
+                'na' => 'N/A',
+                'low' => 'Low',
+                'medium' => 'Medium',
+                'high' => 'High',
+                'monitor' => 'Monitor',
+                'inform' => 'Keep Informed',
+                'satisfy' => 'Keep Satisfied',
+                'manage' => 'Manage Closely',
+            ],
+            'save' => 'Save',
+            'cancel' => 'Cancel',
+            'confirm_yes' => 'Yes, confirm',
+            'confirm_no' => 'Cancel',
+            'confirmation' => 'Confirmation Required',
+            'action' => 'This action cannot be undone.'
         ]
     ],
 ];

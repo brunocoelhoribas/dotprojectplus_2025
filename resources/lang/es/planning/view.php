@@ -398,4 +398,40 @@ return [
             'cancel' => 'Cancelar',
         ]
     ],
+    'stakeholder' => [
+        'title' => 'Gestión de Interesados',
+        'btn_new' => 'Nuevo Interesado',
+        'table' => [
+            'name' => 'Interesado',
+            'resp' => 'Responsabilidades',
+            'interest' => 'Interés',
+            'power' => 'Poder',
+            'strategy' => 'Estrategia',
+        ],
+        'modal' => [
+            'title' => 'Gestionar Interesado',
+            'label_name' => 'Nombre del Interesado:',
+            'label_resp' => 'Responsabilidades:',
+            'label_interest' => 'Nivel de Interés:',
+            'label_power' => 'Nivel de Poder:',
+            'label_strategy' => 'Estrategia de Gestión:',
+            'select_user' => 'Seleccione un usuario...',
+            'options' => [
+                'na' => 'N/A',
+                'low' => 'Bajo',
+                'medium' => 'Medio',
+                'high' => 'Alto',
+                'monitor' => 'Monitorear',
+                'inform' => 'Mantener Informado',
+                'satisfy' => 'Mantener Satisfecho',
+                'manage' => 'Gestionar Atentamente',
+            ],
+            'save' => 'Guardar',
+            'cancel' => 'Cancelar',
+            'confirm_yes' => 'Sí, confirmar',
+            'confirm_no' => 'Cancelar',
+            'confirmation' => 'Confirmación requerida',
+            'action' => 'Esta acción no se puede deshacer.'
+        ]
+    ],
 ];

@@ -395,4 +395,40 @@ return [
             'cancel' => 'Cancelar',
         ]
     ],
+    'stakeholder' => [
+        'title' => 'Gerenciamento das Partes Interessadas',
+        'btn_new' => 'Novo Stakeholder',
+        'table' => [
+            'name' => 'Stakeholder',
+            'resp' => 'Responsabilidades',
+            'interest' => 'Interesse',
+            'power' => 'Poder',
+            'strategy' => 'Estratégia',
+        ],
+        'modal' => [
+            'title' => 'Gerenciar Stakeholder',
+            'label_name' => 'Nome do Stakeholder:',
+            'label_resp' => 'Responsabilidades:',
+            'label_interest' => 'Nível de Interesse:',
+            'label_power' => 'Nível de Poder:',
+            'label_strategy' => 'Estratégia de Gerenciamento:',
+            'select_user' => 'Selecione um usuário...',
+            'options' => [
+                'na' => 'N/A',
+                'low' => 'Baixo',
+                'medium' => 'Médio',
+                'high' => 'Alto',
+                'monitor' => 'Monitorar',
+                'inform' => 'Manter Informado',
+                'satisfy' => 'Manter Satisfeito',
+                'manage' => 'Gerenciar de Perto',
+            ],
+            'save' => 'Salvar',
+            'cancel' => 'Cancelar',
+            'confirm_yes' => 'Sim, confirmar',
+            'confirm_no' => 'Cancelar',
+            'confirmation' => 'Confirmação Requerida',
+            'action' => 'Essa ação não pode ser revertida.'
+        ]
+    ],
 ];

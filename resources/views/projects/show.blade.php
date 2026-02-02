@@ -63,6 +63,7 @@
                             type="button" role="tab" aria-controls="initiation" aria-selected="true">
                         {{ __('projects/views.show.tabs.initiation') }}
                     </button>
+                    @include('projects.partials.stakeholder_form_modal')
                 </li>
                 <li class="nav-item">
                     <button class="nav-link" id="planning-tab" data-bs-toggle="tab" data-bs-target="#planning"
@@ -194,70 +195,7 @@
                         </div>
 
                         <div class="tab-pane fade" id="stakeholder-content" role="tabpanel" aria-labelledby="stakeholder-tab">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="h5 mb-0">{{ __('projects/views.show.stakeholder.title') }}</h4>
-
-                                <div>
-                                    @if($initiating->exists)
-                                        <a href="{{ route('initiating.stakeholders.pdf', $initiating) }}"
-                                           class="btn btn-outline-secondary btn-sm"
-                                           target="_blank">
-                                            {{ __('projects/views.show.stakeholder.generate_pdf') }}
-                                        </a>
-                                    @endif
-
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#createStakeholderModal">
-                                        {{ __('projects/views.show.stakeholder.new_btn') }}
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
-                                    <thead class="thead-dotproject">
-                                    <tr>
-                                        <th>{{ __('projects/views.show.stakeholder.table.name') }}</th>
-                                        <th>{{ __('projects/views.show.stakeholder.table.responsibilities') }}</th>
-                                        <th>{{ __('projects/views.show.stakeholder.table.interest') }}</th>
-                                        <th>{{ __('projects/views.show.stakeholder.table.power') }}</th>
-                                        <th>{{ __('projects/views.show.stakeholder.table.strategy') }}</th>
-                                        <th style="width: 100px;">{{ __('projects/views.show.stakeholder.table.actions') }}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if($project->initiating)
-                                        @forelse ($project->initiating->stakeholders as $stakeholder)
-                                            <tr>
-                                                <td>{{ $stakeholder->contact->full_name ?? 'N/A' }}</td>
-                                                <td>{{ $stakeholder->stakeholder_responsibility }}</td>
-                                                <td>{{ $stakeholder->stakeholder_interest }}</td>
-                                                <td>{{ $stakeholder->stakeholder_power }}</td>
-                                                <td>{{ $stakeholder->stakeholder_strategy }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-outline-primary"
-                                                            onclick="openEditModal({{ $stakeholder }})">
-                                                        {{ __('projects/views.show.stakeholder.edit') }}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="6" class="text-center text-muted py-3">
-                                                    {{ __('projects/views.show.stakeholder.table.empty') }}
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    @else
-                                        <tr>
-                                            <td colspan="6" class="text-center text-muted py-3">
-                                                {{ __('projects/views.show.stakeholder.table.save_charter_hint') }}
-                                            </td>
-                                        </tr>
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                            @include('projects.partials.stakeholder_list', ['project' => $project])
                         </div>
                     </div>
                 </div>
@@ -279,8 +217,6 @@
     </div>
 
 @endsection
-
-@include('projects.partials.stakeholder_form_modal')
 
 @push('scripts')
     <script>
