@@ -15,6 +15,17 @@ return [
         'end_date' => 'Fecha de Cierre:',
         'milestones' => 'Hitos:',
         'success_criteria' => 'Criterios de Aceptación (Éxito):',
+
+        'section_general' => '1. Información General',
+        'section_dates' => '2. Plazos Estimados',
+        'section_justification' => '3. Justificación y Objetivos',
+        'section_scope' => '4. Alcance y Resultados',
+        'section_premises' => '5. Premisas y Restricciones',
+        'section_milestones' => '6. Hitos Principales',
+
+        'signatures_manager' => 'Gerente del Proyecto',
+        'signatures_sponsor' => 'Patrocinador / Cliente',
+        'signatures_approval' => 'Aprobación',
     ],
     'stakeholders' => [
         'main_title' => 'Registro de Interesados',

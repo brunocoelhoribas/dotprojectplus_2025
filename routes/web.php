@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('projects/{project}')->name('projects.')->group(function () {
         Route::post('initiating', [InitiatingController::class, 'storeOrUpdate'])->name('initiating');
 
-        Route::get('gantt-data', [PlanningController::class, 'ganttData'])->name('projects.gantt.data');
+        Route::get('gantt-data', [PlanningController::class, 'ganttData'])->name('gantt.data');
 
         Route::post('wbs', [PlanningController::class, 'storeWbsItem'])->name('wbs.store');
         Route::delete('wbs/{wbsItem}', [PlanningController::class, 'destroyWbsItem'])->name('wbs.destroy');

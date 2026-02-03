@@ -55,6 +55,7 @@ return [
         'current_position' => 'Current Position',
         'date_label' => 'Date',
         'report_date' => 'Report Date',
+        'no_task' =>  'No tasks found.',
 
         'metrics' => [
             'pv' => 'Planned Value (PV)',
@@ -70,6 +71,8 @@ return [
         ],
 
         'gantt' => [
+            'graph' => 'Performance Graph (EVM)',
+            'params_metrics' => 'Parameters and Metrics',
             'start' => 'Start',
             'end' => 'End',
             'progress' => 'Progress',

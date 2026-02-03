@@ -5,7 +5,7 @@
 <div id="stakeholder-list-container">
     <div class="container-fluid p-0">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h6 class="fw-bold text-dark m-0">{{ __('projects/views.show.stakeholder.title') }}</h6>
+            <h6 class="fw-bold text-dark m-0"></h6>
 
             <div>
                 @if($initiating && $initiating->exists)

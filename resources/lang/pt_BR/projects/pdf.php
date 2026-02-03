@@ -15,6 +15,17 @@ return [
         'end_date' => 'Data de Encerramento:',
         'milestones' => 'Marcos:',
         'success_criteria' => 'Critérios de Aceite (Sucesso):',
+
+        'section_general' => '1. Informações Gerais',
+        'section_dates' => '2. Prazos Estimados',
+        'section_justification' => '3. Justificativa e Objetivos',
+        'section_scope' => '4. Escopo e Resultados',
+        'section_premises' => '5. Premissas e Restrições',
+        'section_milestones' => '6. Marcos Principais (Milestones)',
+
+        'signatures_manager' => 'Gerente de Projeto',
+        'signatures_sponsor' => 'Patrocinador / Cliente',
+        'signatures_approval' => 'Aprovação',
     ],
     'stakeholders' => [
         'main_title' => 'Registro de Stakeholders',

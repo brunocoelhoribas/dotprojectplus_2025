@@ -44,3 +44,188 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+.link-hover-yellow {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.link-hover-yellow:hover {
+    color: #ffc107 !important;
+}
+
+.link-hover-yellow {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.link-hover-yellow:hover {
+    color: #ffc107 !important;
+}
+
+.nav-tabs-dotproject {
+    border-bottom: 1px solid #dee2e6;
+}
+.nav-tabs-dotproject .nav-link {
+    color: #6c757d;
+    border: 1px solid transparent;
+    margin-right: 2px;
+    font-weight: 500;
+    border-radius: 4px 4px 0 0;
+}
+.nav-tabs-dotproject .nav-link:hover {
+    border-color: #e9ecef #e9ecef #dee2e6;
+    color: #495057;
+}
+.nav-tabs-dotproject .nav-link.active {
+    color: #212529 !important;
+    background-color: #eebf2f !important;
+    border-color: #eebf2f #eebf2f #fff;
+    font-weight: bold;
+}
+
+.gantt-container {
+    height: 500px;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #dee2e6;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.gantt-container {
+    height: 500px;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid #dee2e6;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.gantt .grid-header {
+    fill: #f8f9fa;
+    stroke: #e0e0e0;
+    stroke-width: 1;
+}
+.gantt .lower-text, .gantt .upper-text {
+    font-size: 12px !important;
+    fill: #333 !important;
+    font-weight: 500;
+}
+.gantt .bar {
+    fill: #cfe2ff !important;
+    stroke: #0d6efd !important;
+    stroke-width: 1px;
+    rx: 3px; ry: 3px;
+}
+.gantt .bar-progress {
+    fill: #0d6efd !important;
+    opacity: 1;
+}
+.gantt .bar-label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    fill: #212529 !important;
+}
+.gantt .bar-wrapper:hover .bar {
+    fill: #b6d4fe !important;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.gantt .grid-row { fill: #fff; }
+.gantt .grid-row:nth-child(even) { fill: #fcfcfc; }
+.gantt .arrow { stroke: #6c757d; stroke-width: 1.5; }
+.gantt .today-highlight { fill: #fff3cd; opacity: 0.5; }
+.gantt-wrapper {
+    display: flex;
+    border: 1px solid #dee2e6;
+    background: white;
+    height: 500px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.gantt-chart-container {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+    background-color: white;
+}
+
+.gantt .grid-header { height: 50px !important; fill: #fff; stroke: #e0e0e0; }
+.gantt .grid-row { fill: #fff; }
+.gantt .grid-row:nth-child(even) { fill: #fcfcfc; }
+.gantt .bar { fill: #cfe2ff; stroke: #0d6efd; stroke-width: 1px; rx: 3px; ry: 3px; }
+.gantt .bar-progress { fill: #0d6efd; }
+.gantt .bar-label { font-size: 11px; fill: #333; font-weight: 500; }
+.gantt .lower-text, .gantt .upper-text { font-size: 11px; fill: #555; }
+
+.task-list-container {
+    width: 350px;
+    min-width: 300px;
+    border-right: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.task-list-header {
+    height: 50px;
+    background-color: #f1f3f5;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #495057;
+}
+
+.task-list-body {
+    flex: 1;
+    overflow-y: hidden;
+    background-color: white;
+}
+
+.task-row {
+    height: 38px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+.task-row:hover {
+    background-color: #e9ecef;
+}
+
+.metrics-panel {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.metric-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.metric-label {
+    width: 45%;
+    text-align: right;
+    padding-right: 15px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #495057;
+}
+
+.metric-value {
+    width: 55%;
+}

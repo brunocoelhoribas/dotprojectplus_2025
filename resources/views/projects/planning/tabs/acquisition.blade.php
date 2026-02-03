@@ -1,6 +1,5 @@
 <div class="container-fluid p-0">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h6 class="fw-bold text-dark m-0">{{ __('planning/view.acquisition.title') }}</h6>
         <button class="btn btn-sm btn-light border shadow-sm" onclick="openAcquisitionModal()">
             <i class="bi bi-plus-lg me-1"></i> {{ __('planning/view.acquisition.btn_new') }}
         </button>

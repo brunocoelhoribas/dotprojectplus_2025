@@ -48,32 +48,35 @@ return [
         ],
     ],
     'schedule' => [
-        'title' => 'Confira o sequenciamento das atividades pelo gráfico de Gantt',
+        'title' => 'Verifique a sequência de atividades usando o gráfico de Gantt',
         'activity_name' => 'Nome da Atividade',
-        'list_baselines' => 'Listar Baselines',
+        'list_baselines' => 'Listar Linhas de Base',
         'baseline_label' => 'Linha de Base',
         'current_position' => 'Posição Atual',
         'date_label' => 'Data',
-        'report_date' => 'Data de Reporte',
+        'report_date' => 'Data do Relatório',
+        'no_task' =>  'Nenhuma atividade foi encontrada.',
 
         'metrics' => [
             'pv' => 'Valor Planejado (VP)',
             'ev' => 'Valor Agregado (VA)',
-            'sv' => 'Variação de Prazo (VPR)',
-            'spi' => 'Índice de Desempenho (IDP)',
+            'sv' => 'Variação de Prazos (VPR)',
+            'spi' => 'Índice de Desempenho de Prazos (IDP)',
         ],
 
         'legend' => [
-            'behind' => 'IDP < 1: Cronograma está atrasado',
-            'ahead'  => 'IDP > 1: Cronograma está adiantado',
-            'track'  => 'IDP = 1: Cronograma está no prazo',
+            'behind' => 'IDP < 1: Projeto está atrasado',
+            'ahead'  => 'IDP > 1: Projeto está adiantado',
+            'track'  => 'IDP = 1: Projeto está no prazo',
         ],
 
         'gantt' => [
+            'graph' => 'Gráfico de Desempenho (EVM)',
+            'params_metrics' => 'Parâmetros e Métricas',
             'start' => 'Início',
             'end' => 'Fim',
             'progress' => 'Progresso',
-            'no_data' => 'Sem dados para exibir.',
+            'no_data' => 'Nenhum dado disponível para exibição.',
         ]
     ],
     'cost' => [
