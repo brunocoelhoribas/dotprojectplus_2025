@@ -70,7 +70,7 @@
 
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
-                    <thead class="thead-dotproject">
+                    <thead class="table-light">
                     <tr>
                         <th>{{ __('companies/view.index.table.name') }}</th>
                         <th>{{ __('companies/view.index.table.active_projects') }}</th>

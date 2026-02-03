@@ -76,6 +76,88 @@ return [
             'no_data' => 'Sem dados para exibir.',
         ]
     ],
+    'cost' => [
+        'title' => 'Estimativas de Custos e Orçamento',
+        'btn_budget' => 'Orçamento',
+        'btn_config_hr' => 'Configurar recursos humanos',
+        'btn_add_non_hr' => 'Incluir recurso não humano',
+
+        'info' => [
+            'intro' => 'Os recursos humanos são automaticamente inclusos na baseline. As seguintes prerrogativas são necessárias:',
+            'a' => 'a) O recurso humano está registrado na organização.',
+            'b' => 'b) Os papéis do recurso humano foram configurados.',
+            'c' => 'c) O custo/hora do recurso humano foi configurado.',
+            'd' => 'd) As atividades do projeto tiveram os papéis estimados.',
+            'e' => 'e) O recurso humano foi alocado em ao menos uma atividade.',
+        ],
+
+        'hr_title' => 'Estimativas para recursos humanos',
+        'footer_note' => 'Os RHs são adicionados automaticamente à baseline de custos. Não é possível excluí-los diretamente. A exclusão de um RH é mediante a desalocação do mesmo das atividades do projeto.',
+        'subtotal_hr' => 'Subtotal estimativas para recursos humanos (R$):',
+
+        'non_hr_title' => 'Estimativas para recursos não humanos',
+        'subtotal_non_hr' => 'Subtotal estimativas para recursos não humanos (R$):',
+
+        'table' => [
+            'name' => 'Nome',
+            'description' => 'Descrição',
+            'start' => 'Data início',
+            'end' => 'Data fim',
+            'qty_hr' => 'Hora/Mês',
+            'qty_non_hr' => 'Quantidade',
+            'unit_value_hr' => 'Valor hora (R$)',
+            'unit_value_non_hr' => 'Custo unitário (R$)',
+            'total' => 'Custo total (R$)',
+            'empty_hr' => 'Nenhum recurso humano alocado ainda.',
+            'empty_non_hr' => 'Nenhum custo adicional registrado.',
+        ],
+
+        'modal' => [
+            'main_title' => 'Adicionar',
+            'subtitle' => 'Cadastro de recurso não humano',
+            'name_label' => 'Nome',
+            'qty_label' => 'Quantidade',
+            'date_begin_label' => 'Data início',
+            'date_end_label' => 'Data fim',
+            'unit_value_label' => 'Valor unitário (R$)',
+            'total_value_label' => 'Valor total (R$)',
+
+            'date_end_help' => 'A data fim não pode ser após a data de encerramento do projeto. (:date)',
+            'calc_rule' => '(Regra de cálculo: quantidade * valor unitário)',
+            'required_fields' => '* Campos obrigatórios',
+
+            'cancel' => 'Cancelar',
+            'send' => 'Enviar',
+
+            'confirmation_title' => 'Confirmação',
+            'confirm_delete' => 'Tem certeza que deseja excluir este custo?',
+            'confirmation_impact' => 'Essa ação afetará o orçamento total.',
+            'confirm_no' => 'Não, Cancelar',
+            'confirm_yes' => 'Sim, Excluir',
+        ],
+
+        'budget' => [
+            'title' => 'Orçamento do Projeto',
+            'table' => [
+                'item' => 'Item',
+                'total' => 'Total (R$)',
+                'section_hr' => 'Estimativas para recursos humanos',
+                'subtotal_hr' => 'Subtotal recursos humanos:',
+                'section_non_hr' => 'Estimativas para recursos não humanos',
+                'subtotal_non_hr' => 'Subtotal não humanos:',
+                'section_reserve' => 'Reserva de contingência',
+                'empty_reserve' => 'Nenhuma reserva de risco registrada.',
+                'monthly_total' => 'TOTAL MENSAL (R$):',
+            ],
+            'footer' => [
+                'mgmt_reserve' => 'Reserva gerencial (%):',
+                'partial_budget' => 'Orçamento parcial (R$):',
+                'total_value' => 'Valor total (R$):',
+                'close' => 'Fechar',
+                'save' => 'Salvar Orçamento',
+            ],
+        ],
+    ],
     'risks' => [
         'title' => 'Riscos',
         'active_risks' => 'Riscos Ativos',

@@ -110,8 +110,19 @@
                     executeScripts(container);
                 })
                 .catch(error => {
-                    console.error('Erro:', error);
-                    container.innerHTML = '<div class="alert alert-danger">{{ __('projects/tabs.planning.messages.load_error') }}</div>';
+                    // Loga o objeto completo no console (abra o F12 para ver detalhes)
+                    console.error('Erro Detalhado:', error);
+
+                    // Tenta pegar a mensagem de erro (se existir) ou converte o objeto para string
+                    let errorMessage = error.message || error.toString();
+
+                    // Mostra na tela (CUIDADO: não faça isso em produção se o erro expuser dados sensíveis)
+                    container.innerHTML = `
+                        <div class="alert alert-danger">
+                            <strong>Erro ao carregar:</strong> ${errorMessage}
+                            <br><small class="text-muted">Verifique o console (F12) para mais detalhes.</small>
+                        </div>`;
+
                     container.style.opacity = '1';
                 });
         }

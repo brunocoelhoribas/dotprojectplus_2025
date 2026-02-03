@@ -22,6 +22,11 @@ return [
         'updated' => 'Minute updated successfully.',
         'deleted' => 'Minute deleted successfully.',
     ],
+    'cost' => [
+        'created' => 'Cost added successfully.',
+        'updated' => 'Cost updated successfully.',
+        'deleted' => 'Cost removed successfully.',
+    ],
     'risk' => [
         'created' => 'Risk created successfully.',
         'updated' => 'Risk updated successfully.',

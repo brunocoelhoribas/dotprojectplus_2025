@@ -76,6 +76,96 @@ return [
             'no_data' => 'No hay datos para mostrar.',
         ]
     ],
+    'cost' => [
+        'title' => 'Estimaciones de Costos y Presupuesto',
+        'btn_budget' => 'Presupuesto',
+        'btn_config_hr' => 'Configurar recursos humanos',
+        'btn_add_non_hr' => 'Incluir recurso no humano',
+
+        'info' => [
+            'intro' => 'Los recursos humanos se incluyen automáticamente en la línea base. Son necesarias las siguientes prerrogativas:',
+            'a' => 'a) El recurso humano está registrado en la organización.',
+            'b' => 'b) Los roles del recurso humano han sido configurados.',
+            'c' => 'c) El costo/hora del recurso humano ha sido configurado.',
+            'd' => 'd) Las actividades del proyecto tienen roles estimados.',
+            'e' => 'e) El recurso humano ha sido asignado al menos a una actividad.',
+        ],
+
+        'hr_title' => 'Estimaciones para recursos humanos',
+        'footer_note' => 'Los RR.HH. se agregan automáticamente a la línea base de costos. No es posible eliminarlos directamente. La eliminación de un RR.HH. se realiza mediante la desasignación del mismo de las actividades del proyecto.',
+        'subtotal_hr' => 'Subtotal estimaciones para recursos humanos (R$):',
+
+        'non_hr_title' => 'Estimaciones para recursos no humanos',
+        'subtotal_non_hr' => 'Subtotal estimaciones para recursos no humanos (R$):',
+
+        'table' => [
+            'name' => 'Nombre',
+            'description' => 'Descripción',
+            'start' => 'Fecha inicio',
+            'end' => 'Fecha fin',
+            'qty_hr' => 'Hora/Mes',
+            'qty_non_hr' => 'Cantidad',
+            'unit_value_hr' => 'Valor hora (R$)',
+            'unit_value_non_hr' => 'Costo unitario (R$)',
+            'total' => 'Costo total (R$)',
+            'empty_hr' => 'Ningún recurso humano asignado aún.',
+            'empty_non_hr' => 'Ningún costo adicional registrado.',
+        ],
+
+        'modal' => [
+            'main_title' => 'Agregar',
+            'subtitle' => 'Registro de recurso no humano',
+            'name_label' => 'Nombre',
+            'qty_label' => 'Cantidad',
+            'date_begin_label' => 'Fecha inicio',
+            'date_end_label' => 'Fecha fin',
+            'unit_value_label' => 'Valor unitario (R$)',
+            'total_value_label' => 'Valor total (R$)',
+
+            'date_end_help' => 'La fecha de finalización no puede ser posterior a la fecha de cierre del proyecto. (:date)',
+            'calc_rule' => '(Regla de cálculo: cantidad * valor unitario)',
+            'required_fields' => '* Campos obligatorios',
+
+            'send' => 'Enviar',
+            'create_title' => 'Nuevo Recurso',
+            'edit_title' => 'Editar Recurso',
+            'desc_label' => 'Descripción del Ítem',
+            'dates_label' => 'Período',
+            'unit_label' => 'Valor Unitario (R$)',
+            'total_preview' => 'Total Estimado',
+
+            'cancel' => 'Cancelar',
+            'save' => 'Guardar',
+
+            'confirmation_title' => 'Confirmación',
+            'confirm_delete' => '¿Está seguro de que desea eliminar este costo?',
+            'confirmation_impact' => 'Esta acción afectará el presupuesto total.',
+            'confirm_no' => 'No, Cancelar',
+            'confirm_yes' => 'Sí, Eliminar',
+        ],
+
+        'budget' => [
+            'title' => 'Presupuesto del Proyecto',
+            'table' => [
+                'item' => 'Ítem',
+                'total' => 'Total',
+                'section_hr' => 'Estimaciones para recursos humanos',
+                'subtotal_hr' => 'Subtotal recursos humanos:',
+                'section_non_hr' => 'Estimaciones para recursos no humanos',
+                'subtotal_non_hr' => 'Subtotal no humanos:',
+                'section_reserve' => 'Reserva de contingencia',
+                'empty_reserve' => 'Ninguna reserva de riesgo registrada.',
+                'monthly_total' => 'TOTAL MENSUAL:',
+            ],
+            'footer' => [
+                'mgmt_reserve' => 'Reserva de gestión (%):',
+                'partial_budget' => 'Presupuesto parcial:',
+                'total_value' => 'Valor total:',
+                'close' => 'Cerrar',
+                'save' => 'Guardar Presupuesto',
+            ],
+        ],
+    ],
     'risks' => [
         'title' => 'Riesgos',
         'active_risks' => 'Riesgos Activos',

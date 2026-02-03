@@ -76,6 +76,96 @@ return [
             'no_data' => 'No data available to display.',
         ]
     ],
+    'cost' => [
+        'title' => 'Cost Estimates & Budget',
+        'btn_budget' => 'Budget',
+        'btn_config_hr' => 'Configure Human Resources',
+        'btn_add_non_hr' => 'Add Non-Human Resource',
+
+        'info' => [
+            'intro' => 'Human resources are automatically included in the baseline. The following prerequisites are necessary:',
+            'a' => 'a) The human resource is registered in the organization.',
+            'b' => 'b) The human resource roles have been configured.',
+            'c' => 'c) The cost/hour of the human resource has been configured.',
+            'd' => 'd) The project activities have estimated roles.',
+            'e' => 'e) The human resource has been allocated to at least one activity.',
+        ],
+
+        'hr_title' => 'Estimates for Human Resources',
+        'footer_note' => 'HRs are automatically added to the cost baseline. It is not possible to delete them directly. Deletion of an HR is done by deallocating them from project activities.',
+        'subtotal_hr' => 'Subtotal estimates for human resources (R$):',
+
+        'non_hr_title' => 'Estimates for Non-Human Resources',
+        'subtotal_non_hr' => 'Subtotal estimates for non-human resources (R$):',
+
+        'table' => [
+            'name' => 'Name',
+            'description' => 'Description',
+            'start' => 'Start Date',
+            'end' => 'End Date',
+            'qty_hr' => 'Hour/Month',
+            'qty_non_hr' => 'Quantity',
+            'unit_value_hr' => 'Hourly Value (R$)',
+            'unit_value_non_hr' => 'Unit Cost (R$)',
+            'total' => 'Total Cost (R$)',
+            'empty_hr' => 'No human resources allocated yet.',
+            'empty_non_hr' => 'No additional costs registered.',
+        ],
+
+        'modal' => [
+            'main_title' => 'Add',
+            'subtitle' => 'Non-human resource registration',
+            'name_label' => 'Name',
+            'qty_label' => 'Quantity',
+            'date_begin_label' => 'Start Date',
+            'date_end_label' => 'End Date',
+            'unit_value_label' => 'Unit Value (R$)',
+            'total_value_label' => 'Total Value (R$)',
+            'date_end_help' => 'The end date cannot be after the project end date. (:date)',
+            'calc_rule' => '(Calculation rule: quantity * unit value)',
+
+            'required_fields' => '* Required fields',
+            'send' => 'Submit',
+
+            'create_title' => 'New Resource',
+            'edit_title' => 'Edit Resource',
+            'desc_label' => 'Item Description',
+            'dates_label' => 'Period',
+            'unit_label' => 'Unit Value (R$)',
+            'total_preview' => 'Estimated Total',
+
+            'cancel' => 'Cancel',
+            'save' => 'Save',
+
+            'confirmation_title' => 'Confirmation',
+            'confirm_delete' => 'Are you sure you want to delete this cost?',
+            'confirmation_impact' => 'This action will affect the total budget.',
+            'confirm_no' => 'No, Cancel',
+            'confirm_yes' => 'Yes, Delete',
+        ],
+
+        'budget' => [
+            'title' => 'Project Budget',
+            'table' => [
+                'item' => 'Item',
+                'total' => 'Total',
+                'section_hr' => 'Human Resources Estimates',
+                'subtotal_hr' => 'Human Resources Subtotal:',
+                'section_non_hr' => 'Non-Human Resources Estimates',
+                'subtotal_non_hr' => 'Non-Human Subtotal:',
+                'section_reserve' => 'Contingency Reserve',
+                'empty_reserve' => 'No risk reserve registered.',
+                'monthly_total' => 'MONTHLY TOTAL:',
+            ],
+            'footer' => [
+                'mgmt_reserve' => 'Management Reserve (%):',
+                'partial_budget' => 'Partial Budget:',
+                'total_value' => 'Total Value:',
+                'close' => 'Close',
+                'save' => 'Save Budget',
+            ],
+        ],
+    ],
     'risks' => [
         'title' => 'Risks',
         'active_risks' => 'Active Risks',

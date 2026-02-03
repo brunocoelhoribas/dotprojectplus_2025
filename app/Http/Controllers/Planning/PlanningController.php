@@ -11,6 +11,7 @@ use App\Models\Planning\Acquisition\AcquisitionPlanning;
 use App\Models\Planning\Communication\Communication;
 use App\Models\Planning\Communication\CommunicationChannel;
 use App\Models\Planning\Communication\CommunicationFrequency;
+use App\Models\Planning\Cost\Cost;
 use App\Models\Planning\Quality\QualityPlanning;
 use App\Models\Planning\Risk\Risk;
 use App\Models\Project\Project;
@@ -509,7 +510,7 @@ class PlanningController extends Controller {
         return match ($tab) {
             'activities' => $this->handleActivitiesTab($project),
             'schedule' => $this->handleScheduleTab($request, $project),
-            'costs' => $this->renderSimpleTab('costs', $project),
+            'costs' => $this->handleCostsTab($project),
             'risks' => $this->handleRisksTab($project),
             'quality' => $this->handleQualityTab($project),
             'communication' => $this->handleCommunicationTab($project),
@@ -564,6 +565,34 @@ class PlanningController extends Controller {
             'evmData' => $evmData,
             'baselines' => $baselines,
             'selectedBaseline' => $selectedBaselineId
+        ])->render();
+
+        return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function handleCostsTab(Project $project): JsonResponse {
+        $costs = Cost::where('cost_project_id', $project->project_id)
+            ->orderBy('cost_date_begin', 'asc')
+            ->get();
+
+        $hrCosts = $costs->where('cost_human_resource_id', '<>', null);
+        $nonHrCosts = $costs->where('cost_human_resource_id', null);
+
+        $totalHr = $hrCosts->sum('cost_value_total');
+        $totalNonHr = $nonHrCosts->sum('cost_value_total');
+        $grandTotal = $totalHr + $totalNonHr;
+
+        $html = view('projects.planning.tabs.costs.costs', [
+            'project' => $project,
+            'costs' => $costs,
+            'hrCosts' => $hrCosts,
+            'nonHrCosts' => $nonHrCosts,
+            'totalHr' => $totalHr,
+            'totalNonHr' => $totalNonHr,
+            'grandTotal' => $grandTotal
         ])->render();
 
         return response()->json(['html' => $html, 'actions' => '']);

@@ -7,7 +7,9 @@ use App\Http\Controllers\Initiating\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Planning\Acquisition\AcquisitionController;
 use App\Http\Controllers\Planning\Communication\CommunicationController;
+use App\Http\Controllers\Planning\PlanningBudgetController;
 use App\Http\Controllers\Planning\PlanningController;
+use App\Http\Controllers\Planning\PlanningCostController;
 use App\Http\Controllers\Planning\PlanningQualityController;
 use App\Http\Controllers\Planning\Risk\RiskController;
 use App\Http\Controllers\Project\ProjectController;
@@ -69,6 +71,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('planning/tab/{tab}', [PlanningController::class, 'loadTabContent'])
             ->name('planning.tab');
+
+        Route::post('/costs', [PlanningCostController::class, 'store'])->name('costs.store');
+        Route::put('/costs/{cost}', [PlanningCostController::class, 'update'])->name('costs.update');
+        Route::delete('/costs/{cost}', [PlanningCostController::class, 'destroy'])->name('costs.destroy');
+        Route::get('/costs/budget', [PlanningBudgetController::class, 'edit'])->name('costs.budget.edit');
+        Route::post('/costs/budget/update', [PlanningBudgetController::class, 'update'])->name('costs.budget.update');
 
         Route::post('/risks', [RiskController::class, 'store'])->name('risks.store');
         Route::put('/risks/{risk}', [RiskController::class, 'update'])->name('risks.update');

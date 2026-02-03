@@ -22,6 +22,11 @@ return [
         'updated' => 'Acta actualizada con éxito.',
         'deleted' => 'Acta eliminada con éxito.',
     ],
+    'cost' => [
+        'created' => 'Costo agregado con éxito.',
+        'updated' => 'Costo actualizado con éxito.',
+        'deleted' => 'Costo eliminado con éxito.',
+    ],
     'risk' => [
         'created' => 'Risco creada con éxito.',
         'updated' => 'Risco actualizada con éxito.',
