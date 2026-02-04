@@ -27,9 +27,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PlanningController extends Controller {
 
@@ -516,7 +518,6 @@ class PlanningController extends Controller {
             'communication' => $this->handleCommunicationTab($project),
             'acquisition' => $this->handleAcquisitionTab($project),
             'stakeholders' => $this->handleStakeholderTab($project),
-            'plan' => $this->renderSimpleTab('plan', $project),
             default => $this->renderUnderConstruction(),
         };
     }
@@ -735,6 +736,58 @@ class PlanningController extends Controller {
     private function renderUnderConstruction(): JsonResponse {
         $html = '<div class="text-center py-5 text-muted">Module under construction.</div>';
         return response()->json(['html' => $html, 'actions' => '']);
+    }
+
+    public function projectPlanPdf(Project $project): Response {
+        $wbsItems = ProjectWbsItem::with([
+            'tasks.owner.contact',
+            'tasks.estimation',
+            'tasks.resources',
+            'tasks.predecessors'
+        ])
+            ->where('project_id', $project->project_id)
+            ->orderBy('sort_order')
+            ->get();
+
+        $project->load([
+            'company',
+            'owner.contact',
+            'initiating',
+            'risks',
+            'acquisitions',
+            'communications',
+            'quality',
+        ]);
+
+        if (!$project->relationLoaded('stakeholders')) {
+            $project->load('stakeholders.contact');
+        }
+
+        $warnings = [];
+
+        if ($project->risks && $project->risks->count() < 3) {
+            $warnings[] = "Atenção: Menos de 3 riscos identificados (Recomendado: 3+)";
+        }
+
+        if ($project->stakeholders && $project->stakeholders->count() < 3) {
+            $warnings[] = "Atenção: Poucos stakeholders identificados.";
+        }
+
+        $pdf = Pdf::loadView('projects.pdf.project_plan', [
+            'project' => $project,
+            'initiating' => $project->initiating,
+            'wbsItems' => $wbsItems,
+            'risks' => $project->risks,
+            'acquisitions' => $project->acquisitions,
+            'stakeholders' => $project->stakeholders,
+            'communications' => $project->communications,
+            'manager' => $project->owner->contact,
+            'warnings' => $warnings
+        ]);
+
+        $pdf->setPaper('A4');
+
+        return $pdf->stream('project_plan_' . $project->project_id . '.pdf');
     }
 
     private function fetchGanttTasks(Project $project, string $baselineId): Collection {

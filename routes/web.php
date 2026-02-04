@@ -114,6 +114,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/acquisition/{acquisition}', [AcquisitionController::class, 'show'])->name('acquisition.show');
         Route::put('/acquisition/{acquisition}', [AcquisitionController::class, 'update'])->name('acquisition.update');
         Route::delete('/acquisition/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
+
+        Route::get('/plan/pdf', [PlanningController::class, 'projectPlanPdf'])->name('plan.pdf');
     });
 
     Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])->name('initiating.pdf');

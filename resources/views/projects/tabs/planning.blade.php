@@ -19,7 +19,11 @@
     <li class="nav-item"><a class="nav-link" onclick="loadTab(event, 'communication')">{{ __('projects/tabs.planning.menu.communication') }}</a></li>
     <li class="nav-item"><a class="nav-link" onclick="loadTab(event, 'acquisition')">{{ __('projects/tabs.planning.menu.acquisition') }}</a></li>
     <li class="nav-item"><a class="nav-link" onclick="loadTab(event, 'stakeholders')">{{ __('projects/tabs.planning.menu.stakeholders') }}</a></li>
-    <li class="nav-item"><a class="nav-link" onclick="loadTab(event, 'plan')">{{ __('projects/tabs.planning.menu.plan') }}</a></li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('projects.plan.pdf', $project->project_id) }}" target="_blank">
+            <i class="bi bi-file-earmark-pdf me-1"></i> {{ __('projects/tabs.planning.menu.plan') }}
+        </a>
+    </li>
 </ul>
 
 <div id="planning-content" class="position-relative min-vh-50">

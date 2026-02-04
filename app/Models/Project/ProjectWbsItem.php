@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProjectWbsItem extends Model {
-    use HasFactory;
-
     protected $table = 'dotp_project_eap_items';
     public $timestamps = false;
 

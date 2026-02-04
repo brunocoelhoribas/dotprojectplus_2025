@@ -2,6 +2,7 @@
 
 namespace App\Models\Project\Task;
 
+use App\Models\Project\Project;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -80,6 +81,15 @@ class Task extends Model {
             'dotp_task_dependencies',
             'dependencies_task_id',
             'dependencies_req_task_id'
+        );
+    }
+
+    public function resources(): BelongsToMany {
+        return $this->belongsToMany(
+            User::class,
+            'dotp_user_tasks',
+            'task_id',
+            'user_id'
         );
     }
 }
