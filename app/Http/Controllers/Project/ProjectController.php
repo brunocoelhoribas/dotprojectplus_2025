@@ -108,8 +108,6 @@ class ProjectController extends Controller {
 
         $statuses = $this->getProjectStatus();
         $priorities = $this->getProjectPriorities();
-        $users = $this->getOwnerList();
-        $initiating = $project->initiating ?? new Initiating();
         $contacts = UserContact::orderBy('contact_first_name')->get();
 
         $wbsItems = ProjectWbsItem::with(['tasks.owner.contact', 'tasks.estimation'])

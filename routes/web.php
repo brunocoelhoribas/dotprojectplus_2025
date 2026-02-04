@@ -123,6 +123,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/tasks/{task}/logs', [ExecutionController::class, 'getTaskLogs'])->name('tasks.logs.list');
         Route::delete('/tasks/logs/{log}', [ExecutionController::class, 'destroyLog'])->name('tasks.logs.destroy');
+
+        Route::get('/closure', [App\Http\Controllers\Closure\ClosureController::class, 'show'])->name('closure.show');
+        Route::post('/closure', [App\Http\Controllers\Closure\ClosureController::class, 'store'])->name('closure.store');
     });
 
     Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])->name('initiating.pdf');
