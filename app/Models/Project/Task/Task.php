@@ -4,10 +4,10 @@ namespace App\Models\Project\Task;
 
 use App\Models\Project\Project;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User\User;
 
@@ -16,8 +16,6 @@ use App\Models\User\User;
  * Mapped to table 'dotp_tasks'.
  */
 class Task extends Model {
-    use HasFactory;
-
     protected $table = 'dotp_tasks';
     protected $primaryKey = 'task_id';
     public $timestamps = false;
@@ -91,5 +89,21 @@ class Task extends Model {
             'task_id',
             'user_id'
         );
+    }
+
+    public function estimatedRoles(): self|HasMany {
+        return $this->hasMany(TaskEstimatedRole::class, 'task_id', 'task_id');
+    }
+
+    public function getAssigneesAttribute() {
+        return $this->estimatedRoles->flatMap(function ($role) {
+            return $role->allocations->map(function ($allocation) {
+                return $allocation->humanResource->user ?? null;
+            });
+        })->filter();
+    }
+
+    public function logs(): self|HasMany {
+        return $this->hasMany(TaskLog::class, 'task_log_task', 'task_id');
     }
 }

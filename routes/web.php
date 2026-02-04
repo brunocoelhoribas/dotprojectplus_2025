@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Execution\ExecutionController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
@@ -102,8 +103,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/quality/metric/{metric}', [PlanningQualityController::class, 'destroyMetric'])->name('quality.destroy_metric');
 
         Route::post('/communication/event', [CommunicationController::class, 'store'])->name('communication.store');
-        Route::get('/communication/event/{communication}', [CommunicationController::class, 'show'])->name('show'); // Para carregar dados no modal
-        Route::put('/communication/event/{communication}', [CommunicationController::class, 'update'])->name('update'); // Para salvar edição
+        Route::get('/communication/event/{communication}', [CommunicationController::class, 'show'])->name('show');
+        Route::put('/communication/event/{communication}', [CommunicationController::class, 'update'])->name('update');
         Route::delete('/communication/event/{communication}', [CommunicationController::class, 'destroy'])->name('communication.destroy');
         Route::post('/communication/channel', [CommunicationController::class, 'storeChannel'])->name('communication.store_channel');
         Route::post('/channel/delete', [CommunicationController::class, 'destroyChannel'])->name('communication.destroy_channel');
@@ -116,6 +117,12 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/acquisition/{acquisition}', [AcquisitionController::class, 'destroy'])->name('acquisition.destroy');
 
         Route::get('/plan/pdf', [PlanningController::class, 'projectPlanPdf'])->name('plan.pdf');
+
+        Route::get('/execution', [ExecutionController::class, 'index'])->name('execution.index');
+        Route::post('/execution/log', [ExecutionController::class, 'storeLog'])->name('execution.log.store');
+
+        Route::get('/tasks/{task}/logs', [ExecutionController::class, 'getTaskLogs'])->name('tasks.logs.list');
+        Route::delete('/tasks/logs/{log}', [ExecutionController::class, 'destroyLog'])->name('tasks.logs.destroy');
     });
 
     Route::get('projects/{project}/initiating/pdf', [InitiatingController::class, 'generatePDF'])->name('initiating.pdf');
