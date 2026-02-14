@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\Company\CompanyController;
+use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
@@ -36,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::resource('companies', CompanyController::class);
+
+    Route::prefix('companies/{company}')->name('companies.')->group(function () {
+        Route::resource('roles', CompanyRoleController::class)->except(['index', 'show']);
+    });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])
         ->name('projects.batchUpdate');

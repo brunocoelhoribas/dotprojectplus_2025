@@ -85,6 +85,40 @@ return [
             'roles' => 'Conteúdo da aba "Papéis da organização".',
             'organogram' => 'Conteúdo da aba "Organograma".',
             'hr' => 'Conteúdo da aba "Recursos Humanos".',
-        ]
+        ],
+        'roles_tab' => [
+            'add_btn' => 'Novo Papel',
+            'empty' => 'Nenhum papel organizacional cadastrado para esta empresa.',
+            'table' => [
+                'name' => 'Nome do Papel',
+                'responsibility' => 'Responsabilidade',
+                'authority' => 'Autoridade',
+                'competence' => 'Competência',
+                'actions' => 'Ações',
+            ],
+        ],
     ],
+    'roles' => [
+        'titles' => [
+            'create' => 'Novo Papel',
+            'edit' => 'Editar Papel',
+        ],
+        'headers' => [
+            'create' => 'Novo Papel Organizacional',
+            'edit' => 'Editando Papel',
+        ],
+        'form' => [
+            'name' => 'Nome do Papel',
+            'responsability' => 'Responsabilidades',
+            'responsability_help' => 'Descreva as principais responsabilidades deste papel.',
+            'authority' => 'Autoridade',
+            'authority_help' => 'Qual a autonomia e autoridade deste papel?',
+            'competence' => 'Competências Necessárias',
+            'competence_help' => 'Quais habilidades são exigidas para este papel?',
+        ],
+        'actions' => [
+            'cancel' => 'Cancelar',
+            'save' => 'Salvar',
+        ],
+    ]
 ];

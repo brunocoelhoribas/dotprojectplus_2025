@@ -85,6 +85,40 @@ return [
             'roles' => 'Contenido de la pestaña "Roles de la organización".',
             'organogram' => 'Contenido de la pestaña "Organigrama".',
             'hr' => 'Contenido de la pestaña "Recursos Humanos".',
-        ]
+        ],
+        'roles_tab' => [
+            'add_btn' => 'Nuevo Rol',
+            'empty' => 'No hay roles organizacionales registrados para esta empresa.',
+            'table' => [
+                'name' => 'Nombre del Rol',
+                'responsibility' => 'Responsabilidad',
+                'authority' => 'Autoridad',
+                'competence' => 'Competencia',
+                'actions' => 'Acciones',
+            ],
+        ],
     ],
+    'roles' => [
+        'titles' => [
+            'create' => 'Nuevo Rol',
+            'edit' => 'Editar Rol',
+        ],
+        'headers' => [
+            'create' => 'Nuevo Rol Organizacional',
+            'edit' => 'Editando Rol',
+        ],
+        'form' => [
+            'name' => 'Nombre del Rol',
+            'responsability' => 'Responsabilidades',
+            'responsability_help' => 'Describa las principales responsabilidades de este rol.',
+            'authority' => 'Autoridad',
+            'authority_help' => '¿Cuál es la autonomía y autoridad de este rol?',
+            'competence' => 'Competencias Necesarias',
+            'competence_help' => '¿Qué habilidades se requieren para este rol?',
+        ],
+        'actions' => [
+            'cancel' => 'Cancelar',
+            'save' => 'Guardar',
+        ],
+    ]
 ];

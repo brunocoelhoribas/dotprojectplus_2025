@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Company;
 
+use App\Http\Controllers\Controller;
 use App\Models\Company\Company;
 use App\Models\User\User;
 use Illuminate\Contracts\View\Factory;
@@ -95,7 +96,8 @@ class CompanyController extends Controller {
             'owner.contact',
             'policy',
             'activeProjects.owner.contact',
-            'archivedProjects.owner.contact'
+            'archivedProjects.owner.contact',
+            'roles'
         ]);
 
         $projectStatus = $this->getProjectStatus();

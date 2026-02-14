@@ -171,8 +171,72 @@
                     @endif
                 </div>
 
-                <div class="tab-pane fade p-4" id="papeis" role="tabpanel" aria-labelledby="papeis-tab">
-                    <p class="text-muted">{{ __('companies/view.show.placeholders.roles') }}</p>
+                <div class="tab-pane fade" id="papeis" role="tabpanel" aria-labelledby="papeis-tab">
+                    <div class="d-flex justify-content-end mb-3 mt-3">
+                        <a href="{{ route('companies.roles.create', $company->company_id) }}"
+                           class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus-lg me-1"></i> {{ __('companies/view.show.roles_tab.add_btn') }}
+                        </a>
+                    </div>
+
+                    @if ($company->roles->isEmpty())
+                        <div class="text-center text-muted py-5 border rounded bg-light">
+                            <i class="bi bi-person-badge display-6 mb-3 d-block opacity-50"></i>
+                            <p class="mb-0">
+                                {{ __('companies/view.show.roles_tab.empty') }}
+                            </p>
+                        </div>
+                    @else
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered align-middle mb-0">
+                                <thead class="table-light">
+                                <tr>
+                                    <th style="width: 15%;">{{ __('companies/view.show.roles_tab.table.name') }}</th>
+                                    <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.responsibility') }}</th>
+                                    <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.authority') }}</th>
+                                    <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.competence') }}</th>
+                                    <th style="width: 10%;" class="text-center">{{ __('companies/view.show.roles_tab.table.actions') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                @foreach ($company->roles as $role)
+                                    @php
+                                        $isConfigured = !empty($role->human_resources_role_responsability) &&
+                                                        !empty($role->human_resources_role_authority) &&
+                                                        !empty($role->human_resources_role_competence);
+
+                                        $rowClass = $isConfigured ? '' : 'table-danger';
+                                    @endphp
+
+                                    <tr class="{{ $rowClass }}">
+                                        <td class="fw-bold text-dark">
+                                            {{ $role->human_resources_role_name }}
+                                        </td>
+                                        <td class="small text-muted">
+                                            {{ Str::limit($role->human_resources_role_responsability, 100) }}
+                                        </td>
+                                        <td class="small text-muted">
+                                            {{ Str::limit($role->human_resources_role_authority, 100) }}
+                                        </td>
+                                        <td class="small text-muted">
+                                            {{ Str::limit($role->human_resources_role_competence, 100) }}
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-1">
+                                                <a href="{{ route('companies.roles.edit', [$company->company_id, $role->human_resources_role_id]) }}"
+                                                   class="btn btn-xs btn-link text-dark p-0"
+                                                   title="{{ __('companies/view.index.actions.edit') }}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+
                 </div>
                 <div class="tab-pane fade p-4" id="organograma" role="tabpanel" aria-labelledby="organograma-tab">
                     <p class="text-muted">{{ __('companies/view.show.placeholders.organogram') }}</p>

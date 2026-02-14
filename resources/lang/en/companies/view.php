@@ -85,6 +85,40 @@ return [
             'roles' => 'Content for "Organization Roles" tab.',
             'organogram' => 'Content for "Organogram" tab.',
             'hr' => 'Content for "Human Resources" tab.',
-        ]
+        ],
+        'roles_tab' => [
+            'add_btn' => 'New Role',
+            'empty' => 'No organizational roles registered for this company.',
+            'table' => [
+                'name' => 'Role Name',
+                'responsibility' => 'Responsibility',
+                'authority' => 'Authority',
+                'competence' => 'Competence',
+                'actions' => 'Actions',
+            ],
+        ],
     ],
+    'roles' => [
+        'titles' => [
+            'create' => 'New Role',
+            'edit' => 'Edit Role',
+        ],
+        'headers' => [
+            'create' => 'New Organizational Role',
+            'edit' => 'Editing Role',
+        ],
+        'form' => [
+            'name' => 'Role Name',
+            'responsability' => 'Responsibilities',
+            'responsability_help' => 'Describe the main responsibilities of this role.',
+            'authority' => 'Authority',
+            'authority_help' => 'What is the autonomy and authority of this role?',
+            'competence' => 'Required Competencies',
+            'competence_help' => 'What skills are required for this role?',
+        ],
+        'actions' => [
+            'cancel' => 'Cancel',
+            'save' => 'Save',
+        ],
+    ]
 ];
