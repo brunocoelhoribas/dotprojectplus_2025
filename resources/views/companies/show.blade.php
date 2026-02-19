@@ -213,13 +213,13 @@
                                             {{ $role->human_resources_role_name }}
                                         </td>
                                         <td class="small text-muted">
-                                            {{ Str::limit($role->human_resources_role_responsability, 100) }}
+                                            {{ Str::limit($role->human_resources_role_responsability) }}
                                         </td>
                                         <td class="small text-muted">
-                                            {{ Str::limit($role->human_resources_role_authority, 100) }}
+                                            {{ Str::limit($role->human_resources_role_authority) }}
                                         </td>
                                         <td class="small text-muted">
-                                            {{ Str::limit($role->human_resources_role_competence, 100) }}
+                                            {{ Str::limit($role->human_resources_role_competence) }}
                                         </td>
                                         <td class="text-center">
                                             <div class="d-flex justify-content-center gap-1">
@@ -239,7 +239,7 @@
 
                 </div>
                 <div class="tab-pane fade p-4" id="organograma" role="tabpanel" aria-labelledby="organograma-tab">
-                    <p class="text-muted">{{ __('companies/view.show.placeholders.organogram') }}</p>
+                    @include('companies.organogram.organogram_tab', ['company' => $company])
                 </div>
                 <div class="tab-pane fade p-4" id="rh" role="tabpanel" aria-labelledby="rh-tab">
                     <p class="text-muted">{{ __('companies/view.show.placeholders.hr') }}</p>

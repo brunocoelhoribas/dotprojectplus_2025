@@ -120,5 +120,23 @@ return [
             'cancel' => 'Cancelar',
             'save' => 'Guardar',
         ],
-    ]
+    ],
+    'organogram' => [
+        'order' => 'Orden',
+        'indentation' => 'Sangría',
+        'role' => 'Rol',
+        'actions' => 'Acciones',
+        'add' => 'Agregar',
+        'save' => 'Guardar',
+        'cancel' => 'Cancelar',
+        'select_placeholder' => 'Seleccione un rol...',
+        'js' => [
+            'confirm_remove' => '¿Eliminar este elemento del organigrama?',
+            'alert_empty' => 'Agregue al menos un rol al organigrama.',
+        ],
+    ],
+    'messages' => [
+        'organogram_invalid' => 'Datos inválidos.',
+        'organogram_success' => '¡Organigrama actualizado con éxito!',
+    ],
 ];

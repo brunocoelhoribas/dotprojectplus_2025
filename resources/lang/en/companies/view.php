@@ -120,5 +120,23 @@ return [
             'cancel' => 'Cancel',
             'save' => 'Save',
         ],
-    ]
+    ],
+    'organogram' => [
+        'order' => 'Order',
+        'indentation' => 'Indentation',
+        'role' => 'Role',
+        'actions' => 'Actions',
+        'add' => 'Add',
+        'save' => 'Save',
+        'cancel' => 'Cancel',
+        'select_placeholder' => 'Select a role...',
+        'js' => [
+            'confirm_remove' => 'Remove this item from the organogram?',
+            'alert_empty' => 'Add at least one role to the organogram.',
+        ],
+    ],
+    'messages' => [
+        'organogram_invalid' => 'Invalid data.',
+        'organogram_success' => 'Organogram updated successfully!',
+    ],
 ];

@@ -120,5 +120,23 @@ return [
             'cancel' => 'Cancelar',
             'save' => 'Salvar',
         ],
-    ]
+    ],
+    'organogram' => [
+        'order' => 'Ordem',
+        'indentation' => 'Indentação',
+        'role' => 'Papel',
+        'actions' => 'Ações',
+        'add' => 'Adicionar',
+        'save' => 'Salvar',
+        'cancel' => 'Cancelar',
+        'select_placeholder' => 'Selecione um papel...',
+        'js' => [
+            'confirm_remove' => 'Remover este item do organograma?',
+            'alert_empty' => 'Adicione pelo menos um papel ao organograma.',
+        ],
+    ],
+    'messages' => [
+        'organogram_invalid' => 'Dados inválidos.',
+        'organogram_success' => 'Organograma atualizado com sucesso!',
+    ],
 ];

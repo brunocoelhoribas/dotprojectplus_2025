@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Company\CompanyController;
+use App\Http\Controllers\Company\CompanyOrganogramController;
 use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
 use App\Http\Controllers\Initiating\InitiatingController;
@@ -40,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('companies/{company}')->name('companies.')->group(function () {
         Route::resource('roles', CompanyRoleController::class)->except(['index', 'show']);
+        Route::post('organogram', [CompanyOrganogramController::class, 'update'])->name('organogram.update');
     });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])
