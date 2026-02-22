@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Company\CompanyController;
+use App\Http\Controllers\Company\CompanyHumanResourceController;
 use App\Http\Controllers\Company\CompanyOrganogramController;
 use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Planning\PlanningCostController;
 use App\Http\Controllers\Planning\PlanningQualityController;
 use App\Http\Controllers\Planning\Risk\RiskController;
 use App\Http\Controllers\Project\ProjectController;
+use App\Http\Controllers\User\UserCostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,11 +39,22 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::prefix('users/{user}')->name('users.')->group(function () {
+        Route::post('costs', [UserCostController::class, 'store'])->name('costs.store');
+        Route::put('costs/{cost}', [UserCostController::class, 'update'])->name('costs.update');
+        Route::delete('costs/{cost}', [UserCostController::class, 'destroy'])->name('costs.destroy');
+    });
+
     Route::resource('companies', CompanyController::class);
 
     Route::prefix('companies/{company}')->name('companies.')->group(function () {
         Route::resource('roles', CompanyRoleController::class)->except(['index', 'show']);
         Route::post('organogram', [CompanyOrganogramController::class, 'update'])->name('organogram.update');
+
+        Route::post('hr', [CompanyHumanResourceController::class, 'store'])->name('hr.store');
+        Route::delete('hr/{hr_id}', [CompanyHumanResourceController::class, 'destroy'])->name('hr.destroy');
+        Route::get('hr/{hr_id}', [CompanyHumanResourceController::class, 'show'])->name('hr.show');
+        Route::put('hr/{hr_id}', [CompanyHumanResourceController::class, 'update'])->name('hr.update');
     });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])

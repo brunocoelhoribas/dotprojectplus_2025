@@ -23,13 +23,18 @@
                         <strong>{{ __('companies/view.form.name') }}</strong>
                         <span class="text-danger">*</span> {{ $company->company_name }}
                     </p>
-                    <p class="mb-1"><strong>{{ __('companies/view.form.phone') }}</strong> {{ $company->company_phone1 ?? 'N/A' }}</p>
-                    <p class="mb-1"><strong>{{ __('companies/view.form.email') }}</strong> {{ $company->company_email ?? 'N/A' }}</p>
+                    <p class="mb-1">
+                        <strong>{{ __('companies/view.form.phone') }}</strong> {{ $company->company_phone1 ?? 'N/A' }}
+                    </p>
+                    <p class="mb-1">
+                        <strong>{{ __('companies/view.form.email') }}</strong> {{ $company->company_email ?? 'N/A' }}
+                    </p>
                     <p class="mb-1">
                         <strong>{{ __('companies/view.form.address') }}</strong>
                         {{ $company->company_address1 }} {{ $company->company_address2 }}
                     </p>
-                    <p class="mb-1"><strong>{{ __('companies/view.form.city') }}</strong> {{ $company->company_city ?? 'N/A' }}</p>
+                    <p class="mb-1">
+                        <strong>{{ __('companies/view.form.city') }}</strong> {{ $company->company_city ?? 'N/A' }}</p>
                 </div>
 
                 <div class="col-md-6">
@@ -38,8 +43,11 @@
                         {{ $company->owner?->contact?->full_name ?? 'N/A' }}
                     </p>
                     <p class="mb-1"><strong>{{ __('companies/view.form.contact_section') }}:</strong> --- </p>
-                    <p class="mb-1"><strong>{{ __('companies/view.form.state') }}</strong> {{ $company->company_state ?? 'N/A' }}</p>
-                    <p class="mb-1"><strong>{{ __('companies/view.form.zip') }}</strong> {{ $company->company_zip ?? 'N/A' }}</p>
+                    <p class="mb-1">
+                        <strong>{{ __('companies/view.form.state') }}</strong> {{ $company->company_state ?? 'N/A' }}
+                    </p>
+                    <p class="mb-1">
+                        <strong>{{ __('companies/view.form.zip') }}</strong> {{ $company->company_zip ?? 'N/A' }}</p>
                 </div>
             </div>
 
@@ -61,17 +69,20 @@
             <ul class="nav nav-tabs nav-tabs-dotproject" id="companyTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="projetos-tab" data-bs-toggle="tab" data-bs-target="#projetos"
-                            type="button" role="tab" aria-controls="projetos" aria-selected="true">{{ __('companies/view.show.tabs.projects') }}
+                            type="button" role="tab" aria-controls="projetos"
+                            aria-selected="true">{{ __('companies/view.show.tabs.projects') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="papeis-tab" data-bs-toggle="tab" data-bs-target="#papeis" type="button"
-                            role="tab" aria-controls="papeis" aria-selected="false">{{ __('companies/view.show.tabs.roles') }}
+                            role="tab" aria-controls="papeis"
+                            aria-selected="false">{{ __('companies/view.show.tabs.roles') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="organograma-tab" data-bs-toggle="tab" data-bs-target="#organograma"
-                            type="button" role="tab" aria-controls="organograma" aria-selected="false">{{ __('companies/view.show.tabs.organogram') }}
+                            type="button" role="tab" aria-controls="organograma"
+                            aria-selected="false">{{ __('companies/view.show.tabs.organogram') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -103,13 +114,15 @@
                             <table class="table table-hover table-bordered align-middle mb-0">
                                 <thead class="table-light">
                                 <tr>
-                                    <th style="width: 8%;" class="text-end">{{ __('companies/view.show.projects_tab.table.complete') }}</th>
+                                    <th style="width: 8%;"
+                                        class="text-end">{{ __('companies/view.show.projects_tab.table.complete') }}</th>
                                     <th>{{ __('companies/view.show.projects_tab.table.project') }}</th>
                                     <th style="width: 10%;">{{ __('companies/view.show.projects_tab.table.start') }}</th>
                                     <th style="width: 10%;">{{ __('companies/view.show.projects_tab.table.end') }}</th>
                                     <th>{{ __('companies/view.show.projects_tab.table.owner') }}</th>
                                     <th>{{ __('companies/view.show.projects_tab.table.status') }}</th>
-                                    <th style="width: 10%;" class="text-center">{{ __('companies/view.show.projects_tab.table.actions') }}</th>
+                                    <th style="width: 10%;"
+                                        class="text-center">{{ __('companies/view.show.projects_tab.table.actions') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -119,7 +132,8 @@
                                             <span class="badge bg-secondary">{{ $project->project_percent_complete ?? 0 }}%</span>
                                         </td>
                                         <td>
-                                            <a href="{{ route('projects.show', $project->project_id) }}" class="text-dark text-decoration-none link-hover-yellow">
+                                            <a href="{{ route('projects.show', $project->project_id) }}"
+                                               class="text-dark text-decoration-none link-hover-yellow">
                                                 {{ $project->project_name }}
                                             </a>
                                         </td>
@@ -144,7 +158,8 @@
                                                     default => 'bg-secondary'
                                                 };
                                             @endphp
-                                            <span class="badge {{ $statusClass }} bg-opacity-75" style="font-weight: normal;">
+                                            <span class="badge {{ $statusClass }} bg-opacity-75"
+                                                  style="font-weight: normal;">
                                                 {{ $projectStatus[$project->project_status] ?? 'N/A' }}
                                             </span>
                                         </td>
@@ -195,7 +210,8 @@
                                     <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.responsibility') }}</th>
                                     <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.authority') }}</th>
                                     <th style="width: 25%;">{{ __('companies/view.show.roles_tab.table.competence') }}</th>
-                                    <th style="width: 10%;" class="text-center">{{ __('companies/view.show.roles_tab.table.actions') }}</th>
+                                    <th style="width: 10%;"
+                                        class="text-center">{{ __('companies/view.show.roles_tab.table.actions') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -242,7 +258,7 @@
                     @include('companies.organogram.organogram_tab', ['company' => $company])
                 </div>
                 <div class="tab-pane fade p-4" id="rh" role="tabpanel" aria-labelledby="rh-tab">
-                    <p class="text-muted">{{ __('companies/view.show.placeholders.hr') }}</p>
+                    @include('companies.human-resources.hr-tab', ['company' => $company])
                 </div>
             </div>
 

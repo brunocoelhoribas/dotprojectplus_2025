@@ -3,8 +3,11 @@
 namespace App\Models\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\HumanResource\HumanResource;
+use App\Models\Planning\Cost\Cost;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -59,6 +62,13 @@ class User extends Authenticatable {
     protected $fillable = [
         'user_username',
         'user_password',
+        'user_contact',
+        'user_parent',
+        'user_type',
+        'user_company',
+        'user_department',
+        'user_owner',
+        'user_signature'
     ];
 
     /**
@@ -82,5 +92,14 @@ class User extends Authenticatable {
         // The foreign key is 'user_contact' on this (User) model,
         // and the local key (owner key) is 'contact_id' on the UserContact model.
         return $this->hasOne(UserContact::class, 'contact_id', 'user_contact');
+    }
+
+    public function costs(): HasMany|self {
+        return $this->hasMany(Cost::class, 'cost_human_resource_id', 'user_id')
+            ->orderBy('cost_date_begin', 'desc');
+    }
+
+    public function humanResource(): HasOne|self {
+        return $this->hasOne(HumanResource::class, 'human_resource_user_id', 'user_id');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -23,7 +24,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read User|null $user The user associated with this contact.
  */
 class UserContact extends Model {
-    use HasFactory;
 
     /**
      * The table associated with the model.
@@ -64,7 +64,6 @@ class UserContact extends Model {
         'contact_city',
         'contact_state',
         'contact_zip',
-        // Add other contact fields as needed
     ];
 
     /**
@@ -83,9 +82,13 @@ class UserContact extends Model {
      * This defines the other side of the 1-to-1 relationship,
      * based on the 'user_contact' key on the 'dotp_users' table.
      *
-     * @return HasOne
+     * @return HasMany|UserContact
      */
-    public function user(): HasOne {
-        return $this->hasOne(User::class, 'user_contact', 'contact_id');
+    public function users(): self|HasMany {
+        return $this->hasMany(
+            User::class,
+            'user_company',
+            'company_id'
+        );
     }
 }
