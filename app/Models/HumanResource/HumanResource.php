@@ -42,4 +42,13 @@ class HumanResource extends Model {
             'human_resources_role_id'
         );
     }
+
+    public function skills(): BelongsToMany {
+        return $this->belongsToMany(
+            HumanResourceSkill::class,
+            'dotp_human_resource_skills',
+            'human_resource_id',
+            'skill_id'
+        )->withPivot('proficiency_level');
+    }
 }

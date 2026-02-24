@@ -87,14 +87,14 @@
         </div>
     </div>
 
-    <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body p-4 text-center">
             <h6 class="text-dark fw-normal mb-3">{{ __('companies/view.hr.details.section_costs') }}</h6>
 
             <table class="table table-bordered table-sm align-middle mx-auto" style="max-width: 900px;" id="costsTable">
                 <thead style="background-color: #FFC107;">
                 <tr class="small fw-bold text-dark">
-                    <th>Projeto</th>
+                    <th>{{ __('companies/view.hr.costs.project') }}</th>
                     <th>{{ __('companies/view.hr.costs.start_date') }}</th>
                     <th>{{ __('companies/view.hr.costs.end_date') }}</th>
                     <th>{{ __('companies/view.hr.costs.standard_rate') }}</th>
@@ -105,7 +105,7 @@
                 @if($hr->user && $hr->user->costs)
                     @foreach($hr->user->costs as $cost)
                         @php
-                            $projName = $companyProjects->firstWhere('project_id', $cost->cost_project_id)->project_name ?? 'N/D';
+                            $projName = $companyProjects->firstWhere('project_id', $cost->cost_project_id)->project_name ?? __('companies/view.hr.costs.not_available');
                         @endphp
                         <tr id="cost-row-{{ $cost->cost_id }}">
                             <td class="small fw-bold">{{ $projName }}</td>
@@ -130,7 +130,7 @@
                 <tr>
                     <td>
                         <select id="new_cost_project_id" class="form-select form-select-sm">
-                            <option value="">Selecione...</option>
+                            <option value="">{{ __('companies/view.hr.actions.select') }}</option>
                             @foreach($companyProjects as $proj)
                                 <option value="{{ $proj->project_id }}">{{ $proj->project_name }}</option>
                             @endforeach
@@ -193,15 +193,15 @@
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h6 class="modal-title fw-bold">{{ __('companies/view.hr.actions.edit') }} (Custo)</h6>
+                    <h6 class="modal-title fw-bold">{{ __('companies/view.hr.actions.edit') }}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="edit_cost_id">
                     <div class="mb-2">
-                        <label class="small fw-bold">Projeto</label>
+                        <label class="small fw-bold">{{ __('companies/view.hr.costs.project') }}</label>
                         <select id="edit_cost_project_id" class="form-select form-select-sm">
-                            <option value="">Selecione...</option>
+                            <option value="">{{ __('companies/view.hr.actions.select') }}</option>
                             @foreach($companyProjects as $proj)
                                 <option value="{{ $proj->project_id }}">{{ $proj->project_name }}</option>
                             @endforeach
@@ -234,20 +234,149 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title h6 fw-bold">
-                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Atenção
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ __('companies/view.hr.messages.error_title') }}
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    {{ __('companies/view.hr.messages.confirm_delete_cost') ?? 'Deseja realmente excluir este custo da lista?' }}
+                    {{ __('companies/view.hr.messages.confirm_delete_cost') }}
                 </div>
                 <div class="modal-footer bg-light">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
                         {{ __('companies/view.hr.actions.cancel') }}
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" onclick="executeDeleteCost()">
-                        Excluir
+                        {{ __('companies/view.hr.table.actions') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-radar me-2"></i>{{ __('companies/view.hr.skills.title') }}
+            </h5>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSkillModal">
+                <i class="bi bi-plus-lg"></i> {{ __('companies/view.hr.skills.add_btn') }}
+            </button>
+        </div>
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <div style="width: 100%; max-width: 350px;">
+                        <canvas id="skillsRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle">
+                            <thead class="table-light">
+                            <tr>
+                                <th>{{ __('companies/view.hr.skills.skill') }}</th>
+                                <th>{{ __('companies/view.hr.skills.type') }}</th>
+                                <th>{{ __('companies/view.hr.skills.level') }}</th>
+                                <th class="text-end">{{ __('companies/view.hr.skills.action') }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($hr->skills as $skill)
+                                <tr id="skill-row-{{ $skill->skill_id }}">
+                                    <td class="fw-bold">{{ $skill->skill_name }}</td>
+                                    <td>
+                                        @if($skill->skill_type === 'technical')
+                                            <span class="badge bg-info text-dark">{{ __('companies/view.hr.skills.technical') }}</span>
+                                        @else
+                                            <span class="badge bg-warning text-dark">{{ __('companies/view.hr.skills.behavioral') }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @for($i=1; $i<=5; $i++)
+                                            <i class="bi bi-star{{ $i <= $skill->pivot->proficiency_level ? '-fill text-warning' : ' text-muted opacity-25' }}"></i>
+                                        @endfor
+                                    </td>
+                                    <td class="text-end">
+                                        <button class="btn btn-xs text-danger"
+                                                onclick="deleteSkill({{ $skill->skill_id }})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted small py-3">
+                                        {{ __('companies/view.hr.skills.empty') }}
+                                    </td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addSkillModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                    <form onsubmit="saveSkill(event)">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <h6 class="modal-title fw-bold">{{ __('companies/view.hr.skills.new_skill') }}</h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-4">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">{{ __('companies/view.hr.skills.skill_name') }}</label>
+                                    <input type="text" id="new_skill_name" class="form-control"
+                                           placeholder="{{ __('companies/view.hr.skills.skill_placeholder') }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">{{ __('companies/view.hr.skills.type') }}</label>
+                                    <select id="new_skill_type" class="form-select">
+                                        <option value="technical">{{ __('companies/view.hr.skills.technical_hard') }}</option>
+                                        <option value="behavioral">{{ __('companies/view.hr.skills.behavioral_soft') }}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 mt-4">
+                                    <label class="form-label small fw-bold">{{ __('companies/view.hr.skills.proficiency_level') }}</label>
+                                    <div class="d-flex justify-content-between px-1">
+                                        <small class="text-muted fw-bold">{{ __('companies/view.hr.skills.beginner') }}</small>
+                                        <small class="text-muted fw-bold">{{ __('companies/view.hr.skills.expert') }}</small>
+                                    </div>
+                                    <input type="range" id="new_skill_level" class="form-range mt-2" min="1" max="5" step="1" value="3">
+                                </div>
+                            </div>
+                            <div class="modal-footer bg-light justify-content-center p-3">
+                                <button type="submit" id="btnSaveSkill" class="btn btn-primary px-5">{{ __('companies/view.hr.actions.save') }}</button>
+                            </div>
+                        </div>
+                    </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteSkillConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title h6 fw-bold">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ __('companies/view.hr.messages.error_title') }}
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ __('companies/view.hr.messages.confirm_delete_skill') }}
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                        {{ __('companies/view.hr.actions.cancel') }}
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="executeDeleteSkill()">
+                        {{ __('companies/view.hr.table.actions') }}
                     </button>
                 </div>
             </div>
@@ -260,7 +389,10 @@
         let editHrModal;
         let editCostModalInstance;
         let deleteCostConfirmModalInstance;
+        let deleteSkillConfirmModalInstance;
+
         let costIdToDelete = null;
+        let skillIdToDelete = null;
 
         const userId = {{ $hr->human_resource_user_id ?? 'null' }};
 
@@ -273,6 +405,9 @@
             }
             if (document.getElementById('deleteCostConfirmModal')) {
                 deleteCostConfirmModalInstance = new bootstrap.Modal(document.getElementById('deleteCostConfirmModal'));
+            }
+            if (document.getElementById('deleteSkillConfirmModal')) {
+                deleteSkillConfirmModalInstance = new bootstrap.Modal(document.getElementById('deleteSkillConfirmModal'));
             }
         });
 
@@ -338,7 +473,7 @@
 
         function saveNewCost() {
             if (!userId) {
-                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", "Usuário não encontrado.", 'error');
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", "{{ __('companies/view.hr.messages.save_error') }}", 'error');
                 return;
             }
 
@@ -348,7 +483,7 @@
             const value = document.getElementById('new_cost_value').value;
 
             if (!projectId || !start || !value) {
-                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", "Preencha o Projeto, Data de Início e a Taxa.", 'error');
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", "{{ __('companies/view.hr.messages.save_error') }}", 'error');
                 return;
             }
 
@@ -379,7 +514,7 @@
                     }
                 })
                 .catch(err => {
-                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", err.message || "Erro ao salvar o custo.", 'error');
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", err.message || "{{ __('companies/view.hr.messages.save_error') }}", 'error');
                 });
         }
 
@@ -427,7 +562,7 @@
                     }
                 })
                 .catch(err => {
-                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", err.message || "Erro na requisição", 'error');
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", err.message || "{{ __('companies/view.hr.messages.save_error') }}", 'error');
                 });
         }
 
@@ -459,6 +594,136 @@
                         if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.success_title') }}", data.message, 'success');
                         costIdToDelete = null;
                     }
+                });
+        }
+
+        let skillModalInstance;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (document.getElementById('addSkillModal')) {
+                skillModalInstance = new bootstrap.Modal(document.getElementById('addSkillModal'));
+            }
+            initRadarChart();
+        });
+
+        function initRadarChart() {
+            const ctx = document.getElementById('skillsRadarChart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: @json($hr->skills->pluck('skill_name'), JSON_THROW_ON_ERROR),
+                    datasets: [{
+                        label: '{{ __('companies/view.hr.skills.proficiency_level') }}',
+                        data: @json($hr->skills->pluck('pivot.proficiency_level'), JSON_THROW_ON_ERROR),
+                        fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    }]
+                },
+                options: {
+                    elements: {line: {tension: 0.3}},
+                    scales: {
+                        r: {
+                            angleLines: {display: true},
+                            suggestedMin: 0,
+                            suggestedMax: 5,
+                            ticks: {stepSize: 1}
+                        }
+                    }
+                }
+            });
+        }
+
+        function saveSkill(event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSaveSkill');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '{{ __('companies/view.hr.actions.saving') }}';
+
+            const formData = new FormData();
+            formData.append('skill_name', document.getElementById('new_skill_name').value);
+            formData.append('skill_type', document.getElementById('new_skill_type').value);
+            formData.append('proficiency_level', document.getElementById('new_skill_level').value);
+
+            fetch("{{ route('companies.hr.skills.store', ['company' => $company->company_id, 'hr_id' => $hr->human_resource_id]) }}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        skillModalInstance.hide();
+                        window.location.reload();
+                    } else {
+                        if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", data.message, 'error');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') }}", err.message, 'error');
+                })
+                .finally(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                });
+        }
+
+        function deleteSkill(skillId) {
+            skillIdToDelete = skillId;
+            if (deleteSkillConfirmModalInstance) {
+                deleteSkillConfirmModalInstance.show();
+            }
+        }
+
+        function executeDeleteSkill() {
+            if (!skillIdToDelete) return;
+
+            let url = "{{ route('companies.hr.skills.destroy', ['company' => $company->company_id, 'hr_id' => $hr->human_resource_id, 'skill_id' => ':id']) }}".replace(':id', skillIdToDelete);
+
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        deleteSkillConfirmModalInstance.hide();
+                        document.getElementById('skill-row-' + skillIdToDelete).remove();
+
+                        if (typeof showMessage === 'function') {
+                            showMessage("{{ __('companies/view.hr.messages.success_title') }}", data.message, 'success');
+                        }
+                        setTimeout(() => window.location.reload(), 1000);
+                    } else {
+                        if (typeof showMessage === 'function') {
+                            showMessage("{{ __('companies/view.hr.messages.error_title') }}", data.message, 'error');
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    if (typeof showMessage === 'function') {
+                        showMessage("{{ __('companies/view.hr.messages.error_title') }}", "Erro ao remover.", 'error');
+                    }
+                })
+                .finally(() => {
+                    skillIdToDelete = null;
                 });
         }
     </script>

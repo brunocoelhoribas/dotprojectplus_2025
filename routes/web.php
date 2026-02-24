@@ -6,6 +6,7 @@ use App\Http\Controllers\Company\CompanyHumanResourceController;
 use App\Http\Controllers\Company\CompanyOrganogramController;
 use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
+use App\Http\Controllers\HumanResource\HumanResourceSkillController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
 use App\Http\Controllers\LanguageController;
@@ -55,6 +56,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('hr/{hr_id}', [CompanyHumanResourceController::class, 'destroy'])->name('hr.destroy');
         Route::get('hr/{hr_id}', [CompanyHumanResourceController::class, 'show'])->name('hr.show');
         Route::put('hr/{hr_id}', [CompanyHumanResourceController::class, 'update'])->name('hr.update');
+        Route::post('/hr/{hr_id}/skills', [HumanResourceSkillController::class, 'store'])->name('hr.skills.store');
+        Route::delete('/hr/{hr_id}/skills/{skill_id}', [HumanResourceSkillController::class, 'destroy'])->name('hr.skills.destroy');
     });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])
