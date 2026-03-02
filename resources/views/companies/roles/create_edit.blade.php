@@ -23,7 +23,6 @@
                     @method('PUT')
                 @endif
 
-                {{-- Nome do Papel --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">
                         {{ __('companies/view.roles.form.name') }} <span class="text-danger">*</span>
@@ -32,21 +31,18 @@
                            value="{{ old('human_resources_role_name', $role->human_resources_role_name) }}">
                 </div>
 
-                {{-- Responsabilidades --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">{{ __('companies/view.roles.form.responsability') }}</label>
                     <textarea name="human_resources_role_responsability" class="form-control" rows="4">{{ old('human_resources_role_responsability', $role->human_resources_role_responsability) }}</textarea>
                     <div class="form-text">{{ __('companies/view.roles.form.responsability_help') }}</div>
                 </div>
 
-                {{-- Autoridade --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">{{ __('companies/view.roles.form.authority') }}</label>
                     <textarea name="human_resources_role_authority" class="form-control" rows="3">{{ old('human_resources_role_authority', $role->human_resources_role_authority) }}</textarea>
                     <div class="form-text">{{ __('companies/view.roles.form.authority_help') }}</div>
                 </div>
 
-                {{-- Competência --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">{{ __('companies/view.roles.form.competence') }}</label>
                     <textarea name="human_resources_role_competence" class="form-control" rows="3">{{ old('human_resources_role_competence', $role->human_resources_role_competence) }}</textarea>

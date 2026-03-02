@@ -6,6 +6,7 @@ use App\Http\Controllers\Company\CompanyHumanResourceController;
 use App\Http\Controllers\Company\CompanyOrganogramController;
 use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
+use App\Http\Controllers\HumanResource\HumanResourceRaciController;
 use App\Http\Controllers\HumanResource\HumanResourceSkillController;
 use App\Http\Controllers\Initiating\InitiatingController;
 use App\Http\Controllers\Initiating\InitiatingStakeholderController;
@@ -58,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('hr/{hr_id}', [CompanyHumanResourceController::class, 'update'])->name('hr.update');
         Route::post('/hr/{hr_id}/skills', [HumanResourceSkillController::class, 'store'])->name('hr.skills.store');
         Route::delete('/hr/{hr_id}/skills/{skill_id}', [HumanResourceSkillController::class, 'destroy'])->name('hr.skills.destroy');
+        Route::post('/hr/{hr_id}/raci', [HumanResourceRaciController::class, 'store'])->name('hr.raci.store');
+        Route::delete('/hr/{hr_id}/raci/{raci_id}', [HumanResourceRaciController::class, 'destroy'])->name('hr.raci.destroy');
     });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])
@@ -74,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('wbs/{wbsItem}', [PlanningController::class, 'destroyWbsItem'])->name('wbs.destroy');
         Route::post('wbs/{wbsItem}/move/{direction}', [PlanningController::class, 'moveWbsItem'])->name('wbs.move');
 
-        Route::post('wbs/{wbsItem}/activity', [PlanningController::class, 'storeActivity'])->name('activity.store');
+        Route::post('wbs/{wbsItem?}/activity', [PlanningController::class, 'storeActivity'])->name('activity.store');
 
         Route::put('activities/{task}', [PlanningController::class, 'updateActivity'])->name('activity.update');
         Route::delete('activities/{task}', [PlanningController::class, 'destroyActivity'])->name('activity.destroy');

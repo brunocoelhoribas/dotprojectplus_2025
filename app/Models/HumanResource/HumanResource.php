@@ -6,6 +6,7 @@ use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static findOrFail($humanResourceId)
@@ -50,5 +51,9 @@ class HumanResource extends Model {
             'human_resource_id',
             'skill_id'
         )->withPivot('proficiency_level');
+    }
+
+    public function raciRoles(): HasMany {
+        return $this->hasMany(HumanResourceRaci::class, 'human_resource_id', 'human_resource_id');
     }
 }
