@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('hr/{hr_id}', [CompanyHumanResourceController::class, 'update'])->name('hr.update');
         Route::post('/hr/{hr_id}/skills', [HumanResourceSkillController::class, 'store'])->name('hr.skills.store');
         Route::delete('/hr/{hr_id}/skills/{skill_id}', [HumanResourceSkillController::class, 'destroy'])->name('hr.skills.destroy');
+        Route::get('/raci', [HumanResourceRaciController::class, 'index'])->name('hr.raci.index');
         Route::post('/hr/{hr_id}/raci', [HumanResourceRaciController::class, 'store'])->name('hr.raci.store');
         Route::delete('/hr/{hr_id}/raci/{raci_id}', [HumanResourceRaciController::class, 'destroy'])->name('hr.raci.destroy');
     });

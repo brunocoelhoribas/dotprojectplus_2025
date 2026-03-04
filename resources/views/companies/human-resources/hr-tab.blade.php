@@ -13,7 +13,11 @@
 @endphp
 
 <div id="hr-content">
-    <div class="d-flex justify-content-end mb-3 mt-3">
+    <div class="d-flex justify-content-end gap-2 mb-3 mt-3">
+        <button type="button" class="btn btn-outline-primary btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#raciMatrixModal">
+            <i class="bi bi-grid-3x3 me-1"></i> {{ __('companies/view.hr.raci.open_matrix_btn') ?? 'Abrir Matriz RACI' }}
+        </button>
+
         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newHrModal">
             <i class="bi bi-plus-lg me-1"></i> {{ __('companies/view.hr.add_btn') }}
         </button>
@@ -235,53 +239,87 @@
     </div>
 </div>
 
+<div class="modal fade" id="statusMessageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header text-white" id="statusModalHeader">
+                <h5 class="modal-title h6 fw-bold" id="statusModalTitle"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4" id="statusModalBody">
+            </div>
+            <div class="modal-footer bg-light justify-content-center">
+                <button type="button" class="btn btn-secondary btn-sm px-4" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    let hrModalInstance = null;
-    let deleteHrConfirmModalInstance = null;
-    let hrIdToDelete = null;
+    let raciModalInstance = null;
+    let deleteRaciConfirmModalInstance = null;
+    let mainRaciMatrixModalInstance = null;
+    let raciIdToDelete = null;
+    let raciHrIdToDelete = null;
 
     document.addEventListener('DOMContentLoaded', function () {
-        if (document.getElementById('newHrModal')) {
-            hrModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('newHrModal'));
+        const mainRaciEl = document.getElementById('raciMatrixModal');
+        if(mainRaciEl) {
+            mainRaciMatrixModalInstance = bootstrap.Modal.getOrCreateInstance(mainRaciEl);
         }
-        if (document.getElementById('deleteHrConfirmModal')) {
-            deleteHrConfirmModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('deleteHrConfirmModal'));
+
+        if (document.getElementById('addRaciModal')) {
+            raciModalInstance = new bootstrap.Modal(document.getElementById('addRaciModal'), {
+                backdrop: false /
+            });
+        }
+        if (document.getElementById('deleteRaciConfirmModal')) {
+            deleteRaciConfirmModalInstance = new bootstrap.Modal(document.getElementById('deleteRaciConfirmModal'), {
+                backdrop: false
+            });
         }
     });
 
-    function toggleHrCreationType() {
-        const isNew = document.getElementById('type_new').checked;
-        const divExisting = document.getElementById('div_existing_user');
-        const divNew = document.getElementById('div_new_user');
-
-        if (isNew) {
-            divExisting.classList.add('d-none');
-            divNew.classList.remove('d-none');
-            document.getElementById('user_id').required = false;
-            document.getElementById('first_name').required = true;
-            document.getElementById('last_name').required = true;
-        } else {
-            divNew.classList.add('d-none');
-            divExisting.classList.remove('d-none');
-            document.getElementById('user_id').required = true;
-            document.getElementById('first_name').required = false;
-            document.getElementById('last_name').required = false;
-        }
+    function openNewRaciModal() {
+        document.getElementById('formAddRaci').reset();
+        raciModalInstance.show();
     }
 
-    function saveHumanResource(event) {
+    function openInlineRaciModal(projectId, activityName, hrId) {
+        document.getElementById('formAddRaci').reset();
+        document.getElementById('new_raci_project_id').value = projectId;
+        document.getElementById('new_raci_activity').value = activityName;
+        document.getElementById('new_raci_hr_id').value = hrId;
+        raciModalInstance.show();
+    }
+
+    function refreshMatrixContent() {
+        fetch(window.location.href)
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                document.getElementById('raci-matrix-container').innerHTML = doc.getElementById('raci-matrix-container').innerHTML;
+
+                document.body.classList.add('modal-open');
+                document.body.style.overflow = 'hidden';
+            })
+            .catch(err => console.error("Erro ao atualizar matriz:", err));
+    }
+
+    function saveRaci(event) {
         event.preventDefault();
+        if (document.activeElement) document.activeElement.blur();
 
-        const form = document.getElementById('formNewHr');
-        const btn = document.getElementById('btnSubmitHr');
+        const btn = document.getElementById('btnSaveRaci');
         const originalText = btn.innerHTML;
-
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
 
-        const formData = new FormData(form);
+        const formData = new FormData(document.getElementById('formAddRaci'));
+        const hrId = document.getElementById('new_raci_hr_id').value;
+        let postUrl = "{{ route('companies.hr.raci.store', ['company' => $company->company_id, 'hr_id' => ':hrId']) }}".replace(':hrId', hrId);
 
-        fetch("{{ route('companies.hr.store', $company->company_id) }}", {
+        fetch(postUrl, {
             method: 'POST',
             body: formData,
             headers: {
@@ -290,26 +328,13 @@
                 'Accept': 'application/json'
             }
         })
-            .then(async response => {
-                const data = await response.json();
-                if (!response.ok) throw data;
-                return data;
-            })
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    hrModalInstance.hide();
-                    form.reset();
-                    if (typeof showMessage === 'function') {
-                        showMessage("{{ __('companies/view.hr.messages.success_title') }}", data.message, 'success');
-                    }
-                    setTimeout(() => window.location.reload(), 1500);
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                let msg = err.message || "{{ __('companies/view.hr.messages.request_error') }}";
-                if (typeof showMessage === 'function') {
-                    showMessage("{{ __('companies/view.hr.messages.error_title') }}", msg, 'error');
+                    raciModalInstance.hide();
+                    refreshMatrixContent();
+                } else {
+                    alert(data.message || "Erro ao salvar");
                 }
             })
             .finally(() => {
@@ -318,17 +343,19 @@
             });
     }
 
-    function deleteHumanResource(hrId) {
-        hrIdToDelete = hrId;
-        if (deleteHrConfirmModalInstance) {
-            deleteHrConfirmModalInstance.show();
-        }
+    function deleteRaci(hrId, raciId) {
+        raciIdToDelete = raciId;
+        raciHrIdToDelete = hrId;
+        deleteRaciConfirmModalInstance.show();
     }
 
-    function executeDeleteHumanResource() {
-        if (!hrIdToDelete) return;
+    function executeDeleteRaci() {
+        if (document.activeElement) document.activeElement.blur();
+        if (!raciIdToDelete || !raciHrIdToDelete) return;
 
-        let url = "{{ route('companies.hr.destroy', ['company' => $company->company_id, 'hr_id' => ':id']) }}".replace(':id', hrIdToDelete);
+        let url = "{{ route('companies.hr.raci.destroy', ['company' => $company->company_id, 'hr_id' => ':hrId', 'raci_id' => ':id']) }}"
+            .replace(':hrId', raciHrIdToDelete)
+            .replace(':id', raciIdToDelete);
 
         fetch(url, {
             method: 'DELETE',
@@ -341,29 +368,13 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    deleteHrConfirmModalInstance.hide();
-                    const row = document.getElementById('hr-row-' + hrIdToDelete);
-                    if (row) row.remove();
-
-                    if (typeof showMessage === 'function') {
-                        showMessage("{{ __('companies/view.hr.messages.success_title') }}", data.message, 'success');
-                    }
-                    setTimeout(() => window.location.reload(), 1000);
-
-                } else {
-                    if (typeof showMessage === 'function') {
-                        showMessage("{{ __('companies/view.hr.messages.error_title') }}", data.message, 'error');
-                    }
-                }
-            })
-            .catch(err => {
-                console.error('Erro na exclusão:', err);
-                if (typeof showMessage === 'function') {
-                    showMessage("{{ __('companies/view.hr.messages.error_title') }}", "{{ __('companies/view.hr.messages.delete_error') }}", 'error');
+                    deleteRaciConfirmModalInstance.hide();
+                    refreshMatrixContent();
                 }
             })
             .finally(() => {
-                hrIdToDelete = null;
+                raciIdToDelete = null;
+                raciHrIdToDelete = null;
             });
     }
 </script>

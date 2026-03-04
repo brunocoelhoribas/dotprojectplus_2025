@@ -212,6 +212,7 @@ return [
         ],
         'raci' => [
             'title' => 'Matriz RACI (Responsabilidades)',
+            'open_matrix_btn' => 'Abrir Matriz RACI',
             'add_btn' => 'Atribuir Papel RACI',
             'activity' => 'Atividade / Entregável',
             'role' => 'Papel (RACI)',
