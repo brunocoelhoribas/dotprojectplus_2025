@@ -6,6 +6,7 @@ use App\Http\Controllers\Company\CompanyHumanResourceController;
 use App\Http\Controllers\Company\CompanyOrganogramController;
 use App\Http\Controllers\Company\CompanyRoleController;
 use App\Http\Controllers\Execution\ExecutionController;
+use App\Http\Controllers\HumanResource\HumanResourcePerformanceController;
 use App\Http\Controllers\HumanResource\HumanResourceRaciController;
 use App\Http\Controllers\HumanResource\HumanResourceSkillController;
 use App\Http\Controllers\Initiating\InitiatingController;
@@ -62,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/raci', [HumanResourceRaciController::class, 'index'])->name('hr.raci.index');
         Route::post('/hr/{hr_id}/raci', [HumanResourceRaciController::class, 'store'])->name('hr.raci.store');
         Route::delete('/hr/{hr_id}/raci/{raci_id}', [HumanResourceRaciController::class, 'destroy'])->name('hr.raci.destroy');
+        Route::post('/hr/performance', [HumanResourcePerformanceController::class, 'store'])->name('hr.performance.store');
+        Route::delete('/hr/performance/{hr_id}', [HumanResourcePerformanceController::class, 'destroy'])->name('hr.performance.destroy');
     });
 
     Route::post('projects/batch-update', [ProjectController::class, 'batchUpdate'])

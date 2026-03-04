@@ -8,8 +8,7 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up()
-    {
+    public function up(): void {
         Schema::create('dotp_skills', static function (Blueprint $table) {
             $table->id('skill_id');
             $table->string('skill_name');

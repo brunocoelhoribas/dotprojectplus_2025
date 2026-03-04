@@ -9,7 +9,7 @@ return new class extends Migration {
      * Run the migrations.
      */
     public function up(): void {
-        Schema::create('dotp_raci', function (Blueprint $table) {
+        Schema::create('dotp_raci', static function (Blueprint $table) {
             $table->id();
             $table->integer('human_resource_id');
             $table->integer('project_id');
