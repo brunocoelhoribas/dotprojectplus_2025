@@ -53,6 +53,8 @@ return [
         'cancel' => 'Cancel',
         'save' => 'Save Project',
         'update' => 'Update Project',
+        'section_general' => 'General Information',
+        'validation_error' => 'Please check the fields below:',
     ],
 
     'show' => [

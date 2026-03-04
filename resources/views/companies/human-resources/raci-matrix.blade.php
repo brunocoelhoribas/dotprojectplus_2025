@@ -315,7 +315,6 @@
                 if (data.success) {
                     raciModalInstance.hide();
 
-                    // Tenta atualizar a célula no DOM em vez de recarregar
                     const record = data.record;
                     const cellSelector = `[data-raci-hr="${record.human_resource_id}"][data-raci-activity="${CSS.escape(record.activity_name)}"][data-raci-project="${record.project_id}"]`;
                     const cell = document.querySelector(cellSelector);
@@ -323,14 +322,15 @@
                     if (cell) {
                         cell.innerHTML = buildFilledCell(record.human_resource_id, record.id, record.raci_role, record.activity_name, record.project_id);
                     } else {
-                        // Célula não existe na tabela (nova atividade ou novo projeto): reload controlado
                         window.location.reload();
                     }
                 } else {
                     if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", data.message, 'error');
                 }
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", err.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao salvar' }}", 'error');
+            })
             .finally(() => {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
@@ -373,7 +373,12 @@
                             cell.innerHTML = buildEmptyCell(projectId, activityName, hrId);
                         }
                     }
+                } else {
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", data.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao remover' }}", 'error');
                 }
+            })
+            .catch(err => {
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", err.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro' }}", 'error');
             })
             .finally(() => {
                 raciIdToDelete = null;

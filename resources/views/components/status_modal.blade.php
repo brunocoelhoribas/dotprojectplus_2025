@@ -3,7 +3,8 @@
         <div class="modal-content border-0 shadow">
             <div class="modal-header text-white" id="statusModalHeader">
                 <h5 class="modal-title h6 fw-bold" id="statusModalTitle"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <div class="modal-body text-center py-4" id="statusModalBody">
             </div>
@@ -17,11 +18,20 @@
 <script>
     let globalStatusModal = null;
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const modalEl = document.getElementById('statusMessageModal');
         if (modalEl) {
             globalStatusModal = new bootstrap.Modal(modalEl);
         }
+
+        // Exibe flash messages do Laravel automaticamente após redirecionamentos CRUD
+        @if(session('success'))
+            showMessage('{{ __('layout.flash.success') ?? 'Sucesso' }}', @json(session('success')), 'success');
+        @elseif(session('error'))
+            showMessage('{{ __('layout.flash.error') ?? 'Erro' }}', @json(session('error')), 'error');
+        @elseif(session('warning'))
+            showMessage('{{ __('layout.flash.warning') ?? 'Atenção' }}', @json(session('warning')), 'error');
+        @endif
     });
 
     /**

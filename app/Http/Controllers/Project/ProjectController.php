@@ -23,9 +23,11 @@ use Illuminate\Support\Facades\DB;
  * Manages Project CRUD operations and related business logic.
  * (Based on the original dotProject module)
  */
-class ProjectController extends Controller {
+class ProjectController extends Controller
+{
 
-    public function index(Request $request): View {
+    public function index(Request $request): View
+    {
         $filterStatus = $request->query('status', 'all');
         $filterOwner = $request->query('owner');
         $filterCompany = $request->query('company');
@@ -59,7 +61,8 @@ class ProjectController extends Controller {
         ]);
     }
 
-    public function create(Request $request): View {
+    public function create(Request $request): View
+    {
         $companyId = $request->query('company_id');
 
         return view('projects.create', [
@@ -75,7 +78,8 @@ class ProjectController extends Controller {
     /**
      * Store a newly created project in the database.
      */
-    public function store(Request $request): RedirectResponse {
+    public function store(Request $request): RedirectResponse
+    {
         $validatedData = $this->validateProject($request);
 
         $m2mDepartments = $this->parseM2MInput($request->input('project_departments'));
@@ -93,11 +97,21 @@ class ProjectController extends Controller {
             $project->contacts()->sync($m2mContacts);
         }
 
+        // Cria automaticamente o Initiating ao criar um projeto
+        Initiating::create([
+            'project_id' => $project->project_id,
+            'initiating_title' => $project->project_name,
+            'initiating_manager' => $project->project_owner,
+            'initiating_create_by' => auth()->id(),
+            'initiating_date_create' => now(),
+        ]);
+
         return redirect()->route('projects.show', $project->project_id)
             ->with('success', __('projects/messages.success.created'));
     }
 
-    public function show(Project $project): View {
+    public function show(Project $project): View
+    {
         $project->loadMissing([
             'company',
             'owner.contact',
@@ -131,7 +145,15 @@ class ProjectController extends Controller {
 
         return view('projects.show', [
             'project' => $project,
-            'initiating' => $project->initiating,
+            'initiating' => Initiating::firstOrCreate(
+                ['project_id' => $project->project_id],
+                [
+                    'initiating_title' => $project->project_name,
+                    'initiating_manager' => $project->project_owner,
+                    'initiating_create_by' => auth()->id(),
+                    'initiating_date_create' => now(),
+                ]
+            ),
             'statuses' => $statuses,
             'priorities' => $priorities,
             'users' => $this->getOwnerList(),
@@ -148,7 +170,8 @@ class ProjectController extends Controller {
     }
 
     // ... (O método edit permanece inalterado) ...
-    public function edit(Project $project): View {
+    public function edit(Project $project): View
+    {
         $project->loadMissing(['departments', 'contacts']);
 
         return view('projects.edit', [
@@ -164,7 +187,8 @@ class ProjectController extends Controller {
     /**
      * Update the specified project in the database.
      */
-    public function update(Request $request, Project $project): RedirectResponse {
+    public function update(Request $request, Project $project): RedirectResponse
+    {
         $validatedData = $this->validateProject($request);
 
         $m2mDepartments = $this->parseM2MInput($request->input('project_departments'));
@@ -184,7 +208,8 @@ class ProjectController extends Controller {
     /**
      * Remove the specified project from the database.
      */
-    public function destroy(Project $project): RedirectResponse {
+    public function destroy(Project $project): RedirectResponse
+    {
         // TODO: Implement cascading delete logic via Observers
         $project->delete();
 
@@ -195,7 +220,8 @@ class ProjectController extends Controller {
     /**
      * Update the status of multiple projects at once.
      */
-    public function batchUpdate(Request $request): RedirectResponse {
+    public function batchUpdate(Request $request): RedirectResponse
+    {
         $request->validate([
             'project_ids' => 'required|array',
             'project_ids.*' => 'integer|exists:dotp_projects,project_id',
@@ -212,7 +238,8 @@ class ProjectController extends Controller {
             ->with('success', __('projects/messages.success.batch_updated'));
     }
 
-    private function validateProject(Request $request): array {
+    private function validateProject(Request $request): array
+    {
         return $request->validate([
             'project_name' => 'required|string|max:255',
             'project_short_name' => 'nullable|string|max:10',
@@ -230,26 +257,31 @@ class ProjectController extends Controller {
         ]);
     }
 
-    private function getCompanyList(): Collection {
+    private function getCompanyList(): Collection
+    {
         return Company::orderBy('company_name')->pluck('company_name', 'company_id');
     }
 
-    private function getOwnerList(): Collection {
+    private function getOwnerList(): Collection
+    {
         return User::join('dotp_contacts', 'dotp_users.user_contact', '=', 'dotp_contacts.contact_id')
             ->orderBy('dotp_contacts.contact_first_name')
             ->orderBy('dotp_contacts.contact_last_name')
             ->pluck(DB::raw("CONCAT(contact_first_name, ' ', contact_last_name)"), 'dotp_users.user_id');
     }
 
-    private function getProjectStatus(): array {
+    private function getProjectStatus(): array
+    {
         return $this->getSysVal('ProjectStatus');
     }
 
-    private function getProjectPriorities(): array {
+    private function getProjectPriorities(): array
+    {
         return $this->getSysVal('ProjectPriority');
     }
 
-    private function getSysVal(string $title): array {
+    private function getSysVal(string $title): array
+    {
         $getStatus = DB::table('dotp_sysvals')
             ->where('sysval_title', $title)
             ->pluck('sysval_value');
@@ -269,7 +301,8 @@ class ProjectController extends Controller {
         return $status;
     }
 
-    private function parseM2MInput($input): array {
+    private function parseM2MInput($input): array
+    {
         if (empty($input)) {
             return [];
         }

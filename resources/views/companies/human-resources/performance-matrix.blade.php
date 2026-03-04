@@ -333,8 +333,11 @@
                     perfModalInstance.hide();
                     refreshPerformanceMatrix();
                 } else {
-                    alert(data.message || "Erro");
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", data.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao salvar' }}", 'error');
                 }
+            })
+            .catch(err => {
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", err.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao salvar' }}", 'error');
             })
             .finally(() => {
                 btn.disabled = false;
@@ -366,7 +369,12 @@
                 if (data.success) {
                     deletePerfConfirmModalInstance.hide();
                     refreshPerformanceMatrix();
+                } else {
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", data.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao remover' }}", 'error');
                 }
+            })
+            .catch(err => {
+                if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", err.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro' }}", 'error');
             })
             .finally(() => {
                 perfIdToDelete = null;

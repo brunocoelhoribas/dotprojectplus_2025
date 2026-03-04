@@ -101,6 +101,9 @@
 {{-- INCLUSÃO DO ARQUIVO DA MATRIZ DE PERFORMANCE --}}
 @include('companies.human-resources.performance-matrix')
 
+{{-- MODAL DE STATUS GLOBAL --}}
+@includeIf('components.status_modal')
+
 <div class="modal fade" id="newHrModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <form id="formNewHr" onsubmit="saveHumanResource(event)">
@@ -191,7 +194,8 @@
                     </div>
 
                     <h6 class="fw-bold small border-bottom pb-1 mt-4">
-                        {{ __('companies/view.hr.details.section_hours') }}</h6>
+                        {{ __('companies/view.hr.details.section_hours') }}
+                    </h6>
                     <div class="row g-2">
                         @php
                             $days = [
@@ -251,22 +255,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="statusMessageModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg">
-            <div class="modal-header text-white" id="statusModalHeader">
-                <h5 class="modal-title h6 fw-bold" id="statusModalTitle"></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center py-4" id="statusModalBody">
-            </div>
-            <div class="modal-footer bg-light justify-content-center">
-                <button type="button" class="btn btn-secondary btn-sm px-4" data-bs-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
     let raciModalInstance = null;
@@ -343,7 +332,7 @@
                     raciModalInstance.hide();
                     refreshMatrixContent();
                 } else {
-                    alert(data.message || "Erro ao salvar");
+                    if (typeof showMessage === 'function') showMessage("{{ __('companies/view.hr.messages.error_title') ?? 'Erro' }}", data.message || "{{ __('companies/view.hr.messages.save_error') ?? 'Erro ao salvar' }}", 'error');
                 }
             })
             .finally(() => {
