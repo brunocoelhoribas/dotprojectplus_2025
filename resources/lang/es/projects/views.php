@@ -53,6 +53,8 @@ return [
         'cancel' => 'Cancelar',
         'save' => 'Guardar Proyecto',
         'update' => 'Actualizar Proyecto',
+        'section_general' => 'Información General',
+        'validation_error' => 'Por favor, verifique los campos a continuación:',
     ],
 
     'show' => [

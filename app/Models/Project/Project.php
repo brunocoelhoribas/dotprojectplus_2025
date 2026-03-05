@@ -5,12 +5,19 @@ namespace App\Models\Project;
 use App\Models\Company\Company;
 use App\Models\Department\Department;
 use App\Models\Initiating\Initiating;
+use App\Models\Initiating\InitiatingStakeholder;
+use App\Models\Planning\Acquisition\AcquisitionPlanning;
+use App\Models\Planning\Communication\Communication;
+use App\Models\Planning\Quality\QualityPlanning;
+use App\Models\Planning\Risk\Risk;
 use App\Models\User\User;
 use App\Models\User\UserContact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model {
@@ -81,5 +88,38 @@ class Project extends Model {
             'project_id',
             'department_id'
         );
+    }
+
+    public function wbsItems(): HasMany|self {
+        return $this->hasMany(ProjectWbsItem::class, 'project_id', 'project_id');
+    }
+
+    public function risks(): HasMany|self {
+        return $this->hasMany(Risk::class, 'risk_project', 'project_id');
+    }
+
+    public function stakeholders(): HasManyThrough|self {
+        return $this->hasManyThrough(
+            InitiatingStakeholder::class,
+            Initiating::class,
+            'project_id',
+            'initiating_id',
+            'project_id',
+            'initiating_id'
+        );
+    }
+
+    public function acquisitions() {
+        return $this->hasMany(AcquisitionPlanning::class, 'project_id', 'project_id');
+    }
+
+
+    public function communications() {
+        return $this->hasMany(Communication::class, 'communication_project_id', 'project_id');
+    }
+
+
+    public function quality(): HasMany|self {
+        return $this->hasMany(QualityPlanning::class, 'project_id', 'project_id');
     }
 }

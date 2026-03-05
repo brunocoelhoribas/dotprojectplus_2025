@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * (Based on setup.php)
  */
 class InitiatingStakeholder extends Model {
-    use HasFactory;
-
     protected $table = 'dotp_initiating_stakeholder';
     protected $primaryKey = 'initiating_stakeholder_id';
 

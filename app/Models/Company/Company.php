@@ -2,6 +2,7 @@
 
 namespace App\Models\Company;
 
+use App\Models\HumanResource\HumanResourcesRole;
 use App\Models\Project\Project;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,8 +42,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \Illuminate\Database\Eloquent\Collection|Project[] $projects The collection of projects for this company.
  */
 class Company extends Model {
-    use HasFactory;
-
     /**
      * The table associated with the model.
      *
@@ -136,6 +135,10 @@ class Company extends Model {
      */
     public function archivedProjects(): HasMany {
         return $this->projects()->where('project_status', 7);
+    }
+
+    public function roles(): self|HasMany {
+        return $this->hasMany(HumanResourcesRole::class, 'human_resources_role_company_id', 'company_id');
     }
 }
 

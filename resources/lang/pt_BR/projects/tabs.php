@@ -10,7 +10,7 @@ return [
             'risks' => 'Riscos',
             'quality' => 'Qualidade',
             'communication' => 'Comunicação',
-            'procurement' => 'Aquisições',
+            'acquisition' => 'Aquisições',
             'stakeholders' => 'Stakeholders',
             'plan' => 'Plano do projeto',
         ],
